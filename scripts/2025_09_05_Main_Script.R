@@ -31,7 +31,7 @@ original_data <- original_data %>% select(-baseline_condition)
 
 original_data <- original_data %>% rename(baseline_condition = "condition_number")
 
-original_data_x <- original_data %>% 
+original_data <- original_data %>% 
   mutate(baseline_condition = if_else(baseline_condition == 1, "good", baseline_condition),
          baseline_condition = if_else(baseline_condition == 2, "fair", baseline_condition),
          baseline_condition = if_else(baseline_condition == 3, "poor", baseline_condition))
@@ -44,4 +44,21 @@ original_data_x <- original_data %>%
 original_data <- original_data %>% 
       mutate(arm = sub(".*_", "", gender_arm)) %>%
       select(-gender_arm) 
-      original_data 
+original_data 
+      
+
+original_data %>% count(baseline_esr_cat)
+
+
+
+
+
+### seperate baseline_temp_cat 
+#first remove 1,2,3 _ 
+#then create two variables 
+
+original_data <- original_data %>% 
+  mutate(arm = sub(".*_", "", gender_arm)) %>%
+  select(-gender_arm) 
+original_data 
+  
