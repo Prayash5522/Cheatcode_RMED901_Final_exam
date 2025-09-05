@@ -47,18 +47,14 @@ original_data <- original_data %>%
 original_data 
       
 
-original_data %>% count(baseline_esr_cat)
+fileName <- paste0("2025_09_05_tidy_version_day1", ".txt")
+
+write_delim(
+  original_data, 
+  file = here("data", fileName),
+  delim = "\t"
+)
 
 
 
 
-
-### seperate baseline_temp_cat 
-#first remove 1,2,3 _ 
-#then create two variables 
-
-original_data <- original_data %>% 
-  mutate(arm = sub(".*_", "", gender_arm)) %>%
-  select(-gender_arm) 
-original_data 
-  
