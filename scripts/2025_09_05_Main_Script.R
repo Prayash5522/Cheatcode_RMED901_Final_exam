@@ -55,6 +55,9 @@ write_delim(
   delim = "\t"
 )
 
+# am renaimimng the coloumn strep_resistance , and seperated it into two coloumns which called strep_resistance_level,
+# strep_resistance
+
 original_data <- original_data %>%
   separate(strep_resistance, into = c("strep", "resistance"), sep = "_", extra = "merge")
 
@@ -104,5 +107,4 @@ original_data <- original_data %>%
 original_data_x <- original_data %>% 
   separate(`6m_radiologic`, into = c("NA", "6m_radiologic"), sep = 2)
 
-# am renaimimng the coloumn strep_resistance , and seperated it into two coloumns which called strep_resistance_level,
-# strep_resistance
+
