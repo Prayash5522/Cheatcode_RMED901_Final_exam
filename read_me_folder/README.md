@@ -11,6 +11,7 @@ Final group work
 
 ## Day2 - 2025_09_08
 
+ - to delete branch use the code in TERMINAL git branch -D quartiles_of_baseline_esr
 
 
 
