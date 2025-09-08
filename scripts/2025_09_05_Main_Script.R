@@ -99,13 +99,13 @@ original_data <- original_data %>%
 ###dividing esr cat variable 
 
 original_data <- original_data %>% 
-  separate(baseline_esr_cat, into = c("NA", "baseline_esr_cat"), sep = 2)
+  separate(baseline_esr_cat, into = c(NA, "baseline_esr_cat"), sep = 2)
 
 
 ####dividing 6m_radiologica
 
 original_data <- original_data %>% 
-  separate(`6m_radiologic`, into = c("NA", "6m_radiologic"), sep = 2)
+  separate(`6m_radiologic`, into = c(NA, "6m_radiologic"), sep = 2)
 
 
 fileName <- paste0("2025_09_08_tidy_version_day2", ".txt")
