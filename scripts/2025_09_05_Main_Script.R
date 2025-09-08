@@ -104,7 +104,7 @@ original_data <- original_data %>%
 
 ####dividing 6m_radiologica
 
-original_data_x <- original_data %>% 
+original_data <- original_data %>% 
   separate(`6m_radiologic`, into = c("NA", "6m_radiologic"), sep = 2)
 
 
@@ -116,3 +116,5 @@ write_delim(
   delim = "\t"
 )
 
+tidy_data_day_2 <- read_delim(here("data", "2025_09_08_tidy_version_day2.txt"))
+                              
