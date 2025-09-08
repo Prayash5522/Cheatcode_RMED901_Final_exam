@@ -118,3 +118,10 @@ write_delim(
 
 tidy_data_day_2 <- read_delim(here("data", "2025_09_08_tidy_version_day2.txt"))
                               
+
+###removing -year, -month, -baseline_esr_cat variables 
+
+tidy_data_day_2 <- tidy_data_day_2 %>% select(-year, -month, -baseline_esr_cat)
+
+
+
