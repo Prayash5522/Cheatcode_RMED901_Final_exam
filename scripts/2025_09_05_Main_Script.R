@@ -55,6 +55,30 @@ write_delim(
   delim = "\t"
 )
 
+# am renaimimng the coloumn strep_resistance , and seperated it into two coloumns which called strep_resistance_level,
+# strep_resistance
 
+original_data <- original_data %>%
+  separate(strep_resistance, into = c("strep", "resistance"), sep = "_", extra = "merge")
+
+print(original_data)
+
+original_data <- original_data %>% 
+  mutate(strep = if_else(strep == 1, "sensitive", strep),
+         strep = if_else(strep == 2, "modrate", strep),
+         strep = if_else(strep == 3, "resistance", strep))
+
+original_data <- original_data %>%
+  separate(resistance, into = c("resistance", "concenteration_after_six_months"), sep = "_", extra = "merge")
+
+print(original_data)
+
+original_data <- original_data %>%
+  rename(strep_resistance_level = strep)
+
+original_data <- original_data %>%
+  rename(strep_resistance = concenteration_after_six_months)
+
+original_data <- original_data %>% select(-resistance)
 
 
