@@ -108,3 +108,11 @@ original_data_x <- original_data %>%
   separate(`6m_radiologic`, into = c("NA", "6m_radiologic"), sep = 2)
 
 
+fileName <- paste0("2025_09_08_tidy_version_day2", ".txt")
+
+write_delim(
+  original_data, 
+  file = here("data", fileName),
+  delim = "\t"
+)
+
