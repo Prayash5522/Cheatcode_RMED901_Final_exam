@@ -148,5 +148,14 @@ joined_data <- tidy_data_day_2 %>%
 
 glimpse(joined_data)
 
+###saving the joined_data
+
+fileName <- paste0("2025_09_08_joined_data_day2", ".txt")
+
+write_delim(
+  joined_data, 
+  file = here("data", fileName),
+  delim = "\t"
+)
 
 
