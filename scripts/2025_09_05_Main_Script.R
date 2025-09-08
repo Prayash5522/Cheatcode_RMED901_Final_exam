@@ -55,6 +55,31 @@ write_delim(
   delim = "\t"
 )
 
+#### dividing baseline_temp_cat into Fahrenheit and Celsius
+
+original_data <- original_data %>% 
+  separate(baseline_temp_cat, into = c("number_temp", "baseline_temp"), 
+           sep = 2) %>% select(-number_temp) %>% 
+  separate_wider_delim(baseline_temp, "/", names = c("baseline_temp_fahren", "baseline_temp_cels"))
+
+original_data <- original_data %>% 
+  separate(baseline_temp_cels, into = c("baseline_temp_cels" , "number"),
+           sep = -1) %>% select(-number)
+
+original_data <- original_data %>% 
+  separate(baseline_temp_fahren, into = c("baseline_temp_fahren" , "number"),
+           sep = -1) %>% select(-number)
+
+###dividing esr cat variable 
+
+original_data <- original_data %>% 
+  separate(baseline_esr_cat, into = c("NA", "baseline_esr_cat"), sep = 2)
+
+
+####dividing 6m_radiologica
+
+original_data_x <- original_data %>% 
+  separate(`6m_radiologic`, into = c("NA", "6m_radiologic"), sep = 2)
 
 
 
