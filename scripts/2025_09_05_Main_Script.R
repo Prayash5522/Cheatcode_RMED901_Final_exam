@@ -158,4 +158,6 @@ write_delim(
   delim = "\t"
 )
 
+joined_data <- read_delim(here("data", "2025_09_08_joined_data_day2.txt"))
+
 
