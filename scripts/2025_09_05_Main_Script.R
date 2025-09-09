@@ -208,3 +208,27 @@ joined_data <- joined_data %>%
   mutate(gender = ifelse(gender == "F", 0, gender),
          gender = ifelse(gender == "M", 1, gender))
 
+##### this is the the coloumn that showes the strep resistance after the addministration
+###of the high dose 
+
+####chanding the values in the dose strep from 0 2 to high and no dose 
+
+joined_data <- joined_data %>%
+  mutate(`dose_strep [g]` = case_when(
+    `dose_strep [g]` == 0 ~ "No_dose",
+    `dose_strep [g]` == 2 ~ "high_dose",
+    TRUE ~ as.character(`dose_strep [g]`)
+  ))
+
+### creating a new cloumn that shows the resistance 
+joined_data <- joined_data %>%
+  mutate(
+    status_after_high_dose_administration = case_when(
+      `dose_strep [g]` == "high_dose" & strep_resistance_level == "resistance" ~ "resistant",
+      `dose_strep [g]` == "high_dose" & strep_resistance_level == "sensitive" ~ "not_resistant", 
+      `dose_strep [g]` == "high_dose" & strep_resistance_level == "modrate" ~ "not_resistant",  # Fixed spelling
+      `dose_strep [g]` == "No_dose" ~ "not_resistant",
+      TRUE ~ "Unknown"
+    )
+  )
+
