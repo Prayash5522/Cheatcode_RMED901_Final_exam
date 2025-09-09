@@ -161,3 +161,9 @@ write_delim(
 joined_data <- read_delim(here("data", "2025_09_08_joined_data_day2.txt"))
 
 
+### Change gender
+
+joined_data <- joined_data %>%
+  mutate(gender = ifelse(gender == "F", 0, gender),
+         gender = ifelse(gender == "M", 1, gender))
+
