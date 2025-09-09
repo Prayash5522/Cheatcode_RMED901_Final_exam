@@ -161,6 +161,11 @@ write_delim(
 joined_data <- read_delim(here("data", "2025_09_08_joined_data_day2.txt"))
 
 
+##### this is the the coloumn that showes the strep resistance after the addministration
+###of the high dose 
+
+####chanding the values in the dose strep from 0 2 to high and no dose 
+
 joined_data <- joined_data %>%
   mutate(`dose_strep [g]` = case_when(
     `dose_strep [g]` == 0 ~ "No_dose",
@@ -168,7 +173,7 @@ joined_data <- joined_data %>%
     TRUE ~ as.character(`dose_strep [g]`)
   ))
 
-
+### creating a new cloumn that shows the resistance 
 joined_data <- joined_data %>%
   mutate(
     status_after_high_dose_administration = case_when(
