@@ -211,11 +211,12 @@ joined_data <- joined_data %>%
 
 glimpse(joined_data)
 
-### cutting "baseline_esr" score into quartiles (4 equal parts)
+### cutting "baseline_esr" score into quartiles (4 equal parts) and making a new variable
 
-joined_data$baseline_esr <- cut(joined_data$baseline_esr, 4)
+joined_data <- joined_data %>% 
+  mutate(baseline_esr_quartiles = cut(baseline_esr, breaks = 4))
 
-table(joined_data$baseline_esr)
+table(joined_data$baseline_esr_quartiles)
 
 ### setting the order of columns as: `patient_id, gender, arm` and other columns
 
@@ -229,3 +230,50 @@ joined_data <- joined_data %>% sort_by(joined_data$patient_id)
 
 head(joined_data)
 tail(joined_data)
+
+#baseline_esr as numneric 
+
+joined_data$baseline_esr <- as.numeric(joined_data$baseline_esr)
+
+glimpse(joined_data)
+
+### connecting above steps with pipe,,,and since we have individually ran the codes above
+#this is just an example of how we can pipe it all together. That's why it is 
+#mareked as a comment 
+
+#joined_data_xyz <- joined_data %>% 
+#  mutate(gender = ifelse(gender == "F", 0, gender),
+#         gender = ifelse(gender == "M", 1, gender)) %>% 
+#  mutate(`dose_strep [g]` = case_when(
+#    `dose_strep [g]` == 0 ~ "No_dose",
+#    `dose_strep [g]` == 2 ~ "high_dose",
+#    TRUE ~ as.character(`dose_strep [g]`)
+#  )) %>%  mutate(
+#    status_after_high_dose_administration = case_when(
+#      `dose_strep [g]` == "high_dose" & strep_resistance_level == "resistance" ~ "resistant",
+#      `dose_strep [g]` == "high_dose" & strep_resistance_level == "sensitive" ~ #"not_resistant", 
+#      `dose_strep [g]` == "high_dose" & strep_resistance_level == "modrate" ~ "not_resistant"#,
+#      `dose_strep [g]` == "No_dose" ~ "not_resistant",
+#      TRUE ~ "Unknown")) %>%
+#  select(-baseline_temp_fahren, -baseline_temp_cels) %>% 
+#  mutate(baseline_temp_cels = (baseline_temp - 31)/(9/5)) %>%
+#  mutate(baseline_esr_quartile = cut(baseline_esr, breaks = 4)) %>% 
+#  select(patient_id, gender, arm, everything()) %>% 
+#  sort_by(joined_data$patient_id)
+
+
+####exploring missing data
+
+skimr:: skim(joined_data)
+
+# comment : we have one baseline_esr value missing. The observation is for a participant
+# in control arm, with poor baseline condition, at was dead at the 6 month follow up. 
+
+
+
+
+
+
+
+
+
