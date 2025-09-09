@@ -161,3 +161,22 @@ write_delim(
 joined_data <- read_delim(here("data", "2025_09_08_joined_data_day2.txt"))
 
 
+joined_data <- joined_data %>%
+  mutate(`dose_strep [g]` = case_when(
+    `dose_strep [g]` == 0 ~ "No_dose",
+    `dose_strep [g]` == 2 ~ "high_dose",
+    TRUE ~ as.character(`dose_strep [g]`)
+  ))
+
+
+joined_data <- joined_data %>%
+  mutate(
+    status_after_high_dose_administration = case_when(
+      `dose_strep [g]` == "high_dose" & strep_resistance_level == "resistance" ~ "resistant",
+      `dose_strep [g]` == "high_dose" & strep_resistance_level == "sensitive" ~ "not_resistant", 
+      `dose_strep [g]` == "high_dose" & strep_resistance_level == "modrate" ~ "not_resistant",  # Fixed spelling
+      `dose_strep [g]` == "No_dose" ~ "not_resistant",
+      TRUE ~ "Unknown"
+    )
+  )
+
