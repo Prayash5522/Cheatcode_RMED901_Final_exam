@@ -160,4 +160,45 @@ write_delim(
 
 joined_data <- read_delim(here("data", "2025_09_08_joined_data_day2.txt"))
 
+###mutate temperature in celcuius
+
+glimpse(joined_data)
+
+#since we had created temperature variable in Fahrenheit and Celsius with the 
+#baseline data, even before joining the data, we will drop the ones created before
+#joining the data and use the baseline temperature from the data which was joined later
+
+joined_data <- joined_data %>% select(-baseline_temp_fahren, -baseline_temp_cels)
+
+glimpse(joined_data)
+
+#now only baseline_temp variable is remaining which is in Fahrenheit 
+#now we will mutate celsius variable using celcius = (°F - 32) ÷ (9/5)
+
+joined_data <- joined_data %>% 
+  mutate(baseline_temp_cels = (baseline_temp - 31)/(9/5))
+
+
+glimpse(joined_data)
+
+### cutting "baseline_esr" score into quartiles (4 equal parts)
+
+joined_data$baseline_esr <- cut(joined_data$baseline_esr, 4)
+
+table(joined_data$baseline_esr)
+
+### setting the order of columns as: `patient_id, gender, arm` and other columns
+
+joined_data <- joined_data %>% select(patient_id, gender, arm, everything())
+
+joined_data
+
+### Arranging patient_id column of your data set in order of increasing number or alphabeticall
+
+joined_data <- joined_data %>% sort_by(joined_data$patient_id)
+
+head(joined_data)
+tail(joined_data)
+
+
 
