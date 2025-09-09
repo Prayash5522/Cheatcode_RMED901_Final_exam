@@ -202,3 +202,9 @@ tail(joined_data)
 
 
 
+### Change gender
+
+joined_data <- joined_data %>%
+  mutate(gender = ifelse(gender == "F", 0, gender),
+         gender = ifelse(gender == "M", 1, gender))
+
