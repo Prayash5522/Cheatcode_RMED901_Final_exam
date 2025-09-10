@@ -5,7 +5,7 @@ library(here)
 library(skimr)
 library(naniar)
 library(ggplot2)
-
+library(janitor)
 original_data <- read_delim(here("data", "2025_09_05_original_exam_data.txt"))
 
 #understanding the data
@@ -386,18 +386,15 @@ names(correlation_check)
 
 
 #### assining the names of the observation within the gender , into male = 1 , female = 0 
-joined_data <- joined_data %>%
-  mutate(gender = factor(gender, 
-                         levels = c(0, 1), 
-                         labels = c("Female", "Male")))
+
 
 ##### ploting the curve comaring between the male and female 
 
 ggplot(joined_data, aes(x = gender, y = baseline_esr, fill = gender)) +
   geom_boxplot() +
   geom_jitter(aes(color = "black"), width = 0.2, alpha = 0.6) +
-  scale_fill_manual(values = c("Male" = "pink", "Female" = "red")) +
-  scale_color_manual(values = c("Male" = "pink", "Female" = "red")) +
+  scale_fill_manual(values = c("1" = "pink", "0" = "red")) +
+  scale_color_manual(values = c("1" = "pink", "0" = "red")) +
   labs(x = "Gender", y = "ESR at baseline (mm/hr)")
 
 ##### check if the genderaffect the baseline ESR (mm/hr) , it shwoed that the gender 
@@ -424,6 +421,21 @@ options(scipen = 999)
 joined_data %>% 
   lm(baseline_esr ~ baseline_temp, data = .) %>%
   broom::tidy()
+
+
+##### Is there an association between streptomycin resistance after 6 months of therapy
+### and erythrocyte sedimentation rate in mm per hour at baseline?
+
+### I Mad anova test to do that becaus I have continoues and categorical data
+#### which need to use anova 
+### the p value is not statistically significat = .05 , thats why strep resistance level
+## dont affect the basline-esr 
+
+joined_data %>%
+  mutate(baseline_esr = log(baseline_esr)) %>%
+  aov(baseline_esr ~ strep_resistance_level, data =.) %>%
+  summary()
+ 
 
 
 
