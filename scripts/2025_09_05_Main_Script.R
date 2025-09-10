@@ -366,6 +366,24 @@ gender_strep_resistance <- joined_data %>% janitor::tabyl(gender,strep_resistanc
 
 gender_strep_resistance
 
+####linear relationship check for variables baseline_esr and temperature
+
+#visual inspection
+joined_data %>% 
+  ggplot(aes(x = baseline_esr, y = baseline_temp)) +
+  geom_point() + 
+  geom_smooth(method = "lm")
+
+#seems to have a linear relation
+
+#display numbers/p-values in standard (non-scientific) format
+options(scipen = 999)
+
+#running linear regression
+joined_data %>% 
+  lm(baseline_esr ~ baseline_temp, data = .) %>%
+  broom::tidy()
+
 
 
 
