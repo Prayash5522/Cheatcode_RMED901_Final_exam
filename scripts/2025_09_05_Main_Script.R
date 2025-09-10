@@ -270,8 +270,9 @@ skimr:: skim(joined_data)
 # comment : we have one baseline_esr value missing. The observation is for a participant
 # in control arm, with poor baseline condition, at was dead at the 6 month follow up. 
 
+##stratifying all categorical_variable
 
-Results_1 <- joined_data %>%
+Stratifying_all_categorical_variable <- joined_data %>%
   group_by(across(where(~ is.factor(.) || is.character(.)))) %>%  # all categorical vars
   summarise(
     min_baseline_temp = min(baseline_temp, na.rm = TRUE),
@@ -281,9 +282,11 @@ Results_1 <- joined_data %>%
     .groups = "drop"
   ) 
 
-glimpse(Results_1)
+glimpse(Stratifying_all_categorical_variable)
 
-Results_2 <- joined_data %>%
+##stratifying gender with baseline_temp
+
+stratify_gender_temp <- joined_data %>%
   group_by(gender) %>%  
   summarise(
     min_baseline_temp = min(baseline_temp, na.rm = TRUE),
@@ -292,7 +295,77 @@ Results_2 <- joined_data %>%
     sd_baseline_temp = sd(baseline_temp, na.rm = TRUE),
   ) 
 
+glimpse(stratify_gender_temp)
+
+###stratifying different varibables for the value of rad_num
+
+##baseline_condition is fair
+
+stratify_fair_rad_num <- joined_data %>%
+  group_by(baseline_condition) %>% filter(baseline_condition == "fair") %>% 
+  summarise(
+    min_rad_num = min(rad_num, na.rm = TRUE),
+    max_rad_num = max(rad_num, na.rm = TRUE),
+    mean_rad_num = mean(rad_num, na.rm = TRUE),
+    sd_rad_num = sd(rad_num, na.rm = TRUE),
+  ) 
+
+glimpse(stratify_fair_rad_num)
 
 
-glimpse(Results_2)
+
+##only for females
+
+stratify_females_rad_num <- joined_data %>%
+  group_by(gender) %>% filter(gender == 0) %>% 
+  summarise(
+    min_rad_num = min(rad_num, na.rm = TRUE),
+    max_rad_num = max(rad_num, na.rm = TRUE),
+    mean_rad_num = mean(rad_num, na.rm = TRUE),
+    sd_rad_num = sd(rad_num, na.rm = TRUE),
+  ) 
+
+glimpse(stratify_females_rad_num)
+
+##Only for persons with baseline temperature 100-100.9F
+
+stratify_temp_rad_num <- joined_data %>%
+  mutate(
+    baseline_tempt100_100.9F = 
+      if_else(baseline_temp >= 0 & baseline_temp <= 100.9, 1, 0)) %>%
+  group_by(baseline_tempt100_100.9F) %>% 
+  filter(baseline_tempt100_100.9F == 1) %>%
+  summarise(
+    min_rad_num  = min(rad_num, na.rm = TRUE),
+    max_rad_num  = max(rad_num, na.rm = TRUE),
+    mean_rad_num = mean(rad_num, na.rm = TRUE),
+    sd_rad_num   = sd(rad_num, na.rm = TRUE)
+  )
+glimpse(stratify_temp_rad_num)
+
+#Only for persons that developed resistance to streptomycin
+
+stratify_resistance_rad_num <- joined_data %>%
+  mutate(
+    resistance_streptomycin = 
+      if_else(strep_resistance_level == "resistance", 1, 0)) %>%
+  group_by(resistance_streptomycin) %>% 
+  filter(resistance_streptomycin == 1) %>%
+  summarise(
+    min_rad_num  = min(rad_num, na.rm = TRUE),
+    max_rad_num  = max(rad_num, na.rm = TRUE),
+    mean_rad_num = mean(rad_num, na.rm = TRUE),
+    sd_rad_num   = sd(rad_num, na.rm = TRUE)
+  )
+glimpse(stratify_resistance_rad_num)
+
+
+###two categorical columns in one table
+
+gender_strep_resistance <- joined_data %>% janitor::tabyl(gender,strep_resistance_level)
+
+gender_strep_resistance
+
+
+
 
