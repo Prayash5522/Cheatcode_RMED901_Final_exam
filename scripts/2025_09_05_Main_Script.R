@@ -400,7 +400,9 @@ ggplot(joined_data, aes(x = gender, y = baseline_esr, fill = gender)) +
   geom_jitter(aes(color = "black"), width = 0.2, alpha = 0.6) +
   scale_fill_manual(values = c("1" = "pink", "0" = "red")) +
   scale_color_manual(values = c("1" = "pink", "0" = "red")) +
+  labs(x = "Gender", y = "ESR at baseline (mm/hr)")
   labs(x = "Gender", y = "ESR at baseline (mm/hr)") # 0 is female and # 1 is male
+
 
 ##### check if the genderaffect the baseline ESR (mm/hr) , it shwoed that the gender 
 ##### does not affect the esr basline , the p value is .5
@@ -427,7 +429,6 @@ joined_data %>%
   lm(baseline_esr ~ baseline_temp, data = .) %>%
   broom::tidy()
 
-
 ####randomization check
 
 ##Does the randomization arm depend on the gender?
@@ -452,8 +453,20 @@ joined_data %>%
   broom::tidy()
 
 # since the p-value is 0.366, at the significance level of 95% confidence interval,
-# we can conclude that randomization does not depend of erythrocyte sedimentation rate in mm per hour at baseline. 
+# we can conclude that randomization does not depend of erythrocyte sedimentation rate in mm per hour at baseline.
 
+##### Is there an association between streptomycin resistance after 6 months of therapy
+### and erythrocyte sedimentation rate in mm per hour at baseline?
 
+### I Mad anova test to do that becaus I have continoues and categorical data
+#### which need to use anova 
+### the p value is not statistically significat = .05 , thats why strep resistance level
+## dont affect the basline-esr 
+
+joined_data %>%
+  mutate(baseline_esr = log(baseline_esr)) %>%
+  aov(baseline_esr ~ strep_resistance_level, data =.) %>%
+  summary()
+ 
 
 
