@@ -5,6 +5,7 @@ library(here)
 library(skimr)
 library(naniar)
 
+
 original_data <- read_delim(here("data", "2025_09_05_original_exam_data.txt"))
 
 #understanding the data
@@ -226,7 +227,7 @@ joined_data
 
 ### Arranging patient_id column of your data set in order of increasing number or alphabeticall
 
-joined_data <- joined_data %>% sort_by(joined_data$patient_id)
+joined_data <- joined_data %>% arrange(joined_data$patient_id)
 
 head(joined_data)
 tail(joined_data)
@@ -270,10 +271,27 @@ skimr:: skim(joined_data)
 # in control arm, with poor baseline condition, at was dead at the 6 month follow up. 
 
 
+Results_1 <- joined_data %>%
+  group_by(across(where(~ is.factor(.) || is.character(.)))) %>%  # all categorical vars
+  summarise(
+    min_baseline_temp = min(baseline_temp, na.rm = TRUE),
+    max_baseline_temp = max(baseline_temp, na.rm = TRUE),
+    mean_baseline_temp = mean(baseline_temp, na.rm = TRUE),
+    sd_baseline_temp = sd(baseline_temp, na.rm = TRUE),
+    .groups = "drop"
+  ) 
+
+glimpse(Results_1)
+
+Results_2 <- joined_data %>%
+  group_by(gender) %>%  
+  summarise(
+    min_baseline_temp = min(baseline_temp, na.rm = TRUE),
+    max_baseline_temp = max(baseline_temp, na.rm = TRUE),
+    mean_baseline_temp = mean(baseline_temp, na.rm = TRUE),
+    sd_baseline_temp = sd(baseline_temp, na.rm = TRUE),
+  ) 
 
 
-
-
-
-
+glimpse(Results_2)
 
