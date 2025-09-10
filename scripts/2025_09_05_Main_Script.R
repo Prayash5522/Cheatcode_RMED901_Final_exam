@@ -4,7 +4,7 @@ library(tidyverse)
 library(here)
 library(skimr)
 library(naniar)
-
+library(ggplot2)
 
 original_data <- read_delim(here("data", "2025_09_05_original_exam_data.txt"))
 
@@ -382,6 +382,50 @@ options(scipen = 999)
 #running linear regression
 joined_data %>% 
   lm(baseline_esr ~ baseline_temp, data = .) %>%
+  broom::tidy()
+
+
+
+
+#### Are there any correlated measurements? (hint: `GGally::ggcorr` or search
+### online for correlation matrix in R) ? for answering this questions ,  I mad a heat map
+### that showes the correlation between each numerical variable 
+
+#### selection of the numerical variable 
+correlation_check <- joined_data %>% 
+  select(where(is.numeric))
+
+###### plotting of the heat map for all the numerical variables within my file
+ggcorr(correlation_check, 
+       label = TRUE,                # show correlation coefficients
+       label_round = 2,             # round decimals
+       hjust = 0.75, size = 3)      # adjust label placement & size
+
+
+###### comment , if I wanted to see the variabl names
+names(correlation_check)
+
+
+#### assining the names of the observation within the gender , into male = 1 , female = 0 
+joined_data <- joined_data %>%
+  mutate(gender = factor(gender, 
+                         levels = c(0, 1), 
+                         labels = c("Female", "Male")))
+
+##### ploting the curve comaring between the male and female 
+
+ggplot(joined_data, aes(x = gender, y = baseline_esr, fill = gender)) +
+  geom_boxplot() +
+  geom_jitter(aes(color = "black"), width = 0.2, alpha = 0.6) +
+  scale_fill_manual(values = c("Male" = "pink", "Female" = "red")) +
+  scale_color_manual(values = c("Male" = "pink", "Female" = "red")) +
+  labs(x = "Gender", y = "ESR at baseline (mm/hr)")
+
+##### check if the genderaffect the baseline ESR (mm/hr) , it shwoed that the gender 
+##### does not affect the esr basline , the p value is .5
+
+joined_data %>%
+  t.test(baseline_esr ~ gender, data = .) %>%
   broom::tidy()
 
 
