@@ -366,27 +366,6 @@ gender_strep_resistance <- joined_data %>% janitor::tabyl(gender,strep_resistanc
 
 gender_strep_resistance
 
-####linear relationship check for variables baseline_esr and temperature
-
-#visual inspection
-joined_data %>% 
-  ggplot(aes(x = baseline_esr, y = baseline_temp)) +
-  geom_point() + 
-  geom_smooth(method = "lm")
-
-#seems to have a linear relation
-
-#display numbers/p-values in standard (non-scientific) format
-options(scipen = 999)
-
-#running linear regression
-joined_data %>% 
-  lm(baseline_esr ~ baseline_temp, data = .) %>%
-  broom::tidy()
-
-
-
-
 #### Are there any correlated measurements? (hint: `GGally::ggcorr` or search
 ### online for correlation matrix in R) ? for answering this questions ,  I mad a heat map
 ### that showes the correlation between each numerical variable 
@@ -427,6 +406,26 @@ ggplot(joined_data, aes(x = gender, y = baseline_esr, fill = gender)) +
 joined_data %>%
   t.test(baseline_esr ~ gender, data = .) %>%
   broom::tidy()
+
+####linear relationship check for variables baseline_esr and temperature
+
+#visual inspection
+joined_data %>% 
+  ggplot(aes(x = baseline_esr, y = baseline_temp)) +
+  geom_point() + 
+  geom_smooth(method = "lm")
+
+#seems to have a linear relation
+
+#display numbers/p-values in standard (non-scientific) format
+options(scipen = 999)
+
+#running linear regression
+joined_data %>% 
+  lm(baseline_esr ~ baseline_temp, data = .) %>%
+  broom::tidy()
+
+
 
 
 
