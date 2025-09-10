@@ -260,7 +260,7 @@ glimpse(joined_data)
 #  mutate(baseline_temp_cels = (baseline_temp - 31)/(9/5)) %>%
 #  mutate(baseline_esr_quartile = cut(baseline_esr, breaks = 4)) %>% 
 #  select(patient_id, gender, arm, everything()) %>% 
-#  sort_by(joined_data$patient_id)
+#  arrange(joined_data$patient_id)
 
 
 ####exploring missing data
