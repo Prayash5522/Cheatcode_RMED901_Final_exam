@@ -1,11 +1,13 @@
 ## Main script
 
-library(tidyverse)
 library(here)
 library(skimr)
 library(naniar)
 library(ggplot2)
+library(GGally)
 library(janitor)
+library(tidyverse)
+
 original_data <- read_delim(here("data", "2025_09_05_original_exam_data.txt"))
 
 #understanding the data
@@ -386,7 +388,10 @@ names(correlation_check)
 
 
 #### assining the names of the observation within the gender , into male = 1 , female = 0 
-
+#joined_data <- joined_data %>%
+#  mutate(gender = if_else(gender, 
+#                         levels = c(0, 1), 
+#                         labels = c("Female", "Male")))
 
 ##### ploting the curve comaring between the male and female 
 
@@ -396,6 +401,8 @@ ggplot(joined_data, aes(x = gender, y = baseline_esr, fill = gender)) +
   scale_fill_manual(values = c("1" = "pink", "0" = "red")) +
   scale_color_manual(values = c("1" = "pink", "0" = "red")) +
   labs(x = "Gender", y = "ESR at baseline (mm/hr)")
+  labs(x = "Gender", y = "ESR at baseline (mm/hr)") # 0 is female and # 1 is male
+
 
 ##### check if the genderaffect the baseline ESR (mm/hr) , it shwoed that the gender 
 ##### does not affect the esr basline , the p value is .5
@@ -422,6 +429,31 @@ joined_data %>%
   lm(baseline_esr ~ baseline_temp, data = .) %>%
   broom::tidy()
 
+####randomization check
+
+##Does the randomization arm depend on the gender?
+
+glimpse(joined_data)
+
+table(joined_data$arm, joined_data$gender)
+
+chisq.test(joined_data$arm, joined_data$gender) %>% 
+  broom::tidy()
+
+# since the p value is 0.946, at the significance level of 95% confidence interval,
+# we can conclude that randomization does not depend on the gender.
+
+
+### randomization arm depend on erythrocyte sedimentation rate in mm per hour at baseline
+
+glimpse(joined_data)
+
+joined_data %>%
+  t.test(baseline_esr ~ arm, data = .) %>% 
+  broom::tidy()
+
+# since the p-value is 0.366, at the significance level of 95% confidence interval,
+# we can conclude that randomization does not depend of erythrocyte sedimentation rate in mm per hour at baseline.
 
 ##### Is there an association between streptomycin resistance after 6 months of therapy
 ### and erythrocyte sedimentation rate in mm per hour at baseline?
@@ -436,9 +468,5 @@ joined_data %>%
   aov(baseline_esr ~ strep_resistance_level, data =.) %>%
   summary()
  
-
-
-
-
 
 
