@@ -6,7 +6,15 @@ output:
 # Cheatcode_RMED901_Final_exam
 Prayash Chaudhary, Omar Omar, Osman Osman 
 
+###--------------------------------------------------------------------------------------------------------------------------###
 ## Introduction
+The UiB organized a two weeks course on R programming language for the PhD students in the medical faculty. 
+The overall aim of the course is to equip students with the valuable skills in data management, data analysis, visualization, 
+and coding. During the two weeks course we learned the basics of R and we worked with the historical clinical trial dataset to practice   
+data handling and analysis. The dataset comes from the 1948 Streptomycin for Tuberculosis trial whereby 107 were randomly     
+assigned to take either sterptomycin (2g) daily or placebo. The dataset has been adopted for teaching purposes and contains  
+information on patient demographics, baseline conditions, treatment assignment and six month outcomes. 
+###-------------------------------------------------------------------------------------------------------------------------###
 
 ### Tasks 1
 
@@ -531,7 +539,3 @@ joined_data %>%
   aov(baseline_esr ~ strep_resistance_level, data =.) %>%
   summary()
 ```
-
-
-
-
