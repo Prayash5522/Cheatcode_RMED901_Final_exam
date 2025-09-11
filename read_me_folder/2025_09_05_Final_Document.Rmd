@@ -6,21 +6,17 @@ output:
 # Cheatcode_RMED901_Final_exam
 Prayash Chaudhary, Omar Omar, Osman Osman 
 
-###--------------------------------------------------------------------------------------------------------------------------###
+
 ## Introduction
-The UiB organized a two weeks course on R programming language for the PhD students in the medical faculty. 
-The overall aim of the course is to equip students with the valuable skills in data management, data analysis, visualization, 
-and coding. During the two weeks course we learned the basics of R and we worked with the historical clinical trial dataset to practice   
-data handling and analysis. The dataset comes from the 1948 Streptomycin for Tuberculosis trial whereby 107 were randomly     
-assigned to take either sterptomycin (2g) daily or placebo. The dataset has been adopted for teaching purposes and contains  
-information on patient demographics, baseline conditions, treatment assignment and six month outcomes. 
-###-------------------------------------------------------------------------------------------------------------------------###
+The UiB organized a two weeks course on R programming language for the PhD students in the medical faculty. The overall aim of the course is to equip students with the valuable skills in data management, data analysis, visualization, and coding. During the two weeks course we learned the basics of R and we worked with the historical clinical trial dataset to practice data handling and analysis. The dataset comes from the 1948 Streptomycin for Tuberculosis trial whereby 107 were randomly assigned to take either sterptomycin (2g) daily or placebo. The dataset has been adopted for teaching purposes and contains information on patient demographics, baseline conditions, treatment assignment and six month outcomes. 
 
-### Tasks 1
+## Tasks
 
- - Task 1
+### Task 1 Create an RStudio project and GitHub repository
  The GitHub repository can be assessed with the following link: https://github.com/Prayash5522/Cheatcode_RMED901_Final_exam 
- - Task 2
+
+### Task 2 Read and tidy the dataset
+
 ```{R, message = FALSE, warning = FALSE}
 library(here)
 library(skimr)
@@ -30,28 +26,31 @@ library(GGally)
 library(janitor)
 library(tidyverse)
 ```
-```{R}
+```{R, message = FALSE}
 original_data <- read_delim(here("data", "2025_09_05_original_exam_data.txt"))
 ```
 
-#understanding the data
+#### Understanding the data
 
 ```{R}
 skimr::skim(original_data)
 ```
-#separate baseline_condition into two parts but before that checking if 1 = good and so on and there are not any values where 1 = good or 2 = poor and so on
+
+ - NOTE: Separate baseline_condition into two parts but before that checking if 1 = good and so on and there are not any values where 1 or any other number is assigned to more than one category
 
 ```{R}
 original_data %>% count(baseline_condition)
 ```
 
-#we find just 3 unique values: 1_good, 2_fair and 3_poor so now we are good to separate the baseline_condition into two part first
+- Comment: we find just 3 unique values: 1_good, 2_fair and 3_poor so now we are good to separate the baseline_condition into two part first
 
+#### Separating baseline_condition
 ```{R}
 original_data <- original_data %>% 
   separate(baseline_condition, into = c("condition_number", "baseline_condition"))
 ```
-#keep the condition number while dropping variable baseline_condition and rename it to "good", "fair" and "poor"
+
+###### Keeping the condition number while dropping variable baseline_condition and rename it to "good", "fair" and "poor"
 
 ```{R}
 original_data <- original_data %>% select(-baseline_condition)
@@ -65,9 +64,9 @@ original_data <- original_data %>%
          baseline_condition = if_else(baseline_condition == 3, "poor", baseline_condition))
 ```
 
+- We seperated the gender_arm variable into two variables , one of them contain the gender and the other contain the arm
 
-# We seperated the gender_arm variable into two variables , one of them contain the gender and the other contain the arm
-# delete the gender arm 
+##### Delete the gender_arm variable
 
 ```{R}
 original_data <- original_data %>% 
@@ -75,7 +74,8 @@ original_data <- original_data %>%
       select(-gender_arm) 
 original_data 
 ```
-#save the changes in a new data_set 
+
+#### Save the changes in a new data_set 
 ```{R}
 fileName <- paste0("2025_09_05_tidy_version_day1", ".txt")
 
@@ -86,9 +86,9 @@ write_delim(
 )
 ```
 
-# We rename the coloumn strep_resistance , and seperated it into two coloumns which called strep_resistance_level,
+##### We rename the coloumn strep_resistance, and seperated it into two coloumns which called strep_resistance_level,
 
-# strep_resistance
+-- strep_resistance
 
 ```{R}
 original_data <- original_data %>%
@@ -117,7 +117,7 @@ original_data <- original_data %>%
 original_data <- original_data %>% select(-resistance)
 ```
 
-#### dividing baseline_temp_cat into Fahrenheit and Celsius
+#### Dividing baseline_temp_cat into Fahrenheit and Celsius
 
 ```{R}
 original_data <- original_data %>% 
@@ -134,20 +134,20 @@ original_data <- original_data %>%
            sep = -1) %>% select(-number)
 ```
 
-###dividing esr cat variable 
+#### Dividing baseline_esr_cat variable 
 
 ```{R}
 original_data <- original_data %>% 
   separate(baseline_esr_cat, into = c(NA, "baseline_esr_cat"), sep = 2)
 ```
 
-####dividing 6m_radiologica
+#### Dividing 6m_radiologica
 
 ```{R}
 original_data <- original_data %>% 
   separate(`6m_radiologic`, into = c(NA, "6m_radiologic"), sep = 2)
 ```
-#saving the tidy dataset
+#### Saving the tidy dataset
 
 ```{R}
 fileName <- paste0("2025_09_08_tidy_version_day2", ".txt")
@@ -159,12 +159,15 @@ write_delim(
 )
 ```
 
-#reading the tidy dataset 
+### Task 3 Tidy, adjust, and explore
+
+#### Reading the tidy dataset 
 ```{R}
 tidy_data_day_2 <- read_delim(here("data", "2025_09_08_tidy_version_day2.txt"))
 ```
 
-###removing -year, -month, -baseline_esr_cat variables 
+
+#### Removing -year, -month, -baseline_esr_cat variables 
 
 ```{R}
 tidy_data_day_2 <- tidy_data_day_2 %>% select(-year, -month, -baseline_esr_cat)
@@ -172,20 +175,20 @@ tidy_data_day_2 <- tidy_data_day_2 %>% select(-year, -month, -baseline_esr_cat)
 glimpse(tidy_data_day_2)
 ```
 
-##We removed the duplicates from the tidy_data_day_2 using the patient_id coloumn
+- We removed the duplicates from the tidy_data_day_2 using the patient_id coloumn
 
 ```{R}
 tidy_data_day_2 <- tidy_data_day_2 %>%
   distinct(patient_id, .keep_all = TRUE)
 ```
 
-##import and assign the additional data set
+#### Import and assign the additional data set
 
 ```{R}
 Additiona_data <- read_delim(here("data", "2025_09_05_original_exam_data_join.txt"))
 ```
 
-## arrang both data sets tidy_data_day_2 and the Additiona_data by the patient_id
+#### Arrang both data sets tidy_data_day_2 and the Additiona_data by the patient_id
 
 ```{R}
 tidy_data_day_2 <- tidy_data_day_2%>%
@@ -196,7 +199,8 @@ Additiona_data <- Additiona_data%>%
 
 glimpse(Additiona_data)
 ```
-##joining the tidy_data_day_2 and the Additiona_data into one file 
+
+#### Joining the tidy_data_day_2 and the Additiona_data into one file 
 ```{R}
 joined_data <- tidy_data_day_2 %>%
   left_join(Additiona_data, by = "patient_id")
@@ -204,7 +208,7 @@ joined_data <- tidy_data_day_2 %>%
 glimpse(joined_data)
 ```
 
-###saving the joined_data
+#### Saving the joined_data
 
 ```{R}
 fileName <- paste0("2025_09_08_joined_data_day2", ".txt")
@@ -215,22 +219,25 @@ write_delim(
   delim = "\t"
 )
 ```
-# Reading the joined dataset
+
+#### Creating a set of new columns
+
+##### Reading the joined dataset
 
 ```{R}
 joined_data <- read_delim(here("data", "2025_09_08_joined_data_day2.txt"))
 ```
 
-### Change gender
+##### A column showing gender as "0" or "1" instead of "F" or "M"
 ```{R}
 joined_data <- joined_data %>%
   mutate(gender = ifelse(gender == "F", 0, gender),
          gender = ifelse(gender == "M", 1, gender))
 ```
 
-##### this is the the coloumn that showes the strep resistance after the addministration of the high dose 
+##### A coloumn that showes the strep resistance after the addministration of the high dose 
 
-####changing the values in the dose strep from 0-2 to no dose and high dose
+ - changing the values in the dose strep from 0-2 to no dose and high dose
 
 ```{R}
 joined_data <- joined_data %>%
@@ -241,7 +248,7 @@ joined_data <- joined_data %>%
   ))
 ```
 
-### creating a new cloumn that shows the resistance 
+##### Creating a new column that shows the resistance 
 
 ```{R}
 joined_data <- joined_data %>%
@@ -255,12 +262,12 @@ joined_data <- joined_data %>%
     )
   )
 ```
-###mutate temperature in celcuius
+##### Mutate temperature in celsius
 
 ```{R}
 glimpse(joined_data)
 ```
-#since we had created temperature variable in Fahrenheit and Celsius with the first baseline dataset, even before joining the data, we will drop the ones created before joining the data and use the baseline temperature from the data which was joined later
+ - since we had created temperature variable in Fahrenheit and Celsius with the first baseline dataset, even before joining the data, we will drop the ones created before joining the data and use the baseline temperature from the data which was joined later
 
 ```{R}
 joined_data <- joined_data %>% select(-baseline_temp_fahren, -baseline_temp_cels)
@@ -268,9 +275,9 @@ joined_data <- joined_data %>% select(-baseline_temp_fahren, -baseline_temp_cels
 glimpse(joined_data)
 ```
 
-#now only baseline_temp variable is remaining which is in Fahrenheit 
+- now only baseline_temp variable is remaining which is in Fahrenheit 
 
-#now we will mutate celsius variable using celcius = (°F - 32) ÷ (9/5)
+- now we will mutate celsius variable using celcius = (°F - 32) ÷ (9/5)
 
 ```{R}
 joined_data <- joined_data %>% 
@@ -280,7 +287,7 @@ joined_data <- joined_data %>%
 glimpse(joined_data)
 ```
 
-### cutting "baseline_esr" score into quartiles (4 equal parts) and making a new variable
+##### Cutting "baseline_esr" score into quartiles (4 equal parts) and making a new variable
 
 ```{R}
 joined_data <- joined_data %>% 
@@ -289,28 +296,35 @@ joined_data <- joined_data %>%
 table(joined_data$baseline_esr_quartiles)
 
 ```
-### setting the order of columns as: `patient_id, gender, arm` and other columns
+
+
+#### Setting the order of columns as: `patient_id, gender, arm` and other columns
 ```{R}
 joined_data <- joined_data %>% select(patient_id, gender, arm, everything())
 
 joined_data
 ```
-### Arranging patient_id column of your data set in order of increasing number or alphabeticall
+
+#### Arranging patient_id column of your data set in order of increasing number or alphabeticall
 ```{R}
 joined_data <- joined_data %>% arrange(joined_data$patient_id)
 
 head(joined_data)
 tail(joined_data)
 ```
-#baseline_esr as numneric 
+
+#### Baseline_esr as numneric 
 ```{R}
 joined_data$baseline_esr <- as.numeric(joined_data$baseline_esr)
 
 glimpse(joined_data)
 ```
-### connecting above steps with pipe and since we have individually ran the codes above this is just an example of how we can pipe it all together. That's why it is mareked as a comment 
 
-joined_data_xyz <- joined_data %>% 
+#### Connecting above steps with pipe 
+
+- Since we have individually ran the codes above this is just an example of how we can pipe it all together. That's why it is marked as a comment below: 
+
+- joined_data_xyz <- joined_data %>% 
   mutate(gender = ifelse(gender == "F", 0, gender),
          gender = ifelse(gender == "M", 1, gender)) %>% 
   mutate(`dose_strep [g]` = case_when(
@@ -331,13 +345,15 @@ joined_data_xyz <- joined_data %>%
   arrange(joined_data$patient_id)
 
 
-####exploring missing data
+#### Exploring missing data
 ```{R}
 skimr:: skim(joined_data)
 ```
-# Comment: We have one baseline_esr value missing. The observation is for a participant in control arm, with poor baseline condition, at was dead at the 6 month follow up. 
+- Comment: We have one baseline_esr value missing. The observation is for a participant in control arm, with poor baseline condition, at was dead at the 6 month follow up. 
 
-##stratifying all categorical_variable
+#### Stratifying categorical_variable to report report min, max, mean and sd of a numeric column
+
+##### Stratifying all categorical_variable
 ```{R}
 Stratifying_all_categorical_variable <- joined_data %>%
   group_by(across(where(~ is.factor(.) || is.character(.)))) %>%  # all categorical vars
@@ -351,7 +367,8 @@ Stratifying_all_categorical_variable <- joined_data %>%
 
 glimpse(Stratifying_all_categorical_variable)
 ```
-##stratifying gender with baseline_temp
+
+##### Stratifying gender with baseline_temp
 ```{R}
 stratify_gender_temp <- joined_data %>%
   group_by(gender) %>%  
@@ -364,9 +381,10 @@ stratify_gender_temp <- joined_data %>%
 
 glimpse(stratify_gender_temp)
 ```
-###stratifying different varibables for the value of rad_num
 
-##baseline_condition is fair
+##### Stratifying different varibables for the value of rad_num
+
+- baseline_condition is fair
 
 ```{R}
 stratify_fair_rad_num <- joined_data %>%
@@ -380,7 +398,8 @@ stratify_fair_rad_num <- joined_data %>%
 
 glimpse(stratify_fair_rad_num)
 ```
-##only for females
+
+- only for females
 ```{R}
 stratify_females_rad_num <- joined_data %>%
   group_by(gender) %>% filter(gender == 0) %>% 
@@ -393,7 +412,8 @@ stratify_females_rad_num <- joined_data %>%
 
 glimpse(stratify_females_rad_num)
 ```
-##Only for persons with baseline temperature 100-100.9F
+
+- Only for persons with baseline temperature 100-100.9F
 ```{R}
 stratify_temp_rad_num <- joined_data %>%
   mutate(
@@ -409,7 +429,8 @@ stratify_temp_rad_num <- joined_data %>%
   )
 glimpse(stratify_temp_rad_num)
 ```
-#Only for persons that developed resistance to streptomycin
+
+- Only for persons that developed resistance to streptomycin
 ```{R}
 stratify_resistance_rad_num <- joined_data %>%
   mutate(
@@ -425,23 +446,29 @@ stratify_resistance_rad_num <- joined_data %>%
   )
 glimpse(stratify_resistance_rad_num)
 
-```{R}
-###two categorical columns in one table
+```
+
+#### Example of two categorical columns in one table
+
 ```{R}
 gender_strep_resistance <- joined_data %>% janitor::tabyl(gender,strep_resistance_level)
 
 gender_strep_resistance
 ```
-#### Are there any correlated measurements? (hint: `GGally::ggcorr` or search online for correlation matrix in R) ? 
-#for answering this questions ,  we mad a heat map that showes the correlation between each numerical variable 
+### Task 4  Create plots that would help answer these questions:
 
-##selection of the numerical variable 
+#### Are there any correlated measurements? (hint: `GGally::ggcorr` or search online for correlation matrix in R) ? 
+
+- For answering this questions ,  we made a heat map that shows the correlation between each numerical variable 
+
+- Selection of the numerical variable 
 
 ```{R}
 correlation_check <- joined_data %>% 
   select(where(is.numeric))
 ```
-###### plotting of the heat map for all the numerical variables within my file
+
+- Plotting of the heat map for all the numerical variables
 ```{R}
 ggcorr(correlation_check, 
        label = TRUE,                # show correlation coefficients
@@ -449,19 +476,21 @@ ggcorr(correlation_check,
        hjust = 0.75, size = 3)      # adjust label placement & size
 ```
 
-###### comment , if I wanted to see the variabl names
-
-names(correlation_check)
-
-
-#### assining the names of the observation within the gender , into male = 1 , female = 0 
-#joined_data <- joined_data %>%
-#  mutate(gender = if_else(gender, 
-#                         levels = c(0, 1), 
-#                         labels = c("Female", "Male")))
-
-##### ploting the curve comaring between the male and female 
+- comment: if we wanted to see the variable names 
 ```{R}
+names(correlation_check)
+```
+
+#### Does the erythrocyte sedimentation rate in mm per hour at baseline distribution depend on `gender`?
+
+- If we were to assign the names of the observation within the gender, male = 1 , female = 0 
+joined_data <- joined_data %>%
+  mutate(gender = if_else(gender, 
+                         levels = c(0, 1), 
+                         labels = c("Female", "Male")))
+
+- Ploting the curve comaring between the male and female 
+```{R, warning = FALSE}
 ggplot(joined_data, aes(x = gender, y = baseline_esr, fill = gender)) +
   geom_boxplot() +
   geom_jitter(aes(color = "black"), width = 0.2, alpha = 0.6) +
@@ -470,38 +499,43 @@ ggplot(joined_data, aes(x = gender, y = baseline_esr, fill = gender)) +
   labs(x = "Gender", y = "ESR at baseline (mm/hr)")
   labs(x = "Gender", y = "ESR at baseline (mm/hr)") # 0 is female and # 1 is male
 ```
-
-##### check if the genderaffect the baseline ESR (mm/hr) , it shwoed that the gender 
-##### does not affect the esr basline , the p value is .5
+ - Note: While checking if the gender affect the baseline ESR (mm/hr), it showed that gender does not affect the basline_esr since the p value is greater than 0.5. 
 
 ```{R}
 joined_data %>%
   t.test(baseline_esr ~ gender, data = .) %>%
   broom::tidy()
 ```
-####linear relationship check for variables baseline_esr and temperature
-```{R}
+
+#### Do erythrocyte sedimentation rate in mm per hour at baseline and baseline temperature have a linear relationship?
+
+```{R, warning = FALSE}
 #visual inspection
 joined_data %>% 
   ggplot(aes(x = baseline_esr, y = baseline_temp)) +
   geom_point() + 
   geom_smooth(method = "lm")
 ```
-#seems to have a linear relation
+- Comment: the visual inspection suggests that erythrocyte sedimentation rate in mm per hour at baseline and baseline temperature seems to have a linear relation
 
-#display numbers/p-values in standard (non-scientific) format
+##### running linear regression to confirm
+
+- display numbers/p-values in standard (non-scientific) format
 ```{R}
 options(scipen = 999)
 ```
-#running linear regression
+
 ```{R}
 joined_data %>% 
   lm(baseline_esr ~ baseline_temp, data = .) %>%
   broom::tidy()
 ```
-####randomization check
+- very low p-value seems to align with the estimation made through visual inspection above.
 
-##Does the randomization arm depend on the gender?
+### Task 5
+
+
+#### Does the randomization arm depend on the gender?
 ```{R}
 glimpse(joined_data)
 
@@ -510,10 +544,10 @@ table(joined_data$arm, joined_data$gender)
 chisq.test(joined_data$arm, joined_data$gender) %>% 
   broom::tidy()
 ```
--- since the p value is 0.946, at the significance level of 95% confidence interval,we can conclude that randomization does not depend on the gender.
+-- Comment: since the p value is 0.946, at the significance level of 95% confidence interval,we can conclude that randomization does not depend on the gender.
 
 
-### randomization arm depend on erythrocyte sedimentation rate in mm per hour at baseline
+#### Does the randomization arm depend on erythrocyte sedimentation rate in mm per hour at baseline?
 
 ```{R}
 glimpse(joined_data)
@@ -523,19 +557,26 @@ joined_data %>%
   broom::tidy()
 
 ```
-# since the p-value is 0.366, at the significance level of 95% confidence interval,
-# we can conclude that randomization does not depend of erythrocyte sedimentation rate in mm per hour at baseline.
+- Comment: since the p-value is 0.366, at the significance level of 95% confidence interval, we can conclude that randomization does not depend of erythrocyte sedimentation rate in mm per hour at baseline.
 
-##### Is there an association between streptomycin resistance after 6 months of therapy
-### and erythrocyte sedimentation rate in mm per hour at baseline?
+##### Is there an association between streptomycin resistance after 6 months of therapy and erythrocyte sedimentation rate in mm per hour at baseline?
 
-### I Mad anova test to do that becaus I have continoues and categorical data
-#### which need to use anova 
-### the p value is not statistically significat = .05 , thats why strep resistance level
-## dont affect the basline-esr 
 ```{R}
 joined_data %>%
   mutate(baseline_esr = log(baseline_esr)) %>%
   aov(baseline_esr ~ strep_resistance_level, data =.) %>%
   summary()
 ```
+- Comment: I made anova test to do that because I have continues and categorical data which need to use anova the p-value is not statistically significant = 0.05, that's why strep resistance level don't affect the baseline-esr. 
+
+##### According to the data, was there a difference of baseline temperature between different Likert score rating of radiologic response on chest x-ray at 6 months categories? 
+
+- One way ANOVA
+
+```{R}
+joined_data %>%
+  mutate(baseline_esr = log(baseline_esr)) %>% aov(baseline_esr ~ `6m_radiologic` , data =.) %>%
+  summary()
+```
+- comment: the results show that the p-value is less than 0.05, suggesting there is a statistically significant difference in baseline temperature across different Likert score categories of 6-month radiologic response 
+
