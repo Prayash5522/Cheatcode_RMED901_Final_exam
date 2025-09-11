@@ -463,10 +463,20 @@ joined_data %>%
 ### the p value is not statistically significat = .05 , thats why strep resistance level
 ## dont affect the basline-esr 
 
+
+#### One way ANOVA
+
 joined_data %>%
   mutate(baseline_esr = log(baseline_esr)) %>%
   aov(baseline_esr ~ strep_resistance_level, data =.) %>%
   summary()
  
+joined_data %>%
+  mutate(baseline_esr = log(baseline_esr)) %>% aov(baseline_esr ~ `6m_radiologic` , data =.) %>%
+  summary()
+
+#### This shows that there is a statistically significant difference in baseline temperature across different Likert score 
+### categories of 6-month radiologic response
+
 
 
