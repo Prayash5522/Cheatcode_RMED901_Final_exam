@@ -1,0 +1,1823 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+
+\section{Cheatcode\_RMED901\_Final\_exam}\label{cheatcode_rmed901_final_exam}
+
+Prayash Chaudhary, Omar Omar, Osman Osman
+
+\subsection{Introduction}\label{introduction}
+
+The UiB organized a two weeks course on R programming language for the
+PhD students in the medical faculty. The overall aim of the course is to
+equip students with the valuable skills in data management, data
+analysis, visualization, and coding. During the two weeks course we
+learned the basics of R and we worked with the historical clinical trial
+dataset to practice data handling and analysis. The dataset comes from
+the 1948 Streptomycin for Tuberculosis trial whereby 107 were randomly
+assigned to take either sterptomycin (2g) daily or placebo. The dataset
+has been adopted for teaching purposes and contains information on
+patient demographics, baseline conditions, treatment assignment and six
+month outcomes.
+
+\subsection{Tasks}\label{tasks}
+
+\subsubsection{Task 1 Create an RStudio project and GitHub
+repository}\label{task-1-create-an-rstudio-project-and-github-repository}
+
+The GitHub repository can be assessed with the following link:
+\url{https://github.com/Prayash5522/Cheatcode_RMED901_Final_exam}
+
+\subsubsection{Task 2 Read and tidy the
+dataset}\label{task-2-read-and-tidy-the-dataset}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(here)}
+\FunctionTok{library}\NormalTok{(skimr)}
+\FunctionTok{library}\NormalTok{(naniar)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(GGally)}
+\FunctionTok{library}\NormalTok{(janitor)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{original\_data }\OtherTok{\textless{}{-}} \FunctionTok{read\_delim}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"2025\_09\_05\_original\_exam\_data.txt"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{Understanding the data}\label{understanding-the-data}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{skimr}\SpecialCharTok{::}\FunctionTok{skim}\NormalTok{(original\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{Data summary}\tabularnewline
+\toprule\noalign{}
+\endfirsthead
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Name & original\_data \\
+Number of rows & 141 \\
+Number of columns & 14 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Column type frequency: & \\
+character & 8 \\
+logical & 1 \\
+numeric & 5 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Group variables & None \\
+\end{longtable}
+
+\textbf{Variable type: character}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.2564}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1282}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1795}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.0513}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.0513}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.0769}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1154}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1410}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+skim\_variable
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+n\_missing
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+complete\_rate
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+min
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+max
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+empty
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+n\_unique
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+whitespace
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+gender & 0 & 1.00 & 1 & 1 & 0 & 2 & 0 \\
+gender\_arm & 0 & 1.00 & 9 & 14 & 0 & 4 & 0 \\
+baseline\_condition & 0 & 1.00 & 6 & 6 & 0 & 3 & 0 \\
+baseline\_temp\_cat & 0 & 1.00 & 14 & 23 & 0 & 4 & 0 \\
+baseline\_esr\_cat & 1 & 0.99 & 5 & 7 & 0 & 3 & 0 \\
+baseline\_cavitation & 0 & 1.00 & 2 & 3 & 0 & 2 & 0 \\
+strep\_resistance & 0 & 1.00 & 10 & 13 & 0 & 3 & 0 \\
+6m\_radiologic & 0 & 1.00 & 7 & 28 & 0 & 6 & 0 \\
+\end{longtable}
+
+\textbf{Variable type: logical}
+
+\begin{longtable}[]{@{}lrrrl@{}}
+\toprule\noalign{}
+skim\_variable & n\_missing & complete\_rate & mean & count \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+improved & 0 & 1 & 0.51 & TRU: 72, FAL: 69 \\
+\end{longtable}
+
+\textbf{Variable type: numeric}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.1786}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.1190}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.1667}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.0952}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.0714}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.0595}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.0595}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.0595}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.0595}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.0595}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.0714}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+skim\_variable
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+n\_missing
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+complete\_rate
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+mean
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+sd
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+p0
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+p25
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+p50
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+p75
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+p100
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+hist
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+patient\_id & 0 & 1 & 57.50 & 30.49 & 1 & 32 & 60 & 83 & 107 & ▆▆▇▇▇ \\
+month & 0 & 1 & 6.60 & 3.49 & 1 & 3 & 7 & 9 & 12 & ▇▃▅▇▇ \\
+year & 0 & 1 & 2009.06 & 0.77 & 2008 & 2008 & 2009 & 2010 & 2010 &
+▅▁▇▁▆ \\
+dose\_strep {[}g{]} & 0 & 1 & 1.15 & 0.99 & 0 & 0 & 2 & 2 & 2 & ▆▁▁▁▇ \\
+rad\_num & 0 & 1 & 3.92 & 1.88 & 1 & 2 & 5 & 6 & 6 & ▇▅▁▆▇ \\
+\end{longtable}
+
+\begin{itemize}
+\tightlist
+\item
+  NOTE: Separate baseline\_condition into two parts but before that
+  checking if 1 = good and so on and there are not any values where 1 or
+  any other number is assigned to more than one category
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{original\_data }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{count}\NormalTok{(baseline\_condition)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 2
+##   baseline_condition     n
+##   <chr>              <int>
+## 1 1_Good                20
+## 2 2_Fair                49
+## 3 3_Poor                72
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Comment: we find just 3 unique values: 1\_good, 2\_fair and 3\_poor so
+  now we are good to separate the baseline\_condition into two part
+  first
+\end{itemize}
+
+\paragraph{Separating
+baseline\_condition}\label{separating-baseline_condition}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{original\_data }\OtherTok{\textless{}{-}}\NormalTok{ original\_data }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{separate}\NormalTok{(baseline\_condition, }\AttributeTok{into =} \FunctionTok{c}\NormalTok{(}\StringTok{"condition\_number"}\NormalTok{, }\StringTok{"baseline\_condition"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+Keeping the condition number while dropping variable baseline\_condition
+and rename it to ``good'', ``fair'' and ``poor''
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{original\_data }\OtherTok{\textless{}{-}}\NormalTok{ original\_data }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{baseline\_condition)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{original\_data }\OtherTok{\textless{}{-}}\NormalTok{ original\_data }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{rename}\NormalTok{(}\AttributeTok{baseline\_condition =} \StringTok{"condition\_number"}\NormalTok{)}
+
+\NormalTok{original\_data }\OtherTok{\textless{}{-}}\NormalTok{ original\_data }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{baseline\_condition =} \FunctionTok{if\_else}\NormalTok{(baseline\_condition }\SpecialCharTok{==} \DecValTok{1}\NormalTok{, }\StringTok{"good"}\NormalTok{, baseline\_condition),}
+         \AttributeTok{baseline\_condition =} \FunctionTok{if\_else}\NormalTok{(baseline\_condition }\SpecialCharTok{==} \DecValTok{2}\NormalTok{, }\StringTok{"fair"}\NormalTok{, baseline\_condition),}
+         \AttributeTok{baseline\_condition =} \FunctionTok{if\_else}\NormalTok{(baseline\_condition }\SpecialCharTok{==} \DecValTok{3}\NormalTok{, }\StringTok{"poor"}\NormalTok{, baseline\_condition))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  We seperated the gender\_arm variable into two variables , one of them
+  contain the gender and the other contain the arm
+\end{itemize}
+
+\subparagraph{Delete the gender\_arm
+variable}\label{delete-the-gender_arm-variable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{original\_data }\OtherTok{\textless{}{-}}\NormalTok{ original\_data }\SpecialCharTok{\%\textgreater{}\%} 
+      \FunctionTok{mutate}\NormalTok{(}\AttributeTok{arm =} \FunctionTok{sub}\NormalTok{(}\StringTok{".*\_"}\NormalTok{, }\StringTok{""}\NormalTok{, gender\_arm)) }\SpecialCharTok{\%\textgreater{}\%}
+      \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{gender\_arm) }
+\NormalTok{original\_data }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 141 x 14
+##    patient_id month  year gender `dose_strep [g]` baseline_condition
+##         <dbl> <dbl> <dbl> <chr>             <dbl> <chr>             
+##  1          1     1  2009 M                     0 good              
+##  2          2     3  2008 F                     0 good              
+##  3          3    11  2010 F                     0 good              
+##  4          4    11  2008 M                     0 good              
+##  5          5     3  2009 F                     0 good              
+##  6          6     5  2008 M                     0 good              
+##  7          7     2  2009 F                     0 good              
+##  8          8     4  2008 M                     0 good              
+##  9          9    10  2010 F                     0 fair              
+## 10         10     9  2008 M                     0 fair              
+## # i 131 more rows
+## # i 8 more variables: baseline_temp_cat <chr>, baseline_esr_cat <chr>,
+## #   baseline_cavitation <chr>, strep_resistance <chr>, `6m_radiologic` <chr>,
+## #   rad_num <dbl>, improved <lgl>, arm <chr>
+\end{verbatim}
+
+\paragraph{Save the changes in a new
+data\_set}\label{save-the-changes-in-a-new-data_set}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fileName }\OtherTok{\textless{}{-}} \FunctionTok{paste0}\NormalTok{(}\StringTok{"2025\_09\_05\_tidy\_version\_day1"}\NormalTok{, }\StringTok{".txt"}\NormalTok{)}
+
+\FunctionTok{write\_delim}\NormalTok{(}
+\NormalTok{  original\_data, }
+  \AttributeTok{file =} \FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, fileName),}
+  \AttributeTok{delim =} \StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subparagraph{We rename the coloumn strep\_resistance, and seperated it
+into two coloumns which called
+strep\_resistance\_level,}\label{we-rename-the-coloumn-strep_resistance-and-seperated-it-into-two-coloumns-which-called-strep_resistance_level}
+
+-- strep\_resistance
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{original\_data }\OtherTok{\textless{}{-}}\NormalTok{ original\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{separate}\NormalTok{(strep\_resistance, }\AttributeTok{into =} \FunctionTok{c}\NormalTok{(}\StringTok{"strep"}\NormalTok{, }\StringTok{"resistance"}\NormalTok{), }\AttributeTok{sep =} \StringTok{"\_"}\NormalTok{, }\AttributeTok{extra =} \StringTok{"merge"}\NormalTok{)}
+
+\FunctionTok{print}\NormalTok{(original\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 141 x 15
+##    patient_id month  year gender `dose_strep [g]` baseline_condition
+##         <dbl> <dbl> <dbl> <chr>             <dbl> <chr>             
+##  1          1     1  2009 M                     0 good              
+##  2          2     3  2008 F                     0 good              
+##  3          3    11  2010 F                     0 good              
+##  4          4    11  2008 M                     0 good              
+##  5          5     3  2009 F                     0 good              
+##  6          6     5  2008 M                     0 good              
+##  7          7     2  2009 F                     0 good              
+##  8          8     4  2008 M                     0 good              
+##  9          9    10  2010 F                     0 fair              
+## 10         10     9  2008 M                     0 fair              
+## # i 131 more rows
+## # i 9 more variables: baseline_temp_cat <chr>, baseline_esr_cat <chr>,
+## #   baseline_cavitation <chr>, strep <chr>, resistance <chr>,
+## #   `6m_radiologic` <chr>, rad_num <dbl>, improved <lgl>, arm <chr>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{original\_data }\OtherTok{\textless{}{-}}\NormalTok{ original\_data }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{strep =} \FunctionTok{if\_else}\NormalTok{(strep }\SpecialCharTok{==} \DecValTok{1}\NormalTok{, }\StringTok{"sensitive"}\NormalTok{, strep),}
+         \AttributeTok{strep =} \FunctionTok{if\_else}\NormalTok{(strep }\SpecialCharTok{==} \DecValTok{2}\NormalTok{, }\StringTok{"modrate"}\NormalTok{, strep),}
+         \AttributeTok{strep =} \FunctionTok{if\_else}\NormalTok{(strep }\SpecialCharTok{==} \DecValTok{3}\NormalTok{, }\StringTok{"resistance"}\NormalTok{, strep))}
+
+\NormalTok{original\_data }\OtherTok{\textless{}{-}}\NormalTok{ original\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{separate}\NormalTok{(resistance, }\AttributeTok{into =} \FunctionTok{c}\NormalTok{(}\StringTok{"resistance"}\NormalTok{, }\StringTok{"concenteration\_after\_six\_months"}\NormalTok{), }\AttributeTok{sep =} \StringTok{"\_"}\NormalTok{, }\AttributeTok{extra =} \StringTok{"merge"}\NormalTok{)}
+
+\FunctionTok{print}\NormalTok{(original\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 141 x 16
+##    patient_id month  year gender `dose_strep [g]` baseline_condition
+##         <dbl> <dbl> <dbl> <chr>             <dbl> <chr>             
+##  1          1     1  2009 M                     0 good              
+##  2          2     3  2008 F                     0 good              
+##  3          3    11  2010 F                     0 good              
+##  4          4    11  2008 M                     0 good              
+##  5          5     3  2009 F                     0 good              
+##  6          6     5  2008 M                     0 good              
+##  7          7     2  2009 F                     0 good              
+##  8          8     4  2008 M                     0 good              
+##  9          9    10  2010 F                     0 fair              
+## 10         10     9  2008 M                     0 fair              
+## # i 131 more rows
+## # i 10 more variables: baseline_temp_cat <chr>, baseline_esr_cat <chr>,
+## #   baseline_cavitation <chr>, strep <chr>, resistance <chr>,
+## #   concenteration_after_six_months <chr>, `6m_radiologic` <chr>,
+## #   rad_num <dbl>, improved <lgl>, arm <chr>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{original\_data }\OtherTok{\textless{}{-}}\NormalTok{ original\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{strep\_resistance\_level =}\NormalTok{ strep)}
+
+\NormalTok{original\_data }\OtherTok{\textless{}{-}}\NormalTok{ original\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{strep\_resistance =}\NormalTok{ concenteration\_after\_six\_months)}
+
+\NormalTok{original\_data }\OtherTok{\textless{}{-}}\NormalTok{ original\_data }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{resistance)}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{Dividing baseline\_temp\_cat into Fahrenheit and
+Celsius}\label{dividing-baseline_temp_cat-into-fahrenheit-and-celsius}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{original\_data }\OtherTok{\textless{}{-}}\NormalTok{ original\_data }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{separate}\NormalTok{(baseline\_temp\_cat, }\AttributeTok{into =} \FunctionTok{c}\NormalTok{(}\StringTok{"number\_temp"}\NormalTok{, }\StringTok{"baseline\_temp"}\NormalTok{), }
+           \AttributeTok{sep =} \DecValTok{2}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{number\_temp) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{separate\_wider\_delim}\NormalTok{(baseline\_temp, }\StringTok{"/"}\NormalTok{, }\AttributeTok{names =} \FunctionTok{c}\NormalTok{(}\StringTok{"baseline\_temp\_fahren"}\NormalTok{, }\StringTok{"baseline\_temp\_cels"}\NormalTok{))}
+
+\NormalTok{original\_data }\OtherTok{\textless{}{-}}\NormalTok{ original\_data }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{separate}\NormalTok{(baseline\_temp\_cels, }\AttributeTok{into =} \FunctionTok{c}\NormalTok{(}\StringTok{"baseline\_temp\_cels"}\NormalTok{ , }\StringTok{"number"}\NormalTok{),}
+           \AttributeTok{sep =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{number)}
+
+\NormalTok{original\_data }\OtherTok{\textless{}{-}}\NormalTok{ original\_data }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{separate}\NormalTok{(baseline\_temp\_fahren, }\AttributeTok{into =} \FunctionTok{c}\NormalTok{(}\StringTok{"baseline\_temp\_fahren"}\NormalTok{ , }\StringTok{"number"}\NormalTok{),}
+           \AttributeTok{sep =} \SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{number)}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{Dividing baseline\_esr\_cat
+variable}\label{dividing-baseline_esr_cat-variable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{original\_data }\OtherTok{\textless{}{-}}\NormalTok{ original\_data }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{separate}\NormalTok{(baseline\_esr\_cat, }\AttributeTok{into =} \FunctionTok{c}\NormalTok{(}\ConstantTok{NA}\NormalTok{, }\StringTok{"baseline\_esr\_cat"}\NormalTok{), }\AttributeTok{sep =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{Dividing 6m\_radiologica}\label{dividing-6m_radiologica}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{original\_data }\OtherTok{\textless{}{-}}\NormalTok{ original\_data }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{separate}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{6m\_radiologic}\StringTok{\textasciigrave{}}\NormalTok{, }\AttributeTok{into =} \FunctionTok{c}\NormalTok{(}\ConstantTok{NA}\NormalTok{, }\StringTok{"6m\_radiologic"}\NormalTok{), }\AttributeTok{sep =} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{Saving the tidy dataset}\label{saving-the-tidy-dataset}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fileName }\OtherTok{\textless{}{-}} \FunctionTok{paste0}\NormalTok{(}\StringTok{"2025\_09\_08\_tidy\_version\_day2"}\NormalTok{, }\StringTok{".txt"}\NormalTok{)}
+
+\FunctionTok{write\_delim}\NormalTok{(}
+\NormalTok{  original\_data, }
+  \AttributeTok{file =} \FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, fileName),}
+  \AttributeTok{delim =} \StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Task 3 Tidy, adjust, and
+explore}\label{task-3-tidy-adjust-and-explore}
+
+\paragraph{Reading the tidy dataset}\label{reading-the-tidy-dataset}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tidy\_data\_day\_2 }\OtherTok{\textless{}{-}} \FunctionTok{read\_delim}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"2025\_09\_08\_tidy\_version\_day2.txt"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 141 Columns: 16
+## -- Column specification --------------------------------------------------------
+## Delimiter: "\t"
+## chr (10): gender, baseline_condition, baseline_temp_fahren, baseline_temp_ce...
+## dbl  (5): patient_id, month, year, dose_strep [g], rad_num
+## lgl  (1): improved
+## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+\end{verbatim}
+
+\paragraph{Removing -year, -month, -baseline\_esr\_cat
+variables}\label{removing--year--month--baseline_esr_cat-variables}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tidy\_data\_day\_2 }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_data\_day\_2 }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{year, }\SpecialCharTok{{-}}\NormalTok{month, }\SpecialCharTok{{-}}\NormalTok{baseline\_esr\_cat)}
+
+\FunctionTok{glimpse}\NormalTok{(tidy\_data\_day\_2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 141
+## Columns: 13
+## $ patient_id             <dbl> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, ~
+## $ gender                 <chr> "M", "F", "F", "M", "F", "M", "F", "M", "F", "M~
+## $ `dose_strep [g]`       <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,~
+## $ baseline_condition     <chr> "good", "good", "good", "good", "good", "good",~
+## $ baseline_temp_fahren   <chr> "<=98.9", "100-100.9", "<=98.9", "<=98.9", "99-~
+## $ baseline_temp_cels     <chr> "37.2", "37.8-38.2", "37.2", "37.2", "37.3-37.7~
+## $ baseline_cavitation    <chr> "yes", "no", "no", "no", "no", "no", "yes", "ye~
+## $ strep_resistance_level <chr> "sensitive", "sensitive", "sensitive", "sensiti~
+## $ strep_resistance       <chr> "0-8", "0-8", "0-8", "0-8", "0-8", "0-8", "0-8"~
+## $ `6m_radiologic`        <chr> "Considerable_improvement", "Moderate_improveme~
+## $ rad_num                <dbl> 6, 5, 5, 5, 5, 6, 5, 5, 5, 5, 6, 5, 5, 5, 5, 6,~
+## $ improved               <lgl> TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE,~
+## $ arm                    <chr> "Control", "Control", "Control", "Control", "Co~
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  We removed the duplicates from the tidy\_data\_day\_2 using the
+  patient\_id coloumn
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tidy\_data\_day\_2 }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_data\_day\_2 }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{distinct}\NormalTok{(patient\_id, }\AttributeTok{.keep\_all =} \ConstantTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{Import and assign the additional data
+set}\label{import-and-assign-the-additional-data-set}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Additiona\_data }\OtherTok{\textless{}{-}} \FunctionTok{read\_delim}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"2025\_09\_05\_original\_exam\_data\_join.txt"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 107 Columns: 3
+## -- Column specification --------------------------------------------------------
+## Delimiter: "\t"
+## dbl (3): patient_id, baseline_temp, baseline_esr
+## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+\end{verbatim}
+
+\paragraph{Arrang both data sets tidy\_data\_day\_2 and the
+Additiona\_data by the
+patient\_id}\label{arrang-both-data-sets-tidy_data_day_2-and-the-additiona_data-by-the-patient_id}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{tidy\_data\_day\_2 }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_data\_day\_2}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(patient\_id)}
+
+\NormalTok{Additiona\_data }\OtherTok{\textless{}{-}}\NormalTok{ Additiona\_data}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{arrange}\NormalTok{(patient\_id)}
+
+\FunctionTok{glimpse}\NormalTok{(Additiona\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 107
+## Columns: 3
+## $ patient_id    <dbl> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 1~
+## $ baseline_temp <dbl> 98.73150, 100.59308, 98.57415, 98.56376, 99.17978, 100.3~
+## $ baseline_esr  <dbl> 16, 13, 26, 27, 49, 23, 45, 47, 25, 38, 28, 29, 22, 22, ~
+\end{verbatim}
+
+\paragraph{Joining the tidy\_data\_day\_2 and the Additiona\_data into
+one
+file}\label{joining-the-tidy_data_day_2-and-the-additiona_data-into-one-file}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{joined\_data }\OtherTok{\textless{}{-}}\NormalTok{ tidy\_data\_day\_2 }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{left\_join}\NormalTok{(Additiona\_data, }\AttributeTok{by =} \StringTok{"patient\_id"}\NormalTok{)}
+
+\FunctionTok{glimpse}\NormalTok{(joined\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 107
+## Columns: 15
+## $ patient_id             <dbl> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, ~
+## $ gender                 <chr> "M", "F", "F", "M", "F", "M", "F", "M", "F", "M~
+## $ `dose_strep [g]`       <dbl> 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,~
+## $ baseline_condition     <chr> "good", "good", "good", "good", "good", "good",~
+## $ baseline_temp_fahren   <chr> "<=98.9", "100-100.9", "<=98.9", "<=98.9", "99-~
+## $ baseline_temp_cels     <chr> "37.2", "37.8-38.2", "37.2", "37.2", "37.3-37.7~
+## $ baseline_cavitation    <chr> "yes", "no", "no", "no", "no", "no", "yes", "ye~
+## $ strep_resistance_level <chr> "sensitive", "sensitive", "sensitive", "sensiti~
+## $ strep_resistance       <chr> "0-8", "0-8", "0-8", "0-8", "0-8", "0-8", "0-8"~
+## $ `6m_radiologic`        <chr> "Considerable_improvement", "Moderate_improveme~
+## $ rad_num                <dbl> 6, 5, 5, 5, 5, 6, 5, 5, 5, 5, 6, 5, 5, 5, 5, 6,~
+## $ improved               <lgl> TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE,~
+## $ arm                    <chr> "Control", "Control", "Control", "Control", "Co~
+## $ baseline_temp          <dbl> 98.73150, 100.59308, 98.57415, 98.56376, 99.179~
+## $ baseline_esr           <dbl> 16, 13, 26, 27, 49, 23, 45, 47, 25, 38, 28, 29,~
+\end{verbatim}
+
+\paragraph{Saving the joined\_data}\label{saving-the-joined_data}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fileName }\OtherTok{\textless{}{-}} \FunctionTok{paste0}\NormalTok{(}\StringTok{"2025\_09\_08\_joined\_data\_day2"}\NormalTok{, }\StringTok{".txt"}\NormalTok{)}
+
+\FunctionTok{write\_delim}\NormalTok{(}
+\NormalTok{  joined\_data, }
+  \AttributeTok{file =} \FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, fileName),}
+  \AttributeTok{delim =} \StringTok{"}\SpecialCharTok{\textbackslash{}t}\StringTok{"}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\paragraph{Creating a set of new
+columns}\label{creating-a-set-of-new-columns}
+
+\subparagraph{Reading the joined
+dataset}\label{reading-the-joined-dataset}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{joined\_data }\OtherTok{\textless{}{-}} \FunctionTok{read\_delim}\NormalTok{(}\FunctionTok{here}\NormalTok{(}\StringTok{"data"}\NormalTok{, }\StringTok{"2025\_09\_08\_joined\_data\_day2.txt"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 107 Columns: 15
+## -- Column specification --------------------------------------------------------
+## Delimiter: "\t"
+## chr (9): gender, baseline_condition, baseline_temp_fahren, baseline_temp_cel...
+## dbl (5): patient_id, dose_strep [g], rad_num, baseline_temp, baseline_esr
+## lgl (1): improved
+## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+\end{verbatim}
+
+\subparagraph{A column showing gender as ``0'' or ``1'' instead of ``F''
+or ``M''}\label{a-column-showing-gender-as-0-or-1-instead-of-f-or-m}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{joined\_data }\OtherTok{\textless{}{-}}\NormalTok{ joined\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{gender =} \FunctionTok{ifelse}\NormalTok{(gender }\SpecialCharTok{==} \StringTok{"F"}\NormalTok{, }\DecValTok{0}\NormalTok{, gender),}
+         \AttributeTok{gender =} \FunctionTok{ifelse}\NormalTok{(gender }\SpecialCharTok{==} \StringTok{"M"}\NormalTok{, }\DecValTok{1}\NormalTok{, gender))}
+\end{Highlighting}
+\end{Shaded}
+
+\subparagraph{A coloumn that showes the strep resistance after the
+addministration of the high
+dose}\label{a-coloumn-that-showes-the-strep-resistance-after-the-addministration-of-the-high-dose}
+
+\begin{itemize}
+\tightlist
+\item
+  changing the values in the dose strep from 0-2 to no dose and high
+  dose
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{joined\_data }\OtherTok{\textless{}{-}}\NormalTok{ joined\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{dose\_strep [g]}\StringTok{\textasciigrave{}} \OtherTok{=} \FunctionTok{case\_when}\NormalTok{(}
+    \StringTok{\textasciigrave{}}\AttributeTok{dose\_strep [g]}\StringTok{\textasciigrave{}} \SpecialCharTok{==} \DecValTok{0} \SpecialCharTok{\textasciitilde{}} \StringTok{"No\_dose"}\NormalTok{,}
+    \StringTok{\textasciigrave{}}\AttributeTok{dose\_strep [g]}\StringTok{\textasciigrave{}} \SpecialCharTok{==} \DecValTok{2} \SpecialCharTok{\textasciitilde{}} \StringTok{"high\_dose"}\NormalTok{,}
+    \ConstantTok{TRUE} \SpecialCharTok{\textasciitilde{}} \FunctionTok{as.character}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{dose\_strep [g]}\StringTok{\textasciigrave{}}\NormalTok{)}
+\NormalTok{  ))}
+\end{Highlighting}
+\end{Shaded}
+
+\subparagraph{Creating a new column that shows the
+resistance}\label{creating-a-new-column-that-shows-the-resistance}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{joined\_data }\OtherTok{\textless{}{-}}\NormalTok{ joined\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{status\_after\_high\_dose\_administration =} \FunctionTok{case\_when}\NormalTok{(}
+      \StringTok{\textasciigrave{}}\AttributeTok{dose\_strep [g]}\StringTok{\textasciigrave{}} \SpecialCharTok{==} \StringTok{"high\_dose"} \SpecialCharTok{\&}\NormalTok{ strep\_resistance\_level }\SpecialCharTok{==} \StringTok{"resistance"} \SpecialCharTok{\textasciitilde{}} \StringTok{"resistant"}\NormalTok{,}
+      \StringTok{\textasciigrave{}}\AttributeTok{dose\_strep [g]}\StringTok{\textasciigrave{}} \SpecialCharTok{==} \StringTok{"high\_dose"} \SpecialCharTok{\&}\NormalTok{ strep\_resistance\_level }\SpecialCharTok{==} \StringTok{"sensitive"} \SpecialCharTok{\textasciitilde{}} \StringTok{"not\_resistant"}\NormalTok{, }
+      \StringTok{\textasciigrave{}}\AttributeTok{dose\_strep [g]}\StringTok{\textasciigrave{}} \SpecialCharTok{==} \StringTok{"high\_dose"} \SpecialCharTok{\&}\NormalTok{ strep\_resistance\_level }\SpecialCharTok{==} \StringTok{"modrate"} \SpecialCharTok{\textasciitilde{}} \StringTok{"not\_resistant"}\NormalTok{,  }\CommentTok{\# Fixed spelling}
+      \StringTok{\textasciigrave{}}\AttributeTok{dose\_strep [g]}\StringTok{\textasciigrave{}} \SpecialCharTok{==} \StringTok{"No\_dose"} \SpecialCharTok{\textasciitilde{}} \StringTok{"not\_resistant"}\NormalTok{,}
+      \ConstantTok{TRUE} \SpecialCharTok{\textasciitilde{}} \StringTok{"Unknown"}
+\NormalTok{    )}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\subparagraph{Mutate temperature in
+celsius}\label{mutate-temperature-in-celsius}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{glimpse}\NormalTok{(joined\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 107
+## Columns: 16
+## $ patient_id                            <dbl> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1~
+## $ gender                                <chr> "1", "0", "0", "1", "0", "1", "0~
+## $ `dose_strep [g]`                      <chr> "No_dose", "No_dose", "No_dose",~
+## $ baseline_condition                    <chr> "good", "good", "good", "good", ~
+## $ baseline_temp_fahren                  <chr> "<=98.9", "100-100.9", "<=98.9",~
+## $ baseline_temp_cels                    <chr> "37.2", "37.8-38.2", "37.2", "37~
+## $ baseline_cavitation                   <chr> "yes", "no", "no", "no", "no", "~
+## $ strep_resistance_level                <chr> "sensitive", "sensitive", "sensi~
+## $ strep_resistance                      <chr> "0-8", "0-8", "0-8", "0-8", "0-8~
+## $ `6m_radiologic`                       <chr> "Considerable_improvement", "Mod~
+## $ rad_num                               <dbl> 6, 5, 5, 5, 5, 6, 5, 5, 5, 5, 6,~
+## $ improved                              <lgl> TRUE, TRUE, TRUE, TRUE, TRUE, TR~
+## $ arm                                   <chr> "Control", "Control", "Control",~
+## $ baseline_temp                         <dbl> 98.73150, 100.59308, 98.57415, 9~
+## $ baseline_esr                          <dbl> 16, 13, 26, 27, 49, 23, 45, 47, ~
+## $ status_after_high_dose_administration <chr> "not_resistant", "not_resistant"~
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  since we had created temperature variable in Fahrenheit and Celsius
+  with the first baseline dataset, even before joining the data, we will
+  drop the ones created before joining the data and use the baseline
+  temperature from the data which was joined later
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{joined\_data }\OtherTok{\textless{}{-}}\NormalTok{ joined\_data }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{baseline\_temp\_fahren, }\SpecialCharTok{{-}}\NormalTok{baseline\_temp\_cels)}
+
+\FunctionTok{glimpse}\NormalTok{(joined\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 107
+## Columns: 14
+## $ patient_id                            <dbl> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1~
+## $ gender                                <chr> "1", "0", "0", "1", "0", "1", "0~
+## $ `dose_strep [g]`                      <chr> "No_dose", "No_dose", "No_dose",~
+## $ baseline_condition                    <chr> "good", "good", "good", "good", ~
+## $ baseline_cavitation                   <chr> "yes", "no", "no", "no", "no", "~
+## $ strep_resistance_level                <chr> "sensitive", "sensitive", "sensi~
+## $ strep_resistance                      <chr> "0-8", "0-8", "0-8", "0-8", "0-8~
+## $ `6m_radiologic`                       <chr> "Considerable_improvement", "Mod~
+## $ rad_num                               <dbl> 6, 5, 5, 5, 5, 6, 5, 5, 5, 5, 6,~
+## $ improved                              <lgl> TRUE, TRUE, TRUE, TRUE, TRUE, TR~
+## $ arm                                   <chr> "Control", "Control", "Control",~
+## $ baseline_temp                         <dbl> 98.73150, 100.59308, 98.57415, 9~
+## $ baseline_esr                          <dbl> 16, 13, 26, 27, 49, 23, 45, 47, ~
+## $ status_after_high_dose_administration <chr> "not_resistant", "not_resistant"~
+\end{verbatim}
+
+\begin{itemize}
+\item
+  now only baseline\_temp variable is remaining which is in Fahrenheit
+\item
+  now we will mutate celsius variable using celcius = (°F - 32) ÷ (9/5)
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{joined\_data }\OtherTok{\textless{}{-}}\NormalTok{ joined\_data }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{baseline\_temp\_cels =}\NormalTok{ (baseline\_temp }\SpecialCharTok{{-}} \DecValTok{31}\NormalTok{)}\SpecialCharTok{/}\NormalTok{(}\DecValTok{9}\SpecialCharTok{/}\DecValTok{5}\NormalTok{))}
+
+
+\FunctionTok{glimpse}\NormalTok{(joined\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 107
+## Columns: 15
+## $ patient_id                            <dbl> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1~
+## $ gender                                <chr> "1", "0", "0", "1", "0", "1", "0~
+## $ `dose_strep [g]`                      <chr> "No_dose", "No_dose", "No_dose",~
+## $ baseline_condition                    <chr> "good", "good", "good", "good", ~
+## $ baseline_cavitation                   <chr> "yes", "no", "no", "no", "no", "~
+## $ strep_resistance_level                <chr> "sensitive", "sensitive", "sensi~
+## $ strep_resistance                      <chr> "0-8", "0-8", "0-8", "0-8", "0-8~
+## $ `6m_radiologic`                       <chr> "Considerable_improvement", "Mod~
+## $ rad_num                               <dbl> 6, 5, 5, 5, 5, 6, 5, 5, 5, 5, 6,~
+## $ improved                              <lgl> TRUE, TRUE, TRUE, TRUE, TRUE, TR~
+## $ arm                                   <chr> "Control", "Control", "Control",~
+## $ baseline_temp                         <dbl> 98.73150, 100.59308, 98.57415, 9~
+## $ baseline_esr                          <dbl> 16, 13, 26, 27, 49, 23, 45, 47, ~
+## $ status_after_high_dose_administration <chr> "not_resistant", "not_resistant"~
+## $ baseline_temp_cels                    <dbl> 37.62861, 38.66282, 37.54119, 37~
+\end{verbatim}
+
+\subparagraph{Cutting ``baseline\_esr'' score into quartiles (4 equal
+parts) and making a new
+variable}\label{cutting-baseline_esr-score-into-quartiles-4-equal-parts-and-making-a-new-variable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{joined\_data }\OtherTok{\textless{}{-}}\NormalTok{ joined\_data }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{baseline\_esr\_quartiles =} \FunctionTok{cut}\NormalTok{(baseline\_esr, }\AttributeTok{breaks =} \DecValTok{4}\NormalTok{))}
+
+\FunctionTok{table}\NormalTok{(joined\_data}\SpecialCharTok{$}\NormalTok{baseline\_esr\_quartiles)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## (10.9,32.2] (32.2,53.5] (53.5,74.8] (74.8,96.1] 
+##          18          30          26          32
+\end{verbatim}
+
+\paragraph{\texorpdfstring{Setting the order of columns as:
+\texttt{patient\_id,\ gender,\ arm} and other
+columns}{Setting the order of columns as: patient\_id, gender, arm and other columns}}\label{setting-the-order-of-columns-as-patient_id-gender-arm-and-other-columns}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{joined\_data }\OtherTok{\textless{}{-}}\NormalTok{ joined\_data }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(patient\_id, gender, arm, }\FunctionTok{everything}\NormalTok{())}
+
+\NormalTok{joined\_data}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 107 x 16
+##    patient_id gender arm     `dose_strep [g]` baseline_condition
+##         <dbl> <chr>  <chr>   <chr>            <chr>             
+##  1          1 1      Control No_dose          good              
+##  2          2 0      Control No_dose          good              
+##  3          3 0      Control No_dose          good              
+##  4          4 1      Control No_dose          good              
+##  5          5 0      Control No_dose          good              
+##  6          6 1      Control No_dose          good              
+##  7          7 0      Control No_dose          good              
+##  8          8 1      Control No_dose          good              
+##  9          9 0      Control No_dose          fair              
+## 10         10 1      Control No_dose          fair              
+## # i 97 more rows
+## # i 11 more variables: baseline_cavitation <chr>, strep_resistance_level <chr>,
+## #   strep_resistance <chr>, `6m_radiologic` <chr>, rad_num <dbl>,
+## #   improved <lgl>, baseline_temp <dbl>, baseline_esr <dbl>,
+## #   status_after_high_dose_administration <chr>, baseline_temp_cels <dbl>,
+## #   baseline_esr_quartiles <fct>
+\end{verbatim}
+
+\paragraph{Arranging patient\_id column of your data set in order of
+increasing number or
+alphabeticall}\label{arranging-patient_id-column-of-your-data-set-in-order-of-increasing-number-or-alphabeticall}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{joined\_data }\OtherTok{\textless{}{-}}\NormalTok{ joined\_data }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{arrange}\NormalTok{(joined\_data}\SpecialCharTok{$}\NormalTok{patient\_id)}
+
+\FunctionTok{head}\NormalTok{(joined\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 16
+##   patient_id gender arm     `dose_strep [g]` baseline_condition
+##        <dbl> <chr>  <chr>   <chr>            <chr>             
+## 1          1 1      Control No_dose          good              
+## 2          2 0      Control No_dose          good              
+## 3          3 0      Control No_dose          good              
+## 4          4 1      Control No_dose          good              
+## 5          5 0      Control No_dose          good              
+## 6          6 1      Control No_dose          good              
+## # i 11 more variables: baseline_cavitation <chr>, strep_resistance_level <chr>,
+## #   strep_resistance <chr>, `6m_radiologic` <chr>, rad_num <dbl>,
+## #   improved <lgl>, baseline_temp <dbl>, baseline_esr <dbl>,
+## #   status_after_high_dose_administration <chr>, baseline_temp_cels <dbl>,
+## #   baseline_esr_quartiles <fct>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{tail}\NormalTok{(joined\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 16
+##   patient_id gender arm          `dose_strep [g]` baseline_condition
+##        <dbl> <chr>  <chr>        <chr>            <chr>             
+## 1        102 1      Streptomycin high_dose        poor              
+## 2        103 0      Streptomycin high_dose        poor              
+## 3        104 1      Streptomycin high_dose        poor              
+## 4        105 0      Streptomycin high_dose        poor              
+## 5        106 0      Streptomycin high_dose        poor              
+## 6        107 0      Streptomycin high_dose        poor              
+## # i 11 more variables: baseline_cavitation <chr>, strep_resistance_level <chr>,
+## #   strep_resistance <chr>, `6m_radiologic` <chr>, rad_num <dbl>,
+## #   improved <lgl>, baseline_temp <dbl>, baseline_esr <dbl>,
+## #   status_after_high_dose_administration <chr>, baseline_temp_cels <dbl>,
+## #   baseline_esr_quartiles <fct>
+\end{verbatim}
+
+\paragraph{Baseline\_esr as numneric}\label{baseline_esr-as-numneric}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{joined\_data}\SpecialCharTok{$}\NormalTok{baseline\_esr }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(joined\_data}\SpecialCharTok{$}\NormalTok{baseline\_esr)}
+
+\FunctionTok{glimpse}\NormalTok{(joined\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 107
+## Columns: 16
+## $ patient_id                            <dbl> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1~
+## $ gender                                <chr> "1", "0", "0", "1", "0", "1", "0~
+## $ arm                                   <chr> "Control", "Control", "Control",~
+## $ `dose_strep [g]`                      <chr> "No_dose", "No_dose", "No_dose",~
+## $ baseline_condition                    <chr> "good", "good", "good", "good", ~
+## $ baseline_cavitation                   <chr> "yes", "no", "no", "no", "no", "~
+## $ strep_resistance_level                <chr> "sensitive", "sensitive", "sensi~
+## $ strep_resistance                      <chr> "0-8", "0-8", "0-8", "0-8", "0-8~
+## $ `6m_radiologic`                       <chr> "Considerable_improvement", "Mod~
+## $ rad_num                               <dbl> 6, 5, 5, 5, 5, 6, 5, 5, 5, 5, 6,~
+## $ improved                              <lgl> TRUE, TRUE, TRUE, TRUE, TRUE, TR~
+## $ baseline_temp                         <dbl> 98.73150, 100.59308, 98.57415, 9~
+## $ baseline_esr                          <dbl> 16, 13, 26, 27, 49, 23, 45, 47, ~
+## $ status_after_high_dose_administration <chr> "not_resistant", "not_resistant"~
+## $ baseline_temp_cels                    <dbl> 37.62861, 38.66282, 37.54119, 37~
+## $ baseline_esr_quartiles                <fct> "(10.9,32.2]", "(10.9,32.2]", "(~
+\end{verbatim}
+
+\paragraph{Connecting above steps with
+pipe}\label{connecting-above-steps-with-pipe}
+
+\begin{itemize}
+\item
+  Since we have individually ran the codes above this is just an example
+  of how we can pipe it all together. That's why it is marked as a
+  comment below:
+\item
+  joined\_data\_xyz \textless- joined\_data \%\textgreater\%
+  mutate(gender = ifelse(gender == ``F'', 0, gender), gender =
+  ifelse(gender == ``M'', 1, gender)) \%\textgreater\%
+  mutate(\texttt{dose\_strep\ {[}g{]}} = case\_when(
+  \texttt{dose\_strep\ {[}g{]}} == 0 \textasciitilde{} ``No\_dose'',
+  \texttt{dose\_strep\ {[}g{]}} == 2 \textasciitilde{} ``high\_dose'',
+  TRUE \textasciitilde{} as.character(\texttt{dose\_strep\ {[}g{]}}) ))
+  \%\textgreater\% mutate( status\_after\_high\_dose\_administration =
+  case\_when( \texttt{dose\_strep\ {[}g{]}} == ``high\_dose'' \&
+  strep\_resistance\_level == ``resistance'' \textasciitilde{}
+  ``resistant'', \texttt{dose\_strep\ {[}g{]}} == ``high\_dose'' \&
+  strep\_resistance\_level == ``sensitive'' \textasciitilde{}
+  \#``not\_resistant'', \texttt{dose\_strep\ {[}g{]}} == ``high\_dose''
+  \& strep\_resistance\_level == ``modrate'' \textasciitilde{}
+  ``not\_resistant''\#, \texttt{dose\_strep\ {[}g{]}} == ``No\_dose''
+  \textasciitilde{} ``not\_resistant'', TRUE \textasciitilde{}
+  ``Unknown'')) \%\textgreater\% select(-baseline\_temp\_fahren,
+  -baseline\_temp\_cels) \%\textgreater\% mutate(baseline\_temp\_cels =
+  (baseline\_temp - 31)/(9/5)) \%\textgreater\%
+  mutate(baseline\_esr\_quartile = cut(baseline\_esr, breaks = 4))
+  \%\textgreater\% select(patient\_id, gender, arm, everything())
+  \%\textgreater\% arrange(joined\_data\$patient\_id)
+\end{itemize}
+
+\paragraph{Exploring missing data}\label{exploring-missing-data}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{skimr}\SpecialCharTok{::} \FunctionTok{skim}\NormalTok{(joined\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{Data summary}\tabularnewline
+\toprule\noalign{}
+\endfirsthead
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Name & joined\_data \\
+Number of rows & 107 \\
+Number of columns & 16 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Column type frequency: & \\
+character & 9 \\
+factor & 1 \\
+logical & 1 \\
+numeric & 5 \\
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_ & \\
+Group variables & None \\
+\end{longtable}
+
+\textbf{Variable type: character}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.3958}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1042}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1458}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.0417}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.0417}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.0625}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.0938}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 14\tabcolsep) * \real{0.1146}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+skim\_variable
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+n\_missing
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+complete\_rate
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+min
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+max
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+empty
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+n\_unique
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+whitespace
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+gender & 0 & 1 & 1 & 1 & 0 & 2 & 0 \\
+arm & 0 & 1 & 7 & 12 & 0 & 2 & 0 \\
+dose\_strep {[}g{]} & 0 & 1 & 7 & 9 & 0 & 2 & 0 \\
+baseline\_condition & 0 & 1 & 4 & 4 & 0 & 3 & 0 \\
+baseline\_cavitation & 0 & 1 & 2 & 3 & 0 & 2 & 0 \\
+strep\_resistance\_level & 0 & 1 & 7 & 10 & 0 & 3 & 0 \\
+strep\_resistance & 0 & 1 & 3 & 4 & 0 & 3 & 0 \\
+6m\_radiologic & 0 & 1 & 5 & 26 & 0 & 6 & 0 \\
+status\_after\_high\_dose\_administration & 0 & 1 & 9 & 13 & 0 & 2 &
+0 \\
+\end{longtable}
+
+\textbf{Variable type: factor}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.2323}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1010}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.1414}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0808}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.0909}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 10\tabcolsep) * \real{0.3535}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+skim\_variable
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+n\_missing
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+complete\_rate
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+ordered
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+n\_unique
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+top\_counts
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+baseline\_esr\_quartiles & 1 & 0.99 & FALSE & 4 & (74: 32, (32: 30, (53:
+26, (10: 18 \\
+\end{longtable}
+
+\textbf{Variable type: logical}
+
+\begin{longtable}[]{@{}lrrrl@{}}
+\toprule\noalign{}
+skim\_variable & n\_missing & complete\_rate & mean & count \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+improved & 0 & 1 & 0.51 & TRU: 55, FAL: 52 \\
+\end{longtable}
+
+\textbf{Variable type: numeric}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.2000}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.1053}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.1474}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.0737}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.0632}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.0632}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.0632}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.0737}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.0737}}
+  >{\raggedleft\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.0737}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 20\tabcolsep) * \real{0.0632}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+skim\_variable
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+n\_missing
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+complete\_rate
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+mean
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+sd
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+p0
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+p25
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+p50
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+p75
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedleft
+p100
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+hist
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+patient\_id & 0 & 1.00 & 54.00 & 31.03 & 1.00 & 27.50 & 54.00 & 80.50 &
+107.00 & ▇▇▇▇▇ \\
+rad\_num & 0 & 1.00 & 3.93 & 1.89 & 1.00 & 2.00 & 5.00 & 6.00 & 6.00 &
+▇▅▁▆▇ \\
+baseline\_temp & 0 & 1.00 & 100.71 & 1.18 & 98.46 & 99.66 & 100.59 &
+101.79 & 102.63 & ▃▅▇▅▇ \\
+baseline\_esr & 1 & 0.99 & 57.83 & 23.57 & 11.00 & 37.25 & 58.50 & 79.50
+& 96.00 & ▅▆▇▆▇ \\
+baseline\_temp\_cels & 0 & 1.00 & 38.73 & 0.65 & 37.48 & 38.14 & 38.66 &
+39.33 & 39.79 & ▃▅▇▅▇ \\
+\end{longtable}
+
+\begin{itemize}
+\tightlist
+\item
+  Comment: We have one baseline\_esr value missing. The observation is
+  for a participant in control arm, with poor baseline condition, at was
+  dead at the 6 month follow up.
+\end{itemize}
+
+\paragraph{Stratifying categorical\_variable to report report min, max,
+mean and sd of a numeric
+column}\label{stratifying-categorical_variable-to-report-report-min-max-mean-and-sd-of-a-numeric-column}
+
+\subparagraph{Stratifying all
+categorical\_variable}\label{stratifying-all-categorical_variable}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{Stratifying\_all\_categorical\_variable }\OtherTok{\textless{}{-}}\NormalTok{ joined\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{where}\NormalTok{(}\SpecialCharTok{\textasciitilde{}} \FunctionTok{is.factor}\NormalTok{(.) }\SpecialCharTok{||} \FunctionTok{is.character}\NormalTok{(.)))) }\SpecialCharTok{\%\textgreater{}\%}  \CommentTok{\# all categorical vars}
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{min\_baseline\_temp =} \FunctionTok{min}\NormalTok{(baseline\_temp, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{max\_baseline\_temp =} \FunctionTok{max}\NormalTok{(baseline\_temp, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{mean\_baseline\_temp =} \FunctionTok{mean}\NormalTok{(baseline\_temp, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{sd\_baseline\_temp =} \FunctionTok{sd}\NormalTok{(baseline\_temp, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{.groups =} \StringTok{"drop"}
+\NormalTok{  ) }
+
+\FunctionTok{glimpse}\NormalTok{(Stratifying\_all\_categorical\_variable)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 80
+## Columns: 14
+## $ gender                                <chr> "0", "0", "0", "0", "0", "0", "0~
+## $ arm                                   <chr> "Control", "Control", "Control",~
+## $ `dose_strep [g]`                      <chr> "No_dose", "No_dose", "No_dose",~
+## $ baseline_condition                    <chr> "fair", "fair", "fair", "fair", ~
+## $ baseline_cavitation                   <chr> "no", "no", "no", "no", "yes", "~
+## $ strep_resistance_level                <chr> "sensitive", "sensitive", "sensi~
+## $ strep_resistance                      <chr> "0-8", "0-8", "0-8", "0-8", "0-8~
+## $ `6m_radiologic`                       <chr> "Considerable_improvement", "Mod~
+## $ status_after_high_dose_administration <chr> "not_resistant", "not_resistant"~
+## $ baseline_esr_quartiles                <fct> "(10.9,32.2]", "(32.2,53.5]", "(~
+## $ min_baseline_temp                     <dbl> 100.07647, 100.74734, 99.40201, ~
+## $ max_baseline_temp                     <dbl> 100.07647, 100.75476, 99.40201, ~
+## $ mean_baseline_temp                    <dbl> 100.07647, 100.75105, 99.40201, ~
+## $ sd_baseline_temp                      <dbl> NA, 0.005247918, NA, NA, NA, 0.0~
+\end{verbatim}
+
+\subparagraph{Stratifying gender with
+baseline\_temp}\label{stratifying-gender-with-baseline_temp}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{stratify\_gender\_temp }\OtherTok{\textless{}{-}}\NormalTok{ joined\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(gender) }\SpecialCharTok{\%\textgreater{}\%}  
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{min\_baseline\_temp =} \FunctionTok{min}\NormalTok{(baseline\_temp, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{max\_baseline\_temp =} \FunctionTok{max}\NormalTok{(baseline\_temp, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{mean\_baseline\_temp =} \FunctionTok{mean}\NormalTok{(baseline\_temp, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{sd\_baseline\_temp =} \FunctionTok{sd}\NormalTok{(baseline\_temp, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+\NormalTok{  ) }
+
+\FunctionTok{glimpse}\NormalTok{(stratify\_gender\_temp)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 2
+## Columns: 5
+## $ gender             <chr> "0", "1"
+## $ min_baseline_temp  <dbl> 98.45755, 98.52052
+## $ max_baseline_temp  <dbl> 102.6306, 102.2899
+## $ mean_baseline_temp <dbl> 100.7474, 100.6586
+## $ sd_baseline_temp   <dbl> 1.218784, 1.132755
+\end{verbatim}
+
+\subparagraph{Stratifying different varibables for the value of
+rad\_num}\label{stratifying-different-varibables-for-the-value-of-rad_num}
+
+\begin{itemize}
+\tightlist
+\item
+  baseline\_condition is fair
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{stratify\_fair\_rad\_num }\OtherTok{\textless{}{-}}\NormalTok{ joined\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(baseline\_condition) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(baseline\_condition }\SpecialCharTok{==} \StringTok{"fair"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{min\_rad\_num =} \FunctionTok{min}\NormalTok{(rad\_num, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{max\_rad\_num =} \FunctionTok{max}\NormalTok{(rad\_num, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{mean\_rad\_num =} \FunctionTok{mean}\NormalTok{(rad\_num, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{sd\_rad\_num =} \FunctionTok{sd}\NormalTok{(rad\_num, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+\NormalTok{  ) }
+
+\FunctionTok{glimpse}\NormalTok{(stratify\_fair\_rad\_num)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 1
+## Columns: 5
+## $ baseline_condition <chr> "fair"
+## $ min_rad_num        <dbl> 2
+## $ max_rad_num        <dbl> 6
+## $ mean_rad_num       <dbl> 4.567568
+## $ sd_rad_num         <dbl> 1.344547
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  only for females
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{stratify\_females\_rad\_num }\OtherTok{\textless{}{-}}\NormalTok{ joined\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(gender) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{filter}\NormalTok{(gender }\SpecialCharTok{==} \DecValTok{0}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{min\_rad\_num =} \FunctionTok{min}\NormalTok{(rad\_num, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{max\_rad\_num =} \FunctionTok{max}\NormalTok{(rad\_num, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{mean\_rad\_num =} \FunctionTok{mean}\NormalTok{(rad\_num, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{sd\_rad\_num =} \FunctionTok{sd}\NormalTok{(rad\_num, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+\NormalTok{  ) }
+
+\FunctionTok{glimpse}\NormalTok{(stratify\_females\_rad\_num)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 1
+## Columns: 5
+## $ gender       <chr> "0"
+## $ min_rad_num  <dbl> 1
+## $ max_rad_num  <dbl> 6
+## $ mean_rad_num <dbl> 3.694915
+## $ sd_rad_num   <dbl> 1.905113
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Only for persons with baseline temperature 100-100.9F
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{stratify\_temp\_rad\_num }\OtherTok{\textless{}{-}}\NormalTok{ joined\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{baseline\_tempt100\_100.9F =} 
+      \FunctionTok{if\_else}\NormalTok{(baseline\_temp }\SpecialCharTok{\textgreater{}=} \DecValTok{0} \SpecialCharTok{\&}\NormalTok{ baseline\_temp }\SpecialCharTok{\textless{}=} \FloatTok{100.9}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(baseline\_tempt100\_100}\FloatTok{.9}\NormalTok{F) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(baseline\_tempt100\_100}\FloatTok{.9}\NormalTok{F }\SpecialCharTok{==} \DecValTok{1}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{min\_rad\_num  =} \FunctionTok{min}\NormalTok{(rad\_num, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{max\_rad\_num  =} \FunctionTok{max}\NormalTok{(rad\_num, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{mean\_rad\_num =} \FunctionTok{mean}\NormalTok{(rad\_num, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{sd\_rad\_num   =} \FunctionTok{sd}\NormalTok{(rad\_num, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  )}
+\FunctionTok{glimpse}\NormalTok{(stratify\_temp\_rad\_num)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 1
+## Columns: 5
+## $ baseline_tempt100_100.9F <dbl> 1
+## $ min_rad_num              <dbl> 1
+## $ max_rad_num              <dbl> 6
+## $ mean_rad_num             <dbl> 4.428571
+## $ sd_rad_num               <dbl> 1.672494
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Only for persons that developed resistance to streptomycin
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{stratify\_resistance\_rad\_num }\OtherTok{\textless{}{-}}\NormalTok{ joined\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{resistance\_streptomycin =} 
+      \FunctionTok{if\_else}\NormalTok{(strep\_resistance\_level }\SpecialCharTok{==} \StringTok{"resistance"}\NormalTok{, }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(resistance\_streptomycin) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{filter}\NormalTok{(resistance\_streptomycin }\SpecialCharTok{==} \DecValTok{1}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}
+    \AttributeTok{min\_rad\_num  =} \FunctionTok{min}\NormalTok{(rad\_num, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{max\_rad\_num  =} \FunctionTok{max}\NormalTok{(rad\_num, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{mean\_rad\_num =} \FunctionTok{mean}\NormalTok{(rad\_num, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{),}
+    \AttributeTok{sd\_rad\_num   =} \FunctionTok{sd}\NormalTok{(rad\_num, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+\NormalTok{  )}
+\FunctionTok{glimpse}\NormalTok{(stratify\_resistance\_rad\_num)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 1
+## Columns: 5
+## $ resistance_streptomycin <dbl> 1
+## $ min_rad_num             <dbl> 1
+## $ max_rad_num             <dbl> 6
+## $ mean_rad_num            <dbl> 4.088235
+## $ sd_rad_num              <dbl> 1.864625
+\end{verbatim}
+
+\paragraph{Example of two categorical columns in one
+table}\label{example-of-two-categorical-columns-in-one-table}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{gender\_strep\_resistance }\OtherTok{\textless{}{-}}\NormalTok{ joined\_data }\SpecialCharTok{\%\textgreater{}\%}\NormalTok{ janitor}\SpecialCharTok{::}\FunctionTok{tabyl}\NormalTok{(gender,strep\_resistance\_level)}
+
+\NormalTok{gender\_strep\_resistance}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  gender modrate resistance sensitive
+##       0       5         19        35
+##       1       3         15        30
+\end{verbatim}
+
+\subsubsection{Task 4 Create plots that would help answer these
+questions:}\label{task-4-create-plots-that-would-help-answer-these-questions}
+
+\paragraph{\texorpdfstring{Are there any correlated measurements? (hint:
+\texttt{GGally::ggcorr} or search online for correlation matrix in R)
+?}{Are there any correlated measurements? (hint: GGally::ggcorr or search online for correlation matrix in R) ?}}\label{are-there-any-correlated-measurements-hint-ggallyggcorr-or-search-online-for-correlation-matrix-in-r}
+
+\begin{itemize}
+\item
+  For answering this questions , we made a heat map that shows the
+  correlation between each numerical variable
+\item
+  Selection of the numerical variable
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{correlation\_check }\OtherTok{\textless{}{-}}\NormalTok{ joined\_data }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{select}\NormalTok{(}\FunctionTok{where}\NormalTok{(is.numeric))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Plotting of the heat map for all the numerical variables
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggcorr}\NormalTok{(correlation\_check, }
+       \AttributeTok{label =} \ConstantTok{TRUE}\NormalTok{,                }\CommentTok{\# show correlation coefficients}
+       \AttributeTok{label\_round =} \DecValTok{2}\NormalTok{,             }\CommentTok{\# round decimals}
+       \AttributeTok{hjust =} \FloatTok{0.75}\NormalTok{, }\AttributeTok{size =} \DecValTok{3}\NormalTok{)      }\CommentTok{\# adjust label placement \& size}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{2025_09_05_Final_Document_files/figure-latex/unnamed-chunk-44-1.pdf}}
+
+\begin{itemize}
+\tightlist
+\item
+  comment: if we wanted to see the variable names
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{names}\NormalTok{(correlation\_check)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "patient_id"         "rad_num"            "baseline_temp"     
+## [4] "baseline_esr"       "baseline_temp_cels"
+\end{verbatim}
+
+\paragraph{\texorpdfstring{Does the erythrocyte sedimentation rate in mm
+per hour at baseline distribution depend on
+\texttt{gender}?}{Does the erythrocyte sedimentation rate in mm per hour at baseline distribution depend on gender?}}\label{does-the-erythrocyte-sedimentation-rate-in-mm-per-hour-at-baseline-distribution-depend-on-gender}
+
+\begin{itemize}
+\item
+  If we were to assign the names of the observation within the gender,
+  male = 1 , female = 0 joined\_data \textless- joined\_data
+  \%\textgreater\% mutate(gender = if\_else(gender, levels = c(0, 1),
+  labels = c(``Female'', ``Male'')))
+\item
+  Ploting the curve comaring between the male and female
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(joined\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ gender, }\AttributeTok{y =}\NormalTok{ baseline\_esr, }\AttributeTok{fill =}\NormalTok{ gender)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_jitter}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{color =} \StringTok{"black"}\NormalTok{), }\AttributeTok{width =} \FloatTok{0.2}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.6}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"1"} \OtherTok{=} \StringTok{"pink"}\NormalTok{, }\StringTok{"0"} \OtherTok{=} \StringTok{"red"}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_manual}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"1"} \OtherTok{=} \StringTok{"pink"}\NormalTok{, }\StringTok{"0"} \OtherTok{=} \StringTok{"red"}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Gender"}\NormalTok{, }\AttributeTok{y =} \StringTok{"ESR at baseline (mm/hr)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{2025_09_05_Final_Document_files/figure-latex/unnamed-chunk-46-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Gender"}\NormalTok{, }\AttributeTok{y =} \StringTok{"ESR at baseline (mm/hr)"}\NormalTok{) }\CommentTok{\# 0 is female and \# 1 is male}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## $x
+## [1] "Gender"
+## 
+## $y
+## [1] "ESR at baseline (mm/hr)"
+## 
+## attr(,"class")
+## [1] "labels"
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Note: While checking if the gender affect the baseline ESR (mm/hr), it
+  showed that gender does not affect the basline\_esr since the p value
+  is greater than 0.5.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{joined\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{t.test}\NormalTok{(baseline\_esr }\SpecialCharTok{\textasciitilde{}}\NormalTok{ gender, }\AttributeTok{data =}\NormalTok{ .) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  broom}\SpecialCharTok{::}\FunctionTok{tidy}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 10
+##   estimate estimate1 estimate2 statistic p.value parameter conf.low conf.high
+##      <dbl>     <dbl>     <dbl>     <dbl>   <dbl>     <dbl>    <dbl>     <dbl>
+## 1     3.12      59.2      56.1     0.677   0.500      101.    -6.02      12.2
+## # i 2 more variables: method <chr>, alternative <chr>
+\end{verbatim}
+
+\paragraph{Do erythrocyte sedimentation rate in mm per hour at baseline
+and baseline temperature have a linear
+relationship?}\label{do-erythrocyte-sedimentation-rate-in-mm-per-hour-at-baseline-and-baseline-temperature-have-a-linear-relationship}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#visual inspection}
+\NormalTok{joined\_data }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ baseline\_esr, }\AttributeTok{y =}\NormalTok{ baseline\_temp)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{geom\_smooth}\NormalTok{(}\AttributeTok{method =} \StringTok{"lm"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `geom_smooth()` using formula = 'y ~ x'
+\end{verbatim}
+
+\pandocbounded{\includegraphics[keepaspectratio]{2025_09_05_Final_Document_files/figure-latex/unnamed-chunk-48-1.pdf}}
+- Comment: the visual inspection suggests that erythrocyte sedimentation
+rate in mm per hour at baseline and baseline temperature seems to have a
+linear relation
+
+\subparagraph{running linear regression to
+confirm}\label{running-linear-regression-to-confirm}
+
+\begin{itemize}
+\tightlist
+\item
+  display numbers/p-values in standard (non-scientific) format
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{options}\NormalTok{(}\AttributeTok{scipen =} \DecValTok{999}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{joined\_data }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{lm}\NormalTok{(baseline\_esr }\SpecialCharTok{\textasciitilde{}}\NormalTok{ baseline\_temp, }\AttributeTok{data =}\NormalTok{ .) }\SpecialCharTok{\%\textgreater{}\%}
+\NormalTok{  broom}\SpecialCharTok{::}\FunctionTok{tidy}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2 x 5
+##   term          estimate std.error statistic    p.value
+##   <chr>            <dbl>     <dbl>     <dbl>      <dbl>
+## 1 (Intercept)    -785.      179.       -4.39 0.0000277 
+## 2 baseline_temp     8.37      1.78      4.71 0.00000771
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  very low p-value seems to align with the estimation made through
+  visual inspection above.
+\end{itemize}
+
+\subsubsection{Task 5}\label{task-5}
+
+\paragraph{Does the randomization arm depend on the
+gender?}\label{does-the-randomization-arm-depend-on-the-gender}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{glimpse}\NormalTok{(joined\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 107
+## Columns: 16
+## $ patient_id                            <dbl> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1~
+## $ gender                                <chr> "1", "0", "0", "1", "0", "1", "0~
+## $ arm                                   <chr> "Control", "Control", "Control",~
+## $ `dose_strep [g]`                      <chr> "No_dose", "No_dose", "No_dose",~
+## $ baseline_condition                    <chr> "good", "good", "good", "good", ~
+## $ baseline_cavitation                   <chr> "yes", "no", "no", "no", "no", "~
+## $ strep_resistance_level                <chr> "sensitive", "sensitive", "sensi~
+## $ strep_resistance                      <chr> "0-8", "0-8", "0-8", "0-8", "0-8~
+## $ `6m_radiologic`                       <chr> "Considerable_improvement", "Mod~
+## $ rad_num                               <dbl> 6, 5, 5, 5, 5, 6, 5, 5, 5, 5, 6,~
+## $ improved                              <lgl> TRUE, TRUE, TRUE, TRUE, TRUE, TR~
+## $ baseline_temp                         <dbl> 98.73150, 100.59308, 98.57415, 9~
+## $ baseline_esr                          <dbl> 16, 13, 26, 27, 49, 23, 45, 47, ~
+## $ status_after_high_dose_administration <chr> "not_resistant", "not_resistant"~
+## $ baseline_temp_cels                    <dbl> 37.62861, 38.66282, 37.54119, 37~
+## $ baseline_esr_quartiles                <fct> "(10.9,32.2]", "(10.9,32.2]", "(~
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{table}\NormalTok{(joined\_data}\SpecialCharTok{$}\NormalTok{arm, joined\_data}\SpecialCharTok{$}\NormalTok{gender)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##               
+##                 0  1
+##   Control      28 24
+##   Streptomycin 31 24
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{chisq.test}\NormalTok{(joined\_data}\SpecialCharTok{$}\NormalTok{arm, joined\_data}\SpecialCharTok{$}\NormalTok{gender) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  broom}\SpecialCharTok{::}\FunctionTok{tidy}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 4
+##   statistic p.value parameter method                                            
+##       <dbl>   <dbl>     <int> <chr>                                             
+## 1   0.00452   0.946         1 Pearson's Chi-squared test with Yates' continuity~
+\end{verbatim}
+
+-- Comment: since the p value is 0.946, at the significance level of
+95\% confidence interval,we can conclude that randomization does not
+depend on the gender.
+
+\paragraph{Does the randomization arm depend on erythrocyte
+sedimentation rate in mm per hour at
+baseline?}\label{does-the-randomization-arm-depend-on-erythrocyte-sedimentation-rate-in-mm-per-hour-at-baseline}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{glimpse}\NormalTok{(joined\_data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 107
+## Columns: 16
+## $ patient_id                            <dbl> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1~
+## $ gender                                <chr> "1", "0", "0", "1", "0", "1", "0~
+## $ arm                                   <chr> "Control", "Control", "Control",~
+## $ `dose_strep [g]`                      <chr> "No_dose", "No_dose", "No_dose",~
+## $ baseline_condition                    <chr> "good", "good", "good", "good", ~
+## $ baseline_cavitation                   <chr> "yes", "no", "no", "no", "no", "~
+## $ strep_resistance_level                <chr> "sensitive", "sensitive", "sensi~
+## $ strep_resistance                      <chr> "0-8", "0-8", "0-8", "0-8", "0-8~
+## $ `6m_radiologic`                       <chr> "Considerable_improvement", "Mod~
+## $ rad_num                               <dbl> 6, 5, 5, 5, 5, 6, 5, 5, 5, 5, 6,~
+## $ improved                              <lgl> TRUE, TRUE, TRUE, TRUE, TRUE, TR~
+## $ baseline_temp                         <dbl> 98.73150, 100.59308, 98.57415, 9~
+## $ baseline_esr                          <dbl> 16, 13, 26, 27, 49, 23, 45, 47, ~
+## $ status_after_high_dose_administration <chr> "not_resistant", "not_resistant"~
+## $ baseline_temp_cels                    <dbl> 37.62861, 38.66282, 37.54119, 37~
+## $ baseline_esr_quartiles                <fct> "(10.9,32.2]", "(10.9,32.2]", "(~
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{joined\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{t.test}\NormalTok{(baseline\_esr }\SpecialCharTok{\textasciitilde{}}\NormalTok{ arm, }\AttributeTok{data =}\NormalTok{ .) }\SpecialCharTok{\%\textgreater{}\%} 
+\NormalTok{  broom}\SpecialCharTok{::}\FunctionTok{tidy}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 10
+##   estimate estimate1 estimate2 statistic p.value parameter conf.low conf.high
+##      <dbl>     <dbl>     <dbl>     <dbl>   <dbl>     <dbl>    <dbl>     <dbl>
+## 1    -4.17      55.7      59.8    -0.907   0.366      102.    -13.3      4.94
+## # i 2 more variables: method <chr>, alternative <chr>
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Comment: since the p-value is 0.366, at the significance level of 95\%
+  confidence interval, we can conclude that randomization does not
+  depend of erythrocyte sedimentation rate in mm per hour at baseline.
+\end{itemize}
+
+\subparagraph{Is there an association between streptomycin resistance
+after 6 months of therapy and erythrocyte sedimentation rate in mm per
+hour at
+baseline?}\label{is-there-an-association-between-streptomycin-resistance-after-6-months-of-therapy-and-erythrocyte-sedimentation-rate-in-mm-per-hour-at-baseline}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{joined\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{baseline\_esr =} \FunctionTok{log}\NormalTok{(baseline\_esr)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{aov}\NormalTok{(baseline\_esr }\SpecialCharTok{\textasciitilde{}}\NormalTok{ strep\_resistance\_level, }\AttributeTok{data =}\NormalTok{.) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summary}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                         Df Sum Sq Mean Sq F value Pr(>F)  
+## strep_resistance_level   2  1.486  0.7431   3.082 0.0501 .
+## Residuals              103 24.835  0.2411                 
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 1 observation deleted due to missingness
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  Comment: I made anova test to do that because I have continues and
+  categorical data which need to use anova the p-value is not
+  statistically significant = 0.05, that's why strep resistance level
+  don't affect the baseline-esr.
+\end{itemize}
+
+\subparagraph{According to the data, was there a difference of baseline
+temperature between different Likert score rating of radiologic response
+on chest x-ray at 6 months
+categories?}\label{according-to-the-data-was-there-a-difference-of-baseline-temperature-between-different-likert-score-rating-of-radiologic-response-on-chest-x-ray-at-6-months-categories}
+
+\begin{itemize}
+\tightlist
+\item
+  One way ANOVA
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{joined\_data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{baseline\_esr =} \FunctionTok{log}\NormalTok{(baseline\_esr)) }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{aov}\NormalTok{(baseline\_esr }\SpecialCharTok{\textasciitilde{}} \StringTok{\textasciigrave{}}\AttributeTok{6m\_radiologic}\StringTok{\textasciigrave{}}\NormalTok{ , }\AttributeTok{data =}\NormalTok{.) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summary}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                  Df Sum Sq Mean Sq F value   Pr(>F)    
+## `6m_radiologic`   5  5.445  1.0890   5.216 0.000269 ***
+## Residuals       100 20.877  0.2088                     
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 1 observation deleted due to missingness
+\end{verbatim}
+
+\begin{itemize}
+\tightlist
+\item
+  comment: the results show that the p-value is less than 0.05,
+  suggesting there is a statistically significant difference in baseline
+  temperature across different Likert score categories of 6-month
+  radiologic response
+\end{itemize}
+
+\end{document}
