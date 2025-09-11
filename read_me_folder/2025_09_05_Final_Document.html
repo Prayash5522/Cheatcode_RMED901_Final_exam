@@ -11,7 +11,7 @@
 
 
 
-<title>2025_09_05_Final_Document</title>
+<title>2025_09_05_Final_Document.knit</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -354,18 +354,1530 @@ display: none;
 
 <div id="cheatcode_rmed901_final_exam" class="section level1">
 <h1>Cheatcode_RMED901_Final_exam</h1>
-<p>Final group work</p>
+<p>Prayash Chaudhary, Omar Omar, Osman Osman</p>
 <div id="introduction" class="section level2">
 <h2>Introduction</h2>
+<p>The UiB organized a two weeks course on R programming language for
+the PhD students in the medical faculty. The overall aim of the course
+is to equip students with the valuable skills in data management, data
+analysis, visualization, and coding. During the two weeks course we
+learned the basics of R and we worked with the historical clinical trial
+dataset to practice data handling and analysis. The dataset comes from
+the 1948 Streptomycin for Tuberculosis trial whereby 107 were randomly
+assigned to take either sterptomycin (2g) daily or placebo. The dataset
+has been adopted for teaching purposes and contains information on
+patient demographics, baseline conditions, treatment assignment and six
+month outcomes.</p>
 </div>
-<div id="methods" class="section level2">
-<h2>Methods</h2>
+<div id="tasks" class="section level2">
+<h2>Tasks</h2>
+<div id="task-1-create-an-rstudio-project-and-github-repository" class="section level3">
+<h3>Task 1 Create an RStudio project and GitHub repository</h3>
+<p>The GitHub repository can be assessed with the following link: <a href="https://github.com/Prayash5522/Cheatcode_RMED901_Final_exam" class="uri">https://github.com/Prayash5522/Cheatcode_RMED901_Final_exam</a></p>
 </div>
-<div id="results" class="section level2">
-<h2>Results</h2>
+<div id="task-2-read-and-tidy-the-dataset" class="section level3">
+<h3>Task 2 Read and tidy the dataset</h3>
+<pre class="r"><code>library(here)
+library(skimr)
+library(naniar)
+library(ggplot2)
+library(GGally)
+library(janitor)
+library(tidyverse)</code></pre>
+<pre class="r"><code>original_data &lt;- read_delim(here(&quot;data&quot;, &quot;2025_09_05_original_exam_data.txt&quot;))</code></pre>
+<div id="understanding-the-data" class="section level4">
+<h4>Understanding the data</h4>
+<pre class="r"><code>skimr::skim(original_data)</code></pre>
+<table>
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">original_data</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">141</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">14</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">8</td>
+</tr>
+<tr class="odd">
+<td align="left">logical</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">numeric</td>
+<td align="left">5</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table>
+<colgroup>
+<col width="25%" />
+<col width="12%" />
+<col width="17%" />
+<col width="5%" />
+<col width="5%" />
+<col width="7%" />
+<col width="11%" />
+<col width="14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">gender</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">gender_arm</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">9</td>
+<td align="right">14</td>
+<td align="right">0</td>
+<td align="right">4</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">baseline_condition</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">baseline_temp_cat</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">14</td>
+<td align="right">23</td>
+<td align="right">0</td>
+<td align="right">4</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">baseline_esr_cat</td>
+<td align="right">1</td>
+<td align="right">0.99</td>
+<td align="right">5</td>
+<td align="right">7</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">baseline_cavitation</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">strep_resistance</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">10</td>
+<td align="right">13</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">6m_radiologic</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">7</td>
+<td align="right">28</td>
+<td align="right">0</td>
+<td align="right">6</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: logical</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="left">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">improved</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0.51</td>
+<td align="left">TRU: 72, FAL: 69</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<colgroup>
+<col width="17%" />
+<col width="11%" />
+<col width="16%" />
+<col width="9%" />
+<col width="7%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="5%" />
+<col width="7%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">patient_id</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">57.50</td>
+<td align="right">30.49</td>
+<td align="right">1</td>
+<td align="right">32</td>
+<td align="right">60</td>
+<td align="right">83</td>
+<td align="right">107</td>
+<td align="left">▆▆▇▇▇</td>
+</tr>
+<tr class="even">
+<td align="left">month</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">6.60</td>
+<td align="right">3.49</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">7</td>
+<td align="right">9</td>
+<td align="right">12</td>
+<td align="left">▇▃▅▇▇</td>
+</tr>
+<tr class="odd">
+<td align="left">year</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">2009.06</td>
+<td align="right">0.77</td>
+<td align="right">2008</td>
+<td align="right">2008</td>
+<td align="right">2009</td>
+<td align="right">2010</td>
+<td align="right">2010</td>
+<td align="left">▅▁▇▁▆</td>
+</tr>
+<tr class="even">
+<td align="left">dose_strep [g]</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1.15</td>
+<td align="right">0.99</td>
+<td align="right">0</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="right">2</td>
+<td align="left">▆▁▁▁▇</td>
+</tr>
+<tr class="odd">
+<td align="left">rad_num</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">3.92</td>
+<td align="right">1.88</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">5</td>
+<td align="right">6</td>
+<td align="right">6</td>
+<td align="left">▇▅▁▆▇</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>NOTE: Separate baseline_condition into two parts but before that
+checking if 1 = good and so on and there are not any values where 1 or
+any other number is assigned to more than one category</li>
+</ul>
+<pre class="r"><code>original_data %&gt;% count(baseline_condition)</code></pre>
+<pre><code>## # A tibble: 3 × 2
+##   baseline_condition     n
+##   &lt;chr&gt;              &lt;int&gt;
+## 1 1_Good                20
+## 2 2_Fair                49
+## 3 3_Poor                72</code></pre>
+<ul>
+<li>Comment: we find just 3 unique values: 1_good, 2_fair and 3_poor so
+now we are good to separate the baseline_condition into two part
+first</li>
+</ul>
 </div>
-<div id="conclusion" class="section level2">
-<h2>Conclusion</h2>
+<div id="separating-baseline_condition" class="section level4">
+<h4>Separating baseline_condition</h4>
+<pre class="r"><code>original_data &lt;- original_data %&gt;% 
+  separate(baseline_condition, into = c(&quot;condition_number&quot;, &quot;baseline_condition&quot;))</code></pre>
+<div id="keeping-the-condition-number-while-dropping-variable-baseline_condition-and-rename-it-to-good-fair-and-poor" class="section level6">
+<h6>Keeping the condition number while dropping variable
+baseline_condition and rename it to “good”, “fair” and “poor”</h6>
+<pre class="r"><code>original_data &lt;- original_data %&gt;% select(-baseline_condition)</code></pre>
+<pre class="r"><code>original_data &lt;- original_data %&gt;% rename(baseline_condition = &quot;condition_number&quot;)
+
+original_data &lt;- original_data %&gt;% 
+  mutate(baseline_condition = if_else(baseline_condition == 1, &quot;good&quot;, baseline_condition),
+         baseline_condition = if_else(baseline_condition == 2, &quot;fair&quot;, baseline_condition),
+         baseline_condition = if_else(baseline_condition == 3, &quot;poor&quot;, baseline_condition))</code></pre>
+<ul>
+<li>We seperated the gender_arm variable into two variables , one of
+them contain the gender and the other contain the arm</li>
+</ul>
+</div>
+<div id="delete-the-gender_arm-variable" class="section level5">
+<h5>Delete the gender_arm variable</h5>
+<pre class="r"><code>original_data &lt;- original_data %&gt;% 
+      mutate(arm = sub(&quot;.*_&quot;, &quot;&quot;, gender_arm)) %&gt;%
+      select(-gender_arm) 
+original_data </code></pre>
+<pre><code>## # A tibble: 141 × 14
+##    patient_id month  year gender `dose_strep [g]` baseline_condition
+##         &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;             
+##  1          1     1  2009 M                     0 good              
+##  2          2     3  2008 F                     0 good              
+##  3          3    11  2010 F                     0 good              
+##  4          4    11  2008 M                     0 good              
+##  5          5     3  2009 F                     0 good              
+##  6          6     5  2008 M                     0 good              
+##  7          7     2  2009 F                     0 good              
+##  8          8     4  2008 M                     0 good              
+##  9          9    10  2010 F                     0 fair              
+## 10         10     9  2008 M                     0 fair              
+## # ℹ 131 more rows
+## # ℹ 8 more variables: baseline_temp_cat &lt;chr&gt;, baseline_esr_cat &lt;chr&gt;,
+## #   baseline_cavitation &lt;chr&gt;, strep_resistance &lt;chr&gt;, `6m_radiologic` &lt;chr&gt;,
+## #   rad_num &lt;dbl&gt;, improved &lt;lgl&gt;, arm &lt;chr&gt;</code></pre>
+</div>
+</div>
+<div id="save-the-changes-in-a-new-data_set" class="section level4">
+<h4>Save the changes in a new data_set</h4>
+<pre class="r"><code>fileName &lt;- paste0(&quot;2025_09_05_tidy_version_day1&quot;, &quot;.txt&quot;)
+
+write_delim(
+  original_data, 
+  file = here(&quot;data&quot;, fileName),
+  delim = &quot;\t&quot;
+)</code></pre>
+<div id="we-rename-the-coloumn-strep_resistance-and-seperated-it-into-two-coloumns-which-called-strep_resistance_level" class="section level5">
+<h5>We rename the coloumn strep_resistance, and seperated it into two
+coloumns which called strep_resistance_level,</h5>
+<p>– strep_resistance</p>
+<pre class="r"><code>original_data &lt;- original_data %&gt;%
+  separate(strep_resistance, into = c(&quot;strep&quot;, &quot;resistance&quot;), sep = &quot;_&quot;, extra = &quot;merge&quot;)
+
+print(original_data)</code></pre>
+<pre><code>## # A tibble: 141 × 15
+##    patient_id month  year gender `dose_strep [g]` baseline_condition
+##         &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;             
+##  1          1     1  2009 M                     0 good              
+##  2          2     3  2008 F                     0 good              
+##  3          3    11  2010 F                     0 good              
+##  4          4    11  2008 M                     0 good              
+##  5          5     3  2009 F                     0 good              
+##  6          6     5  2008 M                     0 good              
+##  7          7     2  2009 F                     0 good              
+##  8          8     4  2008 M                     0 good              
+##  9          9    10  2010 F                     0 fair              
+## 10         10     9  2008 M                     0 fair              
+## # ℹ 131 more rows
+## # ℹ 9 more variables: baseline_temp_cat &lt;chr&gt;, baseline_esr_cat &lt;chr&gt;,
+## #   baseline_cavitation &lt;chr&gt;, strep &lt;chr&gt;, resistance &lt;chr&gt;,
+## #   `6m_radiologic` &lt;chr&gt;, rad_num &lt;dbl&gt;, improved &lt;lgl&gt;, arm &lt;chr&gt;</code></pre>
+<pre class="r"><code>original_data &lt;- original_data %&gt;% 
+  mutate(strep = if_else(strep == 1, &quot;sensitive&quot;, strep),
+         strep = if_else(strep == 2, &quot;modrate&quot;, strep),
+         strep = if_else(strep == 3, &quot;resistance&quot;, strep))
+
+original_data &lt;- original_data %&gt;%
+  separate(resistance, into = c(&quot;resistance&quot;, &quot;concenteration_after_six_months&quot;), sep = &quot;_&quot;, extra = &quot;merge&quot;)
+
+print(original_data)</code></pre>
+<pre><code>## # A tibble: 141 × 16
+##    patient_id month  year gender `dose_strep [g]` baseline_condition
+##         &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;             
+##  1          1     1  2009 M                     0 good              
+##  2          2     3  2008 F                     0 good              
+##  3          3    11  2010 F                     0 good              
+##  4          4    11  2008 M                     0 good              
+##  5          5     3  2009 F                     0 good              
+##  6          6     5  2008 M                     0 good              
+##  7          7     2  2009 F                     0 good              
+##  8          8     4  2008 M                     0 good              
+##  9          9    10  2010 F                     0 fair              
+## 10         10     9  2008 M                     0 fair              
+## # ℹ 131 more rows
+## # ℹ 10 more variables: baseline_temp_cat &lt;chr&gt;, baseline_esr_cat &lt;chr&gt;,
+## #   baseline_cavitation &lt;chr&gt;, strep &lt;chr&gt;, resistance &lt;chr&gt;,
+## #   concenteration_after_six_months &lt;chr&gt;, `6m_radiologic` &lt;chr&gt;,
+## #   rad_num &lt;dbl&gt;, improved &lt;lgl&gt;, arm &lt;chr&gt;</code></pre>
+<pre class="r"><code>original_data &lt;- original_data %&gt;%
+  rename(strep_resistance_level = strep)
+
+original_data &lt;- original_data %&gt;%
+  rename(strep_resistance = concenteration_after_six_months)
+
+original_data &lt;- original_data %&gt;% select(-resistance)</code></pre>
+</div>
+</div>
+<div id="dividing-baseline_temp_cat-into-fahrenheit-and-celsius" class="section level4">
+<h4>Dividing baseline_temp_cat into Fahrenheit and Celsius</h4>
+<pre class="r"><code>original_data &lt;- original_data %&gt;% 
+  separate(baseline_temp_cat, into = c(&quot;number_temp&quot;, &quot;baseline_temp&quot;), 
+           sep = 2) %&gt;% select(-number_temp) %&gt;% 
+  separate_wider_delim(baseline_temp, &quot;/&quot;, names = c(&quot;baseline_temp_fahren&quot;, &quot;baseline_temp_cels&quot;))
+
+original_data &lt;- original_data %&gt;% 
+  separate(baseline_temp_cels, into = c(&quot;baseline_temp_cels&quot; , &quot;number&quot;),
+           sep = -1) %&gt;% select(-number)
+
+original_data &lt;- original_data %&gt;% 
+  separate(baseline_temp_fahren, into = c(&quot;baseline_temp_fahren&quot; , &quot;number&quot;),
+           sep = -1) %&gt;% select(-number)</code></pre>
+</div>
+<div id="dividing-baseline_esr_cat-variable" class="section level4">
+<h4>Dividing baseline_esr_cat variable</h4>
+<pre class="r"><code>original_data &lt;- original_data %&gt;% 
+  separate(baseline_esr_cat, into = c(NA, &quot;baseline_esr_cat&quot;), sep = 2)</code></pre>
+</div>
+<div id="dividing-6m_radiologica" class="section level4">
+<h4>Dividing 6m_radiologica</h4>
+<pre class="r"><code>original_data &lt;- original_data %&gt;% 
+  separate(`6m_radiologic`, into = c(NA, &quot;6m_radiologic&quot;), sep = 2)</code></pre>
+</div>
+<div id="saving-the-tidy-dataset" class="section level4">
+<h4>Saving the tidy dataset</h4>
+<pre class="r"><code>fileName &lt;- paste0(&quot;2025_09_08_tidy_version_day2&quot;, &quot;.txt&quot;)
+
+write_delim(
+  original_data, 
+  file = here(&quot;data&quot;, fileName),
+  delim = &quot;\t&quot;
+)</code></pre>
+</div>
+</div>
+<div id="task-3-tidy-adjust-and-explore" class="section level3">
+<h3>Task 3 Tidy, adjust, and explore</h3>
+<div id="reading-the-tidy-dataset" class="section level4">
+<h4>Reading the tidy dataset</h4>
+<pre class="r"><code>tidy_data_day_2 &lt;- read_delim(here(&quot;data&quot;, &quot;2025_09_08_tidy_version_day2.txt&quot;))</code></pre>
+<pre><code>## Rows: 141 Columns: 16
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;\t&quot;
+## chr (10): gender, baseline_condition, baseline_temp_fahren, baseline_temp_ce...
+## dbl  (5): patient_id, month, year, dose_strep [g], rad_num
+## lgl  (1): improved
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div id="removing--year--month--baseline_esr_cat-variables" class="section level4">
+<h4>Removing -year, -month, -baseline_esr_cat variables</h4>
+<pre class="r"><code>tidy_data_day_2 &lt;- tidy_data_day_2 %&gt;% select(-year, -month, -baseline_esr_cat)
+
+glimpse(tidy_data_day_2)</code></pre>
+<pre><code>## Rows: 141
+## Columns: 13
+## $ patient_id             &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, …
+## $ gender                 &lt;chr&gt; &quot;M&quot;, &quot;F&quot;, &quot;F&quot;, &quot;M&quot;, &quot;F&quot;, &quot;M&quot;, &quot;F&quot;, &quot;M&quot;, &quot;F&quot;, &quot;M…
+## $ `dose_strep [g]`       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ baseline_condition     &lt;chr&gt; &quot;good&quot;, &quot;good&quot;, &quot;good&quot;, &quot;good&quot;, &quot;good&quot;, &quot;good&quot;,…
+## $ baseline_temp_fahren   &lt;chr&gt; &quot;&lt;=98.9&quot;, &quot;100-100.9&quot;, &quot;&lt;=98.9&quot;, &quot;&lt;=98.9&quot;, &quot;99-…
+## $ baseline_temp_cels     &lt;chr&gt; &quot;37.2&quot;, &quot;37.8-38.2&quot;, &quot;37.2&quot;, &quot;37.2&quot;, &quot;37.3-37.7…
+## $ baseline_cavitation    &lt;chr&gt; &quot;yes&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;yes&quot;, &quot;ye…
+## $ strep_resistance_level &lt;chr&gt; &quot;sensitive&quot;, &quot;sensitive&quot;, &quot;sensitive&quot;, &quot;sensiti…
+## $ strep_resistance       &lt;chr&gt; &quot;0-8&quot;, &quot;0-8&quot;, &quot;0-8&quot;, &quot;0-8&quot;, &quot;0-8&quot;, &quot;0-8&quot;, &quot;0-8&quot;…
+## $ `6m_radiologic`        &lt;chr&gt; &quot;Considerable_improvement&quot;, &quot;Moderate_improveme…
+## $ rad_num                &lt;dbl&gt; 6, 5, 5, 5, 5, 6, 5, 5, 5, 5, 6, 5, 5, 5, 5, 6,…
+## $ improved               &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE,…
+## $ arm                    &lt;chr&gt; &quot;Control&quot;, &quot;Control&quot;, &quot;Control&quot;, &quot;Control&quot;, &quot;Co…</code></pre>
+<ul>
+<li>We removed the duplicates from the tidy_data_day_2 using the
+patient_id coloumn</li>
+</ul>
+<pre class="r"><code>tidy_data_day_2 &lt;- tidy_data_day_2 %&gt;%
+  distinct(patient_id, .keep_all = TRUE)</code></pre>
+</div>
+<div id="import-and-assign-the-additional-data-set" class="section level4">
+<h4>Import and assign the additional data set</h4>
+<pre class="r"><code>Additiona_data &lt;- read_delim(here(&quot;data&quot;, &quot;2025_09_05_original_exam_data_join.txt&quot;))</code></pre>
+<pre><code>## Rows: 107 Columns: 3
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;\t&quot;
+## dbl (3): patient_id, baseline_temp, baseline_esr
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div id="arrang-both-data-sets-tidy_data_day_2-and-the-additiona_data-by-the-patient_id" class="section level4">
+<h4>Arrang both data sets tidy_data_day_2 and the Additiona_data by the
+patient_id</h4>
+<pre class="r"><code>tidy_data_day_2 &lt;- tidy_data_day_2%&gt;%
+  arrange(patient_id)
+
+Additiona_data &lt;- Additiona_data%&gt;%
+  arrange(patient_id)
+
+glimpse(Additiona_data)</code></pre>
+<pre><code>## Rows: 107
+## Columns: 3
+## $ patient_id    &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 1…
+## $ baseline_temp &lt;dbl&gt; 98.73150, 100.59308, 98.57415, 98.56376, 99.17978, 100.3…
+## $ baseline_esr  &lt;dbl&gt; 16, 13, 26, 27, 49, 23, 45, 47, 25, 38, 28, 29, 22, 22, …</code></pre>
+</div>
+<div id="joining-the-tidy_data_day_2-and-the-additiona_data-into-one-file" class="section level4">
+<h4>Joining the tidy_data_day_2 and the Additiona_data into one
+file</h4>
+<pre class="r"><code>joined_data &lt;- tidy_data_day_2 %&gt;%
+  left_join(Additiona_data, by = &quot;patient_id&quot;)
+
+glimpse(joined_data)</code></pre>
+<pre><code>## Rows: 107
+## Columns: 15
+## $ patient_id             &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, …
+## $ gender                 &lt;chr&gt; &quot;M&quot;, &quot;F&quot;, &quot;F&quot;, &quot;M&quot;, &quot;F&quot;, &quot;M&quot;, &quot;F&quot;, &quot;M&quot;, &quot;F&quot;, &quot;M…
+## $ `dose_strep [g]`       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,…
+## $ baseline_condition     &lt;chr&gt; &quot;good&quot;, &quot;good&quot;, &quot;good&quot;, &quot;good&quot;, &quot;good&quot;, &quot;good&quot;,…
+## $ baseline_temp_fahren   &lt;chr&gt; &quot;&lt;=98.9&quot;, &quot;100-100.9&quot;, &quot;&lt;=98.9&quot;, &quot;&lt;=98.9&quot;, &quot;99-…
+## $ baseline_temp_cels     &lt;chr&gt; &quot;37.2&quot;, &quot;37.8-38.2&quot;, &quot;37.2&quot;, &quot;37.2&quot;, &quot;37.3-37.7…
+## $ baseline_cavitation    &lt;chr&gt; &quot;yes&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;yes&quot;, &quot;ye…
+## $ strep_resistance_level &lt;chr&gt; &quot;sensitive&quot;, &quot;sensitive&quot;, &quot;sensitive&quot;, &quot;sensiti…
+## $ strep_resistance       &lt;chr&gt; &quot;0-8&quot;, &quot;0-8&quot;, &quot;0-8&quot;, &quot;0-8&quot;, &quot;0-8&quot;, &quot;0-8&quot;, &quot;0-8&quot;…
+## $ `6m_radiologic`        &lt;chr&gt; &quot;Considerable_improvement&quot;, &quot;Moderate_improveme…
+## $ rad_num                &lt;dbl&gt; 6, 5, 5, 5, 5, 6, 5, 5, 5, 5, 6, 5, 5, 5, 5, 6,…
+## $ improved               &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE,…
+## $ arm                    &lt;chr&gt; &quot;Control&quot;, &quot;Control&quot;, &quot;Control&quot;, &quot;Control&quot;, &quot;Co…
+## $ baseline_temp          &lt;dbl&gt; 98.73150, 100.59308, 98.57415, 98.56376, 99.179…
+## $ baseline_esr           &lt;dbl&gt; 16, 13, 26, 27, 49, 23, 45, 47, 25, 38, 28, 29,…</code></pre>
+</div>
+<div id="saving-the-joined_data" class="section level4">
+<h4>Saving the joined_data</h4>
+<pre class="r"><code>fileName &lt;- paste0(&quot;2025_09_08_joined_data_day2&quot;, &quot;.txt&quot;)
+
+write_delim(
+  joined_data, 
+  file = here(&quot;data&quot;, fileName),
+  delim = &quot;\t&quot;
+)</code></pre>
+</div>
+<div id="creating-a-set-of-new-columns" class="section level4">
+<h4>Creating a set of new columns</h4>
+<div id="reading-the-joined-dataset" class="section level5">
+<h5>Reading the joined dataset</h5>
+<pre class="r"><code>joined_data &lt;- read_delim(here(&quot;data&quot;, &quot;2025_09_08_joined_data_day2.txt&quot;))</code></pre>
+<pre><code>## Rows: 107 Columns: 15
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;\t&quot;
+## chr (9): gender, baseline_condition, baseline_temp_fahren, baseline_temp_cel...
+## dbl (5): patient_id, dose_strep [g], rad_num, baseline_temp, baseline_esr
+## lgl (1): improved
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div id="a-column-showing-gender-as-0-or-1-instead-of-f-or-m" class="section level5">
+<h5>A column showing gender as “0” or “1” instead of “F” or “M”</h5>
+<pre class="r"><code>joined_data &lt;- joined_data %&gt;%
+  mutate(gender = ifelse(gender == &quot;F&quot;, 0, gender),
+         gender = ifelse(gender == &quot;M&quot;, 1, gender))</code></pre>
+</div>
+<div id="a-coloumn-that-showes-the-strep-resistance-after-the-addministration-of-the-high-dose" class="section level5">
+<h5>A coloumn that showes the strep resistance after the addministration
+of the high dose</h5>
+<ul>
+<li>changing the values in the dose strep from 0-2 to no dose and high
+dose</li>
+</ul>
+<pre class="r"><code>joined_data &lt;- joined_data %&gt;%
+  mutate(`dose_strep [g]` = case_when(
+    `dose_strep [g]` == 0 ~ &quot;No_dose&quot;,
+    `dose_strep [g]` == 2 ~ &quot;high_dose&quot;,
+    TRUE ~ as.character(`dose_strep [g]`)
+  ))</code></pre>
+</div>
+<div id="creating-a-new-column-that-shows-the-resistance" class="section level5">
+<h5>Creating a new column that shows the resistance</h5>
+<pre class="r"><code>joined_data &lt;- joined_data %&gt;%
+  mutate(
+    status_after_high_dose_administration = case_when(
+      `dose_strep [g]` == &quot;high_dose&quot; &amp; strep_resistance_level == &quot;resistance&quot; ~ &quot;resistant&quot;,
+      `dose_strep [g]` == &quot;high_dose&quot; &amp; strep_resistance_level == &quot;sensitive&quot; ~ &quot;not_resistant&quot;, 
+      `dose_strep [g]` == &quot;high_dose&quot; &amp; strep_resistance_level == &quot;modrate&quot; ~ &quot;not_resistant&quot;,  # Fixed spelling
+      `dose_strep [g]` == &quot;No_dose&quot; ~ &quot;not_resistant&quot;,
+      TRUE ~ &quot;Unknown&quot;
+    )
+  )</code></pre>
+</div>
+<div id="mutate-temperature-in-celsius" class="section level5">
+<h5>Mutate temperature in celsius</h5>
+<pre class="r"><code>glimpse(joined_data)</code></pre>
+<pre><code>## Rows: 107
+## Columns: 16
+## $ patient_id                            &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1…
+## $ gender                                &lt;chr&gt; &quot;1&quot;, &quot;0&quot;, &quot;0&quot;, &quot;1&quot;, &quot;0&quot;, &quot;1&quot;, &quot;0…
+## $ `dose_strep [g]`                      &lt;chr&gt; &quot;No_dose&quot;, &quot;No_dose&quot;, &quot;No_dose&quot;,…
+## $ baseline_condition                    &lt;chr&gt; &quot;good&quot;, &quot;good&quot;, &quot;good&quot;, &quot;good&quot;, …
+## $ baseline_temp_fahren                  &lt;chr&gt; &quot;&lt;=98.9&quot;, &quot;100-100.9&quot;, &quot;&lt;=98.9&quot;,…
+## $ baseline_temp_cels                    &lt;chr&gt; &quot;37.2&quot;, &quot;37.8-38.2&quot;, &quot;37.2&quot;, &quot;37…
+## $ baseline_cavitation                   &lt;chr&gt; &quot;yes&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;…
+## $ strep_resistance_level                &lt;chr&gt; &quot;sensitive&quot;, &quot;sensitive&quot;, &quot;sensi…
+## $ strep_resistance                      &lt;chr&gt; &quot;0-8&quot;, &quot;0-8&quot;, &quot;0-8&quot;, &quot;0-8&quot;, &quot;0-8…
+## $ `6m_radiologic`                       &lt;chr&gt; &quot;Considerable_improvement&quot;, &quot;Mod…
+## $ rad_num                               &lt;dbl&gt; 6, 5, 5, 5, 5, 6, 5, 5, 5, 5, 6,…
+## $ improved                              &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TR…
+## $ arm                                   &lt;chr&gt; &quot;Control&quot;, &quot;Control&quot;, &quot;Control&quot;,…
+## $ baseline_temp                         &lt;dbl&gt; 98.73150, 100.59308, 98.57415, 9…
+## $ baseline_esr                          &lt;dbl&gt; 16, 13, 26, 27, 49, 23, 45, 47, …
+## $ status_after_high_dose_administration &lt;chr&gt; &quot;not_resistant&quot;, &quot;not_resistant&quot;…</code></pre>
+<ul>
+<li>since we had created temperature variable in Fahrenheit and Celsius
+with the first baseline dataset, even before joining the data, we will
+drop the ones created before joining the data and use the baseline
+temperature from the data which was joined later</li>
+</ul>
+<pre class="r"><code>joined_data &lt;- joined_data %&gt;% select(-baseline_temp_fahren, -baseline_temp_cels)
+
+glimpse(joined_data)</code></pre>
+<pre><code>## Rows: 107
+## Columns: 14
+## $ patient_id                            &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1…
+## $ gender                                &lt;chr&gt; &quot;1&quot;, &quot;0&quot;, &quot;0&quot;, &quot;1&quot;, &quot;0&quot;, &quot;1&quot;, &quot;0…
+## $ `dose_strep [g]`                      &lt;chr&gt; &quot;No_dose&quot;, &quot;No_dose&quot;, &quot;No_dose&quot;,…
+## $ baseline_condition                    &lt;chr&gt; &quot;good&quot;, &quot;good&quot;, &quot;good&quot;, &quot;good&quot;, …
+## $ baseline_cavitation                   &lt;chr&gt; &quot;yes&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;…
+## $ strep_resistance_level                &lt;chr&gt; &quot;sensitive&quot;, &quot;sensitive&quot;, &quot;sensi…
+## $ strep_resistance                      &lt;chr&gt; &quot;0-8&quot;, &quot;0-8&quot;, &quot;0-8&quot;, &quot;0-8&quot;, &quot;0-8…
+## $ `6m_radiologic`                       &lt;chr&gt; &quot;Considerable_improvement&quot;, &quot;Mod…
+## $ rad_num                               &lt;dbl&gt; 6, 5, 5, 5, 5, 6, 5, 5, 5, 5, 6,…
+## $ improved                              &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TR…
+## $ arm                                   &lt;chr&gt; &quot;Control&quot;, &quot;Control&quot;, &quot;Control&quot;,…
+## $ baseline_temp                         &lt;dbl&gt; 98.73150, 100.59308, 98.57415, 9…
+## $ baseline_esr                          &lt;dbl&gt; 16, 13, 26, 27, 49, 23, 45, 47, …
+## $ status_after_high_dose_administration &lt;chr&gt; &quot;not_resistant&quot;, &quot;not_resistant&quot;…</code></pre>
+<ul>
+<li><p>now only baseline_temp variable is remaining which is in
+Fahrenheit</p></li>
+<li><p>now we will mutate celsius variable using celcius = (°F - 32) ÷
+(9/5)</p></li>
+</ul>
+<pre class="r"><code>joined_data &lt;- joined_data %&gt;% 
+  mutate(baseline_temp_cels = (baseline_temp - 31)/(9/5))
+
+
+glimpse(joined_data)</code></pre>
+<pre><code>## Rows: 107
+## Columns: 15
+## $ patient_id                            &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1…
+## $ gender                                &lt;chr&gt; &quot;1&quot;, &quot;0&quot;, &quot;0&quot;, &quot;1&quot;, &quot;0&quot;, &quot;1&quot;, &quot;0…
+## $ `dose_strep [g]`                      &lt;chr&gt; &quot;No_dose&quot;, &quot;No_dose&quot;, &quot;No_dose&quot;,…
+## $ baseline_condition                    &lt;chr&gt; &quot;good&quot;, &quot;good&quot;, &quot;good&quot;, &quot;good&quot;, …
+## $ baseline_cavitation                   &lt;chr&gt; &quot;yes&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;…
+## $ strep_resistance_level                &lt;chr&gt; &quot;sensitive&quot;, &quot;sensitive&quot;, &quot;sensi…
+## $ strep_resistance                      &lt;chr&gt; &quot;0-8&quot;, &quot;0-8&quot;, &quot;0-8&quot;, &quot;0-8&quot;, &quot;0-8…
+## $ `6m_radiologic`                       &lt;chr&gt; &quot;Considerable_improvement&quot;, &quot;Mod…
+## $ rad_num                               &lt;dbl&gt; 6, 5, 5, 5, 5, 6, 5, 5, 5, 5, 6,…
+## $ improved                              &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TR…
+## $ arm                                   &lt;chr&gt; &quot;Control&quot;, &quot;Control&quot;, &quot;Control&quot;,…
+## $ baseline_temp                         &lt;dbl&gt; 98.73150, 100.59308, 98.57415, 9…
+## $ baseline_esr                          &lt;dbl&gt; 16, 13, 26, 27, 49, 23, 45, 47, …
+## $ status_after_high_dose_administration &lt;chr&gt; &quot;not_resistant&quot;, &quot;not_resistant&quot;…
+## $ baseline_temp_cels                    &lt;dbl&gt; 37.62861, 38.66282, 37.54119, 37…</code></pre>
+</div>
+<div id="cutting-baseline_esr-score-into-quartiles-4-equal-parts-and-making-a-new-variable" class="section level5">
+<h5>Cutting “baseline_esr” score into quartiles (4 equal parts) and
+making a new variable</h5>
+<pre class="r"><code>joined_data &lt;- joined_data %&gt;% 
+  mutate(baseline_esr_quartiles = cut(baseline_esr, breaks = 4))
+
+table(joined_data$baseline_esr_quartiles)</code></pre>
+<pre><code>## 
+## (10.9,32.2] (32.2,53.5] (53.5,74.8] (74.8,96.1] 
+##          18          30          26          32</code></pre>
+</div>
+</div>
+<div id="setting-the-order-of-columns-as-patient_id-gender-arm-and-other-columns" class="section level4">
+<h4>Setting the order of columns as:
+<code>patient_id, gender, arm</code> and other columns</h4>
+<pre class="r"><code>joined_data &lt;- joined_data %&gt;% select(patient_id, gender, arm, everything())
+
+joined_data</code></pre>
+<pre><code>## # A tibble: 107 × 16
+##    patient_id gender arm     `dose_strep [g]` baseline_condition
+##         &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;             
+##  1          1 1      Control No_dose          good              
+##  2          2 0      Control No_dose          good              
+##  3          3 0      Control No_dose          good              
+##  4          4 1      Control No_dose          good              
+##  5          5 0      Control No_dose          good              
+##  6          6 1      Control No_dose          good              
+##  7          7 0      Control No_dose          good              
+##  8          8 1      Control No_dose          good              
+##  9          9 0      Control No_dose          fair              
+## 10         10 1      Control No_dose          fair              
+## # ℹ 97 more rows
+## # ℹ 11 more variables: baseline_cavitation &lt;chr&gt;, strep_resistance_level &lt;chr&gt;,
+## #   strep_resistance &lt;chr&gt;, `6m_radiologic` &lt;chr&gt;, rad_num &lt;dbl&gt;,
+## #   improved &lt;lgl&gt;, baseline_temp &lt;dbl&gt;, baseline_esr &lt;dbl&gt;,
+## #   status_after_high_dose_administration &lt;chr&gt;, baseline_temp_cels &lt;dbl&gt;,
+## #   baseline_esr_quartiles &lt;fct&gt;</code></pre>
+</div>
+<div id="arranging-patient_id-column-of-your-data-set-in-order-of-increasing-number-or-alphabeticall" class="section level4">
+<h4>Arranging patient_id column of your data set in order of increasing
+number or alphabeticall</h4>
+<pre class="r"><code>joined_data &lt;- joined_data %&gt;% arrange(joined_data$patient_id)
+
+head(joined_data)</code></pre>
+<pre><code>## # A tibble: 6 × 16
+##   patient_id gender arm     `dose_strep [g]` baseline_condition
+##        &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;            &lt;chr&gt;             
+## 1          1 1      Control No_dose          good              
+## 2          2 0      Control No_dose          good              
+## 3          3 0      Control No_dose          good              
+## 4          4 1      Control No_dose          good              
+## 5          5 0      Control No_dose          good              
+## 6          6 1      Control No_dose          good              
+## # ℹ 11 more variables: baseline_cavitation &lt;chr&gt;, strep_resistance_level &lt;chr&gt;,
+## #   strep_resistance &lt;chr&gt;, `6m_radiologic` &lt;chr&gt;, rad_num &lt;dbl&gt;,
+## #   improved &lt;lgl&gt;, baseline_temp &lt;dbl&gt;, baseline_esr &lt;dbl&gt;,
+## #   status_after_high_dose_administration &lt;chr&gt;, baseline_temp_cels &lt;dbl&gt;,
+## #   baseline_esr_quartiles &lt;fct&gt;</code></pre>
+<pre class="r"><code>tail(joined_data)</code></pre>
+<pre><code>## # A tibble: 6 × 16
+##   patient_id gender arm          `dose_strep [g]` baseline_condition
+##        &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;        &lt;chr&gt;            &lt;chr&gt;             
+## 1        102 1      Streptomycin high_dose        poor              
+## 2        103 0      Streptomycin high_dose        poor              
+## 3        104 1      Streptomycin high_dose        poor              
+## 4        105 0      Streptomycin high_dose        poor              
+## 5        106 0      Streptomycin high_dose        poor              
+## 6        107 0      Streptomycin high_dose        poor              
+## # ℹ 11 more variables: baseline_cavitation &lt;chr&gt;, strep_resistance_level &lt;chr&gt;,
+## #   strep_resistance &lt;chr&gt;, `6m_radiologic` &lt;chr&gt;, rad_num &lt;dbl&gt;,
+## #   improved &lt;lgl&gt;, baseline_temp &lt;dbl&gt;, baseline_esr &lt;dbl&gt;,
+## #   status_after_high_dose_administration &lt;chr&gt;, baseline_temp_cels &lt;dbl&gt;,
+## #   baseline_esr_quartiles &lt;fct&gt;</code></pre>
+</div>
+<div id="baseline_esr-as-numneric" class="section level4">
+<h4>Baseline_esr as numneric</h4>
+<pre class="r"><code>joined_data$baseline_esr &lt;- as.numeric(joined_data$baseline_esr)
+
+glimpse(joined_data)</code></pre>
+<pre><code>## Rows: 107
+## Columns: 16
+## $ patient_id                            &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1…
+## $ gender                                &lt;chr&gt; &quot;1&quot;, &quot;0&quot;, &quot;0&quot;, &quot;1&quot;, &quot;0&quot;, &quot;1&quot;, &quot;0…
+## $ arm                                   &lt;chr&gt; &quot;Control&quot;, &quot;Control&quot;, &quot;Control&quot;,…
+## $ `dose_strep [g]`                      &lt;chr&gt; &quot;No_dose&quot;, &quot;No_dose&quot;, &quot;No_dose&quot;,…
+## $ baseline_condition                    &lt;chr&gt; &quot;good&quot;, &quot;good&quot;, &quot;good&quot;, &quot;good&quot;, …
+## $ baseline_cavitation                   &lt;chr&gt; &quot;yes&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;…
+## $ strep_resistance_level                &lt;chr&gt; &quot;sensitive&quot;, &quot;sensitive&quot;, &quot;sensi…
+## $ strep_resistance                      &lt;chr&gt; &quot;0-8&quot;, &quot;0-8&quot;, &quot;0-8&quot;, &quot;0-8&quot;, &quot;0-8…
+## $ `6m_radiologic`                       &lt;chr&gt; &quot;Considerable_improvement&quot;, &quot;Mod…
+## $ rad_num                               &lt;dbl&gt; 6, 5, 5, 5, 5, 6, 5, 5, 5, 5, 6,…
+## $ improved                              &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TR…
+## $ baseline_temp                         &lt;dbl&gt; 98.73150, 100.59308, 98.57415, 9…
+## $ baseline_esr                          &lt;dbl&gt; 16, 13, 26, 27, 49, 23, 45, 47, …
+## $ status_after_high_dose_administration &lt;chr&gt; &quot;not_resistant&quot;, &quot;not_resistant&quot;…
+## $ baseline_temp_cels                    &lt;dbl&gt; 37.62861, 38.66282, 37.54119, 37…
+## $ baseline_esr_quartiles                &lt;fct&gt; &quot;(10.9,32.2]&quot;, &quot;(10.9,32.2]&quot;, &quot;(…</code></pre>
+</div>
+<div id="connecting-above-steps-with-pipe" class="section level4">
+<h4>Connecting above steps with pipe</h4>
+<ul>
+<li><p>Since we have individually ran the codes above this is just an
+example of how we can pipe it all together. That’s why it is marked as a
+comment below:</p></li>
+<li><p>joined_data_xyz &lt;- joined_data %&gt;% mutate(gender =
+ifelse(gender == “F”, 0, gender), gender = ifelse(gender == “M”, 1,
+gender)) %&gt;% mutate(<code>dose_strep [g]</code> = case_when(
+<code>dose_strep [g]</code> == 0 ~ “No_dose”,
+<code>dose_strep [g]</code> == 2 ~ “high_dose”, TRUE ~
+as.character(<code>dose_strep [g]</code>) )) %&gt;% mutate(
+status_after_high_dose_administration = case_when(
+<code>dose_strep [g]</code> == “high_dose” &amp; strep_resistance_level
+== “resistance” ~ “resistant”, <code>dose_strep [g]</code> ==
+“high_dose” &amp; strep_resistance_level == “sensitive” ~
+#“not_resistant”, <code>dose_strep [g]</code> == “high_dose” &amp;
+strep_resistance_level == “modrate” ~ “not_resistant”#,
+<code>dose_strep [g]</code> == “No_dose” ~ “not_resistant”, TRUE ~
+“Unknown”)) %&gt;% select(-baseline_temp_fahren, -baseline_temp_cels)
+%&gt;% mutate(baseline_temp_cels = (baseline_temp - 31)/(9/5)) %&gt;%
+mutate(baseline_esr_quartile = cut(baseline_esr, breaks = 4)) %&gt;%
+select(patient_id, gender, arm, everything()) %&gt;%
+arrange(joined_data$patient_id)</p></li>
+</ul>
+</div>
+<div id="exploring-missing-data" class="section level4">
+<h4>Exploring missing data</h4>
+<pre class="r"><code>skimr:: skim(joined_data)</code></pre>
+<table>
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">joined_data</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">107</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">16</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">9</td>
+</tr>
+<tr class="odd">
+<td align="left">factor</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">logical</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">5</td>
+</tr>
+<tr class="even">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table>
+<colgroup>
+<col width="39%" />
+<col width="10%" />
+<col width="14%" />
+<col width="4%" />
+<col width="4%" />
+<col width="6%" />
+<col width="9%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">gender</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">arm</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">7</td>
+<td align="right">12</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">dose_strep [g]</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">7</td>
+<td align="right">9</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">baseline_condition</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">4</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">baseline_cavitation</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">2</td>
+<td align="right">3</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">strep_resistance_level</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">7</td>
+<td align="right">10</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">strep_resistance</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">3</td>
+<td align="right">4</td>
+<td align="right">0</td>
+<td align="right">3</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">6m_radiologic</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">5</td>
+<td align="right">26</td>
+<td align="right">0</td>
+<td align="right">6</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">status_after_high_dose_administration</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">9</td>
+<td align="right">13</td>
+<td align="right">0</td>
+<td align="right">2</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: factor</strong></p>
+<table>
+<colgroup>
+<col width="23%" />
+<col width="10%" />
+<col width="14%" />
+<col width="8%" />
+<col width="9%" />
+<col width="35%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">ordered</th>
+<th align="right">n_unique</th>
+<th align="left">top_counts</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">baseline_esr_quartiles</td>
+<td align="right">1</td>
+<td align="right">0.99</td>
+<td align="left">FALSE</td>
+<td align="right">4</td>
+<td align="left">(74: 32, (32: 30, (53: 26, (10: 18</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: logical</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="left">count</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">improved</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0.51</td>
+<td align="left">TRU: 55, FAL: 52</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table style="width:100%;">
+<colgroup>
+<col width="20%" />
+<col width="10%" />
+<col width="14%" />
+<col width="7%" />
+<col width="6%" />
+<col width="6%" />
+<col width="6%" />
+<col width="7%" />
+<col width="7%" />
+<col width="7%" />
+<col width="6%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">patient_id</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">54.00</td>
+<td align="right">31.03</td>
+<td align="right">1.00</td>
+<td align="right">27.50</td>
+<td align="right">54.00</td>
+<td align="right">80.50</td>
+<td align="right">107.00</td>
+<td align="left">▇▇▇▇▇</td>
+</tr>
+<tr class="even">
+<td align="left">rad_num</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">3.93</td>
+<td align="right">1.89</td>
+<td align="right">1.00</td>
+<td align="right">2.00</td>
+<td align="right">5.00</td>
+<td align="right">6.00</td>
+<td align="right">6.00</td>
+<td align="left">▇▅▁▆▇</td>
+</tr>
+<tr class="odd">
+<td align="left">baseline_temp</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">100.71</td>
+<td align="right">1.18</td>
+<td align="right">98.46</td>
+<td align="right">99.66</td>
+<td align="right">100.59</td>
+<td align="right">101.79</td>
+<td align="right">102.63</td>
+<td align="left">▃▅▇▅▇</td>
+</tr>
+<tr class="even">
+<td align="left">baseline_esr</td>
+<td align="right">1</td>
+<td align="right">0.99</td>
+<td align="right">57.83</td>
+<td align="right">23.57</td>
+<td align="right">11.00</td>
+<td align="right">37.25</td>
+<td align="right">58.50</td>
+<td align="right">79.50</td>
+<td align="right">96.00</td>
+<td align="left">▅▆▇▆▇</td>
+</tr>
+<tr class="odd">
+<td align="left">baseline_temp_cels</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">38.73</td>
+<td align="right">0.65</td>
+<td align="right">37.48</td>
+<td align="right">38.14</td>
+<td align="right">38.66</td>
+<td align="right">39.33</td>
+<td align="right">39.79</td>
+<td align="left">▃▅▇▅▇</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Comment: We have one baseline_esr value missing. The observation is
+for a participant in control arm, with poor baseline condition, at was
+dead at the 6 month follow up.</li>
+</ul>
+</div>
+<div id="stratifying-categorical_variable-to-report-report-min-max-mean-and-sd-of-a-numeric-column" class="section level4">
+<h4>Stratifying categorical_variable to report report min, max, mean and
+sd of a numeric column</h4>
+<div id="stratifying-all-categorical_variable" class="section level5">
+<h5>Stratifying all categorical_variable</h5>
+<pre class="r"><code>Stratifying_all_categorical_variable &lt;- joined_data %&gt;%
+  group_by(across(where(~ is.factor(.) || is.character(.)))) %&gt;%  # all categorical vars
+  summarise(
+    min_baseline_temp = min(baseline_temp, na.rm = TRUE),
+    max_baseline_temp = max(baseline_temp, na.rm = TRUE),
+    mean_baseline_temp = mean(baseline_temp, na.rm = TRUE),
+    sd_baseline_temp = sd(baseline_temp, na.rm = TRUE),
+    .groups = &quot;drop&quot;
+  ) 
+
+glimpse(Stratifying_all_categorical_variable)</code></pre>
+<pre><code>## Rows: 80
+## Columns: 14
+## $ gender                                &lt;chr&gt; &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0&quot;, &quot;0…
+## $ arm                                   &lt;chr&gt; &quot;Control&quot;, &quot;Control&quot;, &quot;Control&quot;,…
+## $ `dose_strep [g]`                      &lt;chr&gt; &quot;No_dose&quot;, &quot;No_dose&quot;, &quot;No_dose&quot;,…
+## $ baseline_condition                    &lt;chr&gt; &quot;fair&quot;, &quot;fair&quot;, &quot;fair&quot;, &quot;fair&quot;, …
+## $ baseline_cavitation                   &lt;chr&gt; &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;yes&quot;, &quot;…
+## $ strep_resistance_level                &lt;chr&gt; &quot;sensitive&quot;, &quot;sensitive&quot;, &quot;sensi…
+## $ strep_resistance                      &lt;chr&gt; &quot;0-8&quot;, &quot;0-8&quot;, &quot;0-8&quot;, &quot;0-8&quot;, &quot;0-8…
+## $ `6m_radiologic`                       &lt;chr&gt; &quot;Considerable_improvement&quot;, &quot;Mod…
+## $ status_after_high_dose_administration &lt;chr&gt; &quot;not_resistant&quot;, &quot;not_resistant&quot;…
+## $ baseline_esr_quartiles                &lt;fct&gt; &quot;(10.9,32.2]&quot;, &quot;(32.2,53.5]&quot;, &quot;(…
+## $ min_baseline_temp                     &lt;dbl&gt; 100.07647, 100.74734, 99.40201, …
+## $ max_baseline_temp                     &lt;dbl&gt; 100.07647, 100.75476, 99.40201, …
+## $ mean_baseline_temp                    &lt;dbl&gt; 100.07647, 100.75105, 99.40201, …
+## $ sd_baseline_temp                      &lt;dbl&gt; NA, 0.005247918, NA, NA, NA, 0.0…</code></pre>
+</div>
+<div id="stratifying-gender-with-baseline_temp" class="section level5">
+<h5>Stratifying gender with baseline_temp</h5>
+<pre class="r"><code>stratify_gender_temp &lt;- joined_data %&gt;%
+  group_by(gender) %&gt;%  
+  summarise(
+    min_baseline_temp = min(baseline_temp, na.rm = TRUE),
+    max_baseline_temp = max(baseline_temp, na.rm = TRUE),
+    mean_baseline_temp = mean(baseline_temp, na.rm = TRUE),
+    sd_baseline_temp = sd(baseline_temp, na.rm = TRUE),
+  ) 
+
+glimpse(stratify_gender_temp)</code></pre>
+<pre><code>## Rows: 2
+## Columns: 5
+## $ gender             &lt;chr&gt; &quot;0&quot;, &quot;1&quot;
+## $ min_baseline_temp  &lt;dbl&gt; 98.45755, 98.52052
+## $ max_baseline_temp  &lt;dbl&gt; 102.6306, 102.2899
+## $ mean_baseline_temp &lt;dbl&gt; 100.7474, 100.6586
+## $ sd_baseline_temp   &lt;dbl&gt; 1.218784, 1.132755</code></pre>
+</div>
+<div id="stratifying-different-varibables-for-the-value-of-rad_num" class="section level5">
+<h5>Stratifying different varibables for the value of rad_num</h5>
+<ul>
+<li>baseline_condition is fair</li>
+</ul>
+<pre class="r"><code>stratify_fair_rad_num &lt;- joined_data %&gt;%
+  group_by(baseline_condition) %&gt;% filter(baseline_condition == &quot;fair&quot;) %&gt;% 
+  summarise(
+    min_rad_num = min(rad_num, na.rm = TRUE),
+    max_rad_num = max(rad_num, na.rm = TRUE),
+    mean_rad_num = mean(rad_num, na.rm = TRUE),
+    sd_rad_num = sd(rad_num, na.rm = TRUE),
+  ) 
+
+glimpse(stratify_fair_rad_num)</code></pre>
+<pre><code>## Rows: 1
+## Columns: 5
+## $ baseline_condition &lt;chr&gt; &quot;fair&quot;
+## $ min_rad_num        &lt;dbl&gt; 2
+## $ max_rad_num        &lt;dbl&gt; 6
+## $ mean_rad_num       &lt;dbl&gt; 4.567568
+## $ sd_rad_num         &lt;dbl&gt; 1.344547</code></pre>
+<ul>
+<li>only for females</li>
+</ul>
+<pre class="r"><code>stratify_females_rad_num &lt;- joined_data %&gt;%
+  group_by(gender) %&gt;% filter(gender == 0) %&gt;% 
+  summarise(
+    min_rad_num = min(rad_num, na.rm = TRUE),
+    max_rad_num = max(rad_num, na.rm = TRUE),
+    mean_rad_num = mean(rad_num, na.rm = TRUE),
+    sd_rad_num = sd(rad_num, na.rm = TRUE),
+  ) 
+
+glimpse(stratify_females_rad_num)</code></pre>
+<pre><code>## Rows: 1
+## Columns: 5
+## $ gender       &lt;chr&gt; &quot;0&quot;
+## $ min_rad_num  &lt;dbl&gt; 1
+## $ max_rad_num  &lt;dbl&gt; 6
+## $ mean_rad_num &lt;dbl&gt; 3.694915
+## $ sd_rad_num   &lt;dbl&gt; 1.905113</code></pre>
+<ul>
+<li>Only for persons with baseline temperature 100-100.9F</li>
+</ul>
+<pre class="r"><code>stratify_temp_rad_num &lt;- joined_data %&gt;%
+  mutate(
+    baseline_tempt100_100.9F = 
+      if_else(baseline_temp &gt;= 0 &amp; baseline_temp &lt;= 100.9, 1, 0)) %&gt;%
+  group_by(baseline_tempt100_100.9F) %&gt;% 
+  filter(baseline_tempt100_100.9F == 1) %&gt;%
+  summarise(
+    min_rad_num  = min(rad_num, na.rm = TRUE),
+    max_rad_num  = max(rad_num, na.rm = TRUE),
+    mean_rad_num = mean(rad_num, na.rm = TRUE),
+    sd_rad_num   = sd(rad_num, na.rm = TRUE)
+  )
+glimpse(stratify_temp_rad_num)</code></pre>
+<pre><code>## Rows: 1
+## Columns: 5
+## $ baseline_tempt100_100.9F &lt;dbl&gt; 1
+## $ min_rad_num              &lt;dbl&gt; 1
+## $ max_rad_num              &lt;dbl&gt; 6
+## $ mean_rad_num             &lt;dbl&gt; 4.428571
+## $ sd_rad_num               &lt;dbl&gt; 1.672494</code></pre>
+<ul>
+<li>Only for persons that developed resistance to streptomycin</li>
+</ul>
+<pre class="r"><code>stratify_resistance_rad_num &lt;- joined_data %&gt;%
+  mutate(
+    resistance_streptomycin = 
+      if_else(strep_resistance_level == &quot;resistance&quot;, 1, 0)) %&gt;%
+  group_by(resistance_streptomycin) %&gt;% 
+  filter(resistance_streptomycin == 1) %&gt;%
+  summarise(
+    min_rad_num  = min(rad_num, na.rm = TRUE),
+    max_rad_num  = max(rad_num, na.rm = TRUE),
+    mean_rad_num = mean(rad_num, na.rm = TRUE),
+    sd_rad_num   = sd(rad_num, na.rm = TRUE)
+  )
+glimpse(stratify_resistance_rad_num)</code></pre>
+<pre><code>## Rows: 1
+## Columns: 5
+## $ resistance_streptomycin &lt;dbl&gt; 1
+## $ min_rad_num             &lt;dbl&gt; 1
+## $ max_rad_num             &lt;dbl&gt; 6
+## $ mean_rad_num            &lt;dbl&gt; 4.088235
+## $ sd_rad_num              &lt;dbl&gt; 1.864625</code></pre>
+</div>
+</div>
+<div id="example-of-two-categorical-columns-in-one-table" class="section level4">
+<h4>Example of two categorical columns in one table</h4>
+<pre class="r"><code>gender_strep_resistance &lt;- joined_data %&gt;% janitor::tabyl(gender,strep_resistance_level)
+
+gender_strep_resistance</code></pre>
+<pre><code>##  gender modrate resistance sensitive
+##       0       5         19        35
+##       1       3         15        30</code></pre>
+</div>
+</div>
+<div id="task-4-create-plots-that-would-help-answer-these-questions" class="section level3">
+<h3>Task 4 Create plots that would help answer these questions:</h3>
+<div id="are-there-any-correlated-measurements-hint-ggallyggcorr-or-search-online-for-correlation-matrix-in-r" class="section level4">
+<h4>Are there any correlated measurements? (hint:
+<code>GGally::ggcorr</code> or search online for correlation matrix in
+R) ?</h4>
+<ul>
+<li><p>For answering this questions , we made a heat map that shows the
+correlation between each numerical variable</p></li>
+<li><p>Selection of the numerical variable</p></li>
+</ul>
+<pre class="r"><code>correlation_check &lt;- joined_data %&gt;% 
+  select(where(is.numeric))</code></pre>
+<ul>
+<li>Plotting of the heat map for all the numerical variables</li>
+</ul>
+<pre class="r"><code>ggcorr(correlation_check, 
+       label = TRUE,                # show correlation coefficients
+       label_round = 2,             # round decimals
+       hjust = 0.75, size = 3)      # adjust label placement &amp; size</code></pre>
+<p><img role="img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABUAAAAPACAIAAAB7BESOAAAACXBIWXMAAB2HAAAdhwGP5fFlAAAgAElEQVR4nOzdf4zj530n9s93pctdndhxYMU/zhdAQMitvFnUTRAYAtk0wN4h9XBTQWmCNWDD2KZ7INH4jyFSr5yi+kN/uGjkdQ2ygBMM0e1hYdiAF3GzUC1SNWKhV3UIwQjOdbBZqyINLJBzY9ky4rMT95LcLfsHydkZzi/ODGfJ59nXC/xDQz7f53m+/I5lvef5VYxGowAAAABW25lldwAAAAA4nAAPAAAACRDgAQAAIAECPAAAACRAgAcAAIAECPAAAACQAAEeAAAAEiDAAwAAQAIEeAAAAEiAAA8AAAAJEOABAAAgAQI8AAAAJECABwAAgAQI8AAAAJAAAR4AAAASIMADAABAAgR4AAAASIAADwAAAAkQ4AEAACABAjwAAAAkQIAHAACABAjwAAAAkAABHgAAABIgwAMAAEACBHgAAABIgAAPAAAACRDgAQAAIAECPAAAACRAgAcAAIAECPAAAACQAAEeAAAAEiDAAwAAQAIEeAAAAEiAAA8AAAAJEOABAAAgAQI8AAAAJECABwAAgAQI8AAAAJAAAR4AAAASIMADAABAAgR4AAAASIAADwAAAAkQ4AEAACABAjwAAAAkQIAHAACABAjwAAAAkAABHgAAABIgwAMAAEACBHgAAABIgAAPAAAACRDgAQAAIAECPAAAACRAgAcAAIAECPAAAACQAAEeAAAAEiDAAwAAQAIEeAAAAEiAAA8AAAAJEOABAAAgAQI8AAAAJECABwAAgAQI8AAAAJAAAR4AAAASIMADAABAAgR4AAAASIAADwAAAAkQ4AEAACABAjwAAAAkQIAHAACABAjwAAAAkAABHgAAABIgwAMAAEACBHgAAABIgAAPAAAACRDgAQAAIAECPAAAACRAgAcAAIAECPAAAACQAAEeAAAAEiDAAwAAQAIEeAAAAEiAAA8AAAAJEOABAAAgAQI8AAAAJECABwAAgAQI8AAAAJAAAR4AAAASIMADAABAAgR4AAAASIAADwAAAAkQ4AEAACABAjwAAAAkQIAHAACABAjwAAAAkAABHgAAABIgwAMAAEACBHgAAABIgAAPAAAACRDgAQAAIAECPAAAACRAgAcAAIAECPAAAACQAAEeAAAAEiDAAwAAQAIEeAAAAEiAAA8AAAAJEOABAAAgAQI8AAAAJECABwAAgAQI8AAAAJAAAR4AAAASIMADAABAAgR4AAAASIAADwAAAAkQ4AEAFqzXKIqiaPSW3Y8ddnRq2K4WRVFtD5fXn2Gv3aiu2Hf0YK3krwmw2gR4AAAeuN61WrPTX3YvANLy6LI7AADAg1Za3xytL7sTAByREXgAAABIgAAPAHBahr12tVoURVEU1Ua7t3vF+bDXbkxLFEVRVPcqNuxtL1OtVht71DRb136lJmV3roHfWo29val5enxwKwc1XutERHRqs8vAD6v//sLxYbtx/7sdTqveeq+6vff7XHX0vu/o5mHfwlG/qzkfNPAwGwEAsFDdekREvV6f/Q+vendnscre/322vdigtXehnVXtU6yyrdSkU91txSutwfbPKpXddexs5vBW5rGrlq3r56h/chut2ZKV1qA7+31v3d++V81+jce8gZ2NzXsvO57IvA8aeLgJ8AAAC3Y/SVZa3cFoNBoNpmH9fhybFJqWGE2K7QyDk1S3vdCgO31vMNtgpb5VbFrqfoOHB/jx54NpT2Y7PFcrR/yOdlw3V/1bXZ0W2yqz13vT6+Z6InOaJu2thzJ9arv/zjD/E5nzQQMPOwEeAGDBpnFxRzYc7Ixjk0Hv2XA2KbUzeB4S4WaumXl/Z4MHBvid7cy0PV8rc9sV4Oesf4+u3k/U2/qws/fzPJE57dnPmbs5+hOZ60EDWAMPAHAqKq2ra9t+LK0/W4+I/p1BRESsbYxGo9HmeikiYjgc9nrtdqNRLTd3HK1WPleJiH7zcqM33G859PDFm/1drUVElC5eqkT0b74470Lq82dLu9ue9HdxreztaPVXLl2839XS2fO73tvTwU/kKP2M+tM7+jl+mhtrx7mXiJjvQQPYxA4A4HTsjMMxDWm3X98KaMPeZCO0crlcqzWbnV0Ho48TX0S/UyuXJzuv7b31Wr9ZLmaN/xowd0CtnCsfVmQBrSyx/sOfyOEGd/ox11d1tHuZ/0EDDzUBHgBgGYbtark2TeyVSqVeb7W6g9mtzErrm4Nu/f7ucv1Os1krF8W2DcrHkfK0nXYrR6t/VxR/wA5u/zjf1RwPGkCABwBYgmH7crMfW5vGbW5ubmysr6/tFQtLaxubm6PRaNBttbYSXr9Tu9zeMal8/+XTG7MzuY/vtFt5MHdxcvMM2h/5XuZ70MBDTYAHADgVsyFvsnp6PHg7mYndujqT2Q8YvC2tra9vbG5ubU8+XUq9c636aTntVh7EXRz4ROY0Tz9PeC/7PWgAAR4A4HTM5K69dz+b0bvViYitqDlsV4uiKBq9HYVKa5MF05Mfxz91PrlroLbXKIqiqC5kAPe0W3kQd3GcJ7JfP2/teCY7H9TR72WuBw0gwAMAnJJ+szxdwDzsNcb7l03T4nTX8WtbK5yHvXa1qHV21DBNgrXqtg3Nhr3J9PvpyPF0N/VmeVuxYa9RrXUiov7s+kLWi59KK9vGxB/EXex8IpebR8/vez2TrQeyVdWR72W+Bw3gHHgAgAWbHPBdr8/8d1dl+8Hg3dlPIyIqre7MEeKzu9rtWddo1K3vWWxbqcPPgZ9ZtL3HYeaHtzK37fe1rR+H1r/r/Ph9ur/XOfB7PJFjHby+9zOZ+RKO+ETmfdDAw80IPADA6Xh6Y3A/xVXq3cHm9s3L1jYG3db9kFep1LuD0eb62vhQ862h6dL65qDb2rY9eVQq9dZMXRFrGzPF9ix1UgtspbR+o7Ur4p72XWx/IpVKvTvYPNa4/vSZbOtldzC7M91R72XOBw083IrRaLTsPgAAwCnqNYpaJ+rd1drLHuCojMADAABAAgR4AAAASIAADwDAIozPSJvDzGlpy5duz4GHjAAPAAAACbCJHQAAACTACDwAAAAkQIAHAACABAjwAAAAkAABHgAAABIgwAMAAEACBHgAAABIgAAPAAAACRDgAQAAIAECPAAAACRAgAcAAIAECPAAAACQAAEeAAAAEiDAAwAAQAIEeAAAAEiAAA8AAAAJEOABAAAgAQI8AAAAJECABwAAgAQI8AAAAJAAAR4AAAASIMADAABAAgR4AAAASIAADwAAAAkQ4AEAACABAjwAAAAkQIAHAACABAjwAAAAkAABHgAAABIgwAMAAEACBHgAAABIgAAPAAAACRDgAQAAIAECPAAAACRAgAcAAIAECPAAAACQAAEeAAAAEiDAAwAAQAIEeAAAAEiAAA8AAAAJEOABAAAgAQI8AAAAJECABwAAgAQI8AAAAJAAAR4AAAASIMADAABAAgR4AAAASIAADwAAAAkQ4AEAACABAjwAAAAkQIAHAACABAjwAAAAkAABHgAAABIgwAMAAEACBHgAAABIgAAPAAAACRDgAQAAIAECPAAAACRAgAcAAIAECPAAAACQAAEeAAAAEiDAAwAAQAIEeAAAAEiAAA8AAAAJEOABAAAgAQI8AAAAJECABwAAgAQI8AAAAJAAAR4AAAASIMADAABAAgR4AAAASIAADwAAAAkQ4AEAACABAjwAAAAkQIAHAACABDy67A4AALAavvDpZfeA1fPhjy+7B8B9RuABAAAgAQI8AAAAJECABwAAgAQI8AAAAJAAAR4AAAASIMADAABAAgR4AAAASIAADwAAAAkQ4AEAACABAjwAAAAkQIAHAACABAjwAAAAkAABHgAAABIgwAMAAEACBHgAAABIgAAPAAAACRDgAQAAIAECPAAAACRAgAcAAIAECPAAAACQAAEeAAAAEiDAAwAAQAIEeAAAAEiAAA8AAAAJEOABAAAgAQI8AAAAJECABwAAgAQI8AAAAJAAAR4AAAASIMADAABAAgR4AAAASIAADwAAAAkQ4AEAACABAjwAAAAkQIAHAACABAjwAAAAkAABHgAAABIgwAMAAEACBHgAAABIgAAPAAAACRDgAQAAIAECPAAAACRAgAcAAIAECPAAAACQAAEeAAAAEiDAAwAAQAIEeAAAAEiAAA8AAAAJEOABAAAgAQI8AAAAJECABwAAgAQI8AAAAJAAAR4AAAASIMADAABAAgR4AAAASIAADwAAAAkQ4AEAACABAjwAAAAkQIAHAACABAjwAAAAkAABHgAAABIgwAMAAEACBHgAAABIgAAPAAAACRDgAQAAIAECPAAAACRAgAcAAIAECPAAAACQAAEeAAAAEiDAAwAAQAIEeAAAAEiAAA8AAAAJEOABAAAgAQI8AAAAJECABwAAgAQI8AAAAJAAAR4AAAASIMADAABAAh5ddgcAAGCRht945dof/1lncHf8Y6X85KXf+NX19z924orfbD/3fHMQceHK6MoTexd547X2l7968y/u9gex6NYBohiNRsvuAwAAK+ALn152D07uzd71L9Zevrv7g8qFKzeuPFE6QdXDlz5b/tzdiH0D/P0Cu5WfGjz3KydpfWk+/PFl9wC4zxR6AAAy0bv+/J7pPSL6L18vX3/t+FV/40v7hvOIODi9R8TghfJzrwyP3zxAhAAPABnrNYqiKBq9Zfdjhx2dGrarRVFU23INi/DGK598efKPlY9eGXz+2ujz10af/0T3wuOTd1/+avuN41X9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FHqYUUyhBwAAgAiYQg9cLC1d/f1d010JAACIlRF4AAAAiIAADwAAABEQ4AEAACACAjwAAABEQIAHAACACAjwAAAAEAEBHgAAACIgwAMAAEAEBHgAAACIgAAPAAAAERDgAQAAIAICPAAAAERAgAcAAIAICPAAAAAQAQEeAAAAIiDAAwAAQAQEeAAAAIiAAA8AAAAREOABAAAgAgI8AAAARECABwAAgAgI8AAAABABAR4AAAAiIMADAABABAR4AAAAiIAADwAAABEQ4AEAACACAjwAAABEQIAHAACACAjwAAAAEAEBHgAAACIgwAMAAEAEBHgAAACIgAAPAAAAERDgAQAAIAICPAAAAERAgAcAAIAICPAAAAAQAQEeAAAAIiDAAwAAQAQEeAAAAIiAAA8AAAAREOABAAAgAgI8AAAARECABwAAgAgI8AAAABABAR4AAAAiIMADAABABAR4AAAAiIAADwAAABEQ4AEAACACAjwAAABEQIAHAACACAjwAAAAEAEBHgAAACIgwAMAAEAEBHgAAACIgAAPAAAAERDgAQAAIAICPAAAAERAgAcAAIAICPAAAAAQAQEeAAAAIiDAAwAAQAQEeAAAAIiAAA8AAAAREOABAAAgAgI8AAAARECABwAAgAgI8AAAABABAR4AAAAiIMADAABABAR4AAAAiIAADwAAABFI9ff3T3cdAAAAgDF8YborAEyO//z96emuAjPOn3x5fvinZ6e7Fsw837on7N4+3ZVg5lm/SYtBDd+6Z7prAAwyhR4AAAAiIMADAABABAR4AAAAiIAADwAAABEQ4AEAACACAjwAAABEQIAHAACACAjwAAAAEAEBHgAAACIgwAMAAEAEBHgAAACIgAAPAAAAERDgAQAAIAICPAAAAERAgAcAAIAICPAAAAAQAQEeAAAAIiDAAwAAQAQEeAAAAIiAAA8AAAAREOABAAAgAgI8AAAARECABwAAgAgI8AAAABABAR4AAAAiIMADAABABAR4AAAAiIAADwAAABEQ4AEAACACAjwAAABEQIAHAACACAjwAAAAEAEBHgAAACIgwAMAAEAEBHgAAACIgAAPAAAAERDgAQAAIAICPAAAAERAgAcAAIAICPAAAAAQAQEeAAAAIiDAAwAAQAQEeAAAAIiAAA8AAAAREOABAAAgAgI8AAAARECABwAAgAgI8AAAABAB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Vys99fTdW3tXDpmqeuaNwW53TU23D27pnDi6J/Xjw+er3MhLovCte8Lu7dNdiQtV2P0/W98c/eMRC8iVeyrZPr32wd7m8y1uF0IIZ3sz/+NgsVY5k3nJTLN+kxZj8AMtxoBv3TPdNQAGGYEHZormx956+Y4lNT9aesfzxx6ra/h9gkXduP0/9qwdba+4pXdEmd5njZaNW7ubay85mG6+v7Sx7p0i593U+/Tto07qqdmxXryu/wfLRrsk3RxnX3y2aFn/YPfyy2t+lF5+ZynSCM0F02IAs5sAD8wcC5of239szw/vWjKYvZcuWbtjz1uvP7Z8nPl5/EXduP31z996ecvapUOC/9Ila1/ufev1x6T36XVJy8ZHSj+4PTtk54B007KOH2zt3Xj1+HrD827qPbC1++5l6abBY0lR/aN1rBevq3lJ99Nbezfqi0+vL7asz5UeWJFtGIzx6YbrOx54sHf9Qr+aOUyLAcxmptDPCbNhCn3yHeoQ99e8ALNgCj2TbnZMoWfyzYop9Ey+WTGFnslnCj3MJEbgAQAAIAJfmO4KcDG0dPX3d013JS7QbPgOAAAAE2cEHgAAACIgwAMAAEAEBHgAAACIgAAPAAAAERDgAQAAIAICPAAAAERAgAcAAIAICPAAAAAQAQEeAAAAIiDAAwAAQAQEeAAAAIiAAA8AAAAREOABAAAgAgI8AAAARECABwAAgAgI8AAAABABAR4AAAAiIMADAABABAR4AAAAiIAADwAAABEQ4AEAACACAjwAAABEQIAHAACACAjwAAAAEAEBHgAAACIgwAMAAEAEBHgAAACIgAAPAAAAERDgAQAAIAICPAAAAERAgAcAAIAICPAAAAAQAQEeAAAAIiDAAwAAQAQEeAAAAIiAAA8AAAAREOABAAAgAgI8AAAARECABwAAgAgI8AAAABABAR4AAAAiIMADAABABAR4AAAAiIAADwAAABEQ4AEAACACAjwAAABEQIAHAACACAjwAAAAEAEBHgAAACIgwAMAAEAEBHgAAACIgAAPAAAAERDgAQAAIAICPAAAAERAgAcAAIAICPAAAAAQAQEeAAAAIiDAAwAAQAQEeAAAAIiAAA8AAAAREOABAAAgAgI8AAAARECABwAAgAgI8AAAABABAR4AAAAiIMADAABABAR4AAAAiIAADwAAABEQ4AEAACACAjwAAABEQIAHAACACAjwAAAAEAEBHgAAACIgwAMAAEAEUv39/dNdBwAAAGAMRuABAAAgAgI8AAAARECABwAAgAgI8AAAABABAR4AAAAiIMADAABABAR4AAAAiIAADwAAABEQ4AEAACACAjwAAABEQIAHAACACAjwAAAAEAEBHgAAACIgwAMAAEAEBHgAAACIgAAPAAAAERDgAQAAIAICPAAAAERAgAcAAIAICPAAAAAQAQEeAAAAIiDAAwAAQAQEeAAAAIiAAA8AAAAREOABAAAgAgI8AAAARECABwAAgAgI8AAAABABAR4AAAAiIMADAABABAR4AAAAiIAADwAAABH4/4emagcFywScAAAAAElFTkSuQmCC" width="672" /></p>
+<ul>
+<li>comment: if we wanted to see the variable names</li>
+</ul>
+<pre class="r"><code>names(correlation_check)</code></pre>
+<pre><code>## [1] &quot;patient_id&quot;         &quot;rad_num&quot;            &quot;baseline_temp&quot;     
+## [4] &quot;baseline_esr&quot;       &quot;baseline_temp_cels&quot;</code></pre>
+</div>
+<div id="does-the-erythrocyte-sedimentation-rate-in-mm-per-hour-at-baseline-distribution-depend-on-gender" class="section level4">
+<h4>Does the erythrocyte sedimentation rate in mm per hour at baseline
+distribution depend on <code>gender</code>?</h4>
+<ul>
+<li><p>If we were to assign the names of the observation within the
+gender, male = 1 , female = 0 joined_data &lt;- joined_data %&gt;%
+mutate(gender = if_else(gender, levels = c(0, 1), labels = c(“Female”,
+“Male”)))</p></li>
+<li><p>Ploting the curve comaring between the male and female</p></li>
+</ul>
+<pre class="r"><code>ggplot(joined_data, aes(x = gender, y = baseline_esr, fill = gender)) +
+  geom_boxplot() +
+  geom_jitter(aes(color = &quot;black&quot;), width = 0.2, alpha = 0.6) +
+  scale_fill_manual(values = c(&quot;1&quot; = &quot;pink&quot;, &quot;0&quot; = &quot;red&quot;)) +
+  scale_color_manual(values = c(&quot;1&quot; = &quot;pink&quot;, &quot;0&quot; = &quot;red&quot;)) +
+  labs(x = &quot;Gender&quot;, y = &quot;ESR at baseline (mm/hr)&quot;)</code></pre>
+<p><img role="img" src="data:image/png;base64,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" width="672" /></p>
+<pre class="r"><code>  labs(x = &quot;Gender&quot;, y = &quot;ESR at baseline (mm/hr)&quot;) # 0 is female and # 1 is male</code></pre>
+<pre><code>## $x
+## [1] &quot;Gender&quot;
+## 
+## $y
+## [1] &quot;ESR at baseline (mm/hr)&quot;
+## 
+## attr(,&quot;class&quot;)
+## [1] &quot;labels&quot;</code></pre>
+<ul>
+<li>Note: While checking if the gender affect the baseline ESR (mm/hr),
+it showed that gender does not affect the basline_esr since the p value
+is greater than 0.5.</li>
+</ul>
+<pre class="r"><code>joined_data %&gt;%
+  t.test(baseline_esr ~ gender, data = .) %&gt;%
+  broom::tidy()</code></pre>
+<pre><code>## # A tibble: 1 × 10
+##   estimate estimate1 estimate2 statistic p.value parameter conf.low conf.high
+##      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+## 1     3.12      59.2      56.1     0.677   0.500      101.    -6.02      12.2
+## # ℹ 2 more variables: method &lt;chr&gt;, alternative &lt;chr&gt;</code></pre>
+</div>
+<div id="do-erythrocyte-sedimentation-rate-in-mm-per-hour-at-baseline-and-baseline-temperature-have-a-linear-relationship" class="section level4">
+<h4>Do erythrocyte sedimentation rate in mm per hour at baseline and
+baseline temperature have a linear relationship?</h4>
+<pre class="r"><code>#visual inspection
+joined_data %&gt;% 
+  ggplot(aes(x = baseline_esr, y = baseline_temp)) +
+  geom_point() + 
+  geom_smooth(method = &quot;lm&quot;)</code></pre>
+<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
+<p><img role="img" src="data:image/png;base64,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" width="672" />
+- Comment: the visual inspection suggests that erythrocyte sedimentation
+rate in mm per hour at baseline and baseline temperature seems to have a
+linear relation</p>
+<div id="running-linear-regression-to-confirm" class="section level5">
+<h5>running linear regression to confirm</h5>
+<ul>
+<li>display numbers/p-values in standard (non-scientific) format</li>
+</ul>
+<pre class="r"><code>options(scipen = 999)</code></pre>
+<pre class="r"><code>joined_data %&gt;% 
+  lm(baseline_esr ~ baseline_temp, data = .) %&gt;%
+  broom::tidy()</code></pre>
+<pre><code>## # A tibble: 2 × 5
+##   term          estimate std.error statistic    p.value
+##   &lt;chr&gt;            &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;      &lt;dbl&gt;
+## 1 (Intercept)    -785.      179.       -4.39 0.0000277 
+## 2 baseline_temp     8.37      1.78      4.71 0.00000771</code></pre>
+<ul>
+<li>very low p-value seems to align with the estimation made through
+visual inspection above.</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="task-5" class="section level3">
+<h3>Task 5</h3>
+<div id="does-the-randomization-arm-depend-on-the-gender" class="section level4">
+<h4>Does the randomization arm depend on the gender?</h4>
+<pre class="r"><code>glimpse(joined_data)</code></pre>
+<pre><code>## Rows: 107
+## Columns: 16
+## $ patient_id                            &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1…
+## $ gender                                &lt;chr&gt; &quot;1&quot;, &quot;0&quot;, &quot;0&quot;, &quot;1&quot;, &quot;0&quot;, &quot;1&quot;, &quot;0…
+## $ arm                                   &lt;chr&gt; &quot;Control&quot;, &quot;Control&quot;, &quot;Control&quot;,…
+## $ `dose_strep [g]`                      &lt;chr&gt; &quot;No_dose&quot;, &quot;No_dose&quot;, &quot;No_dose&quot;,…
+## $ baseline_condition                    &lt;chr&gt; &quot;good&quot;, &quot;good&quot;, &quot;good&quot;, &quot;good&quot;, …
+## $ baseline_cavitation                   &lt;chr&gt; &quot;yes&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;…
+## $ strep_resistance_level                &lt;chr&gt; &quot;sensitive&quot;, &quot;sensitive&quot;, &quot;sensi…
+## $ strep_resistance                      &lt;chr&gt; &quot;0-8&quot;, &quot;0-8&quot;, &quot;0-8&quot;, &quot;0-8&quot;, &quot;0-8…
+## $ `6m_radiologic`                       &lt;chr&gt; &quot;Considerable_improvement&quot;, &quot;Mod…
+## $ rad_num                               &lt;dbl&gt; 6, 5, 5, 5, 5, 6, 5, 5, 5, 5, 6,…
+## $ improved                              &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TR…
+## $ baseline_temp                         &lt;dbl&gt; 98.73150, 100.59308, 98.57415, 9…
+## $ baseline_esr                          &lt;dbl&gt; 16, 13, 26, 27, 49, 23, 45, 47, …
+## $ status_after_high_dose_administration &lt;chr&gt; &quot;not_resistant&quot;, &quot;not_resistant&quot;…
+## $ baseline_temp_cels                    &lt;dbl&gt; 37.62861, 38.66282, 37.54119, 37…
+## $ baseline_esr_quartiles                &lt;fct&gt; &quot;(10.9,32.2]&quot;, &quot;(10.9,32.2]&quot;, &quot;(…</code></pre>
+<pre class="r"><code>table(joined_data$arm, joined_data$gender)</code></pre>
+<pre><code>##               
+##                 0  1
+##   Control      28 24
+##   Streptomycin 31 24</code></pre>
+<pre class="r"><code>chisq.test(joined_data$arm, joined_data$gender) %&gt;% 
+  broom::tidy()</code></pre>
+<pre><code>## # A tibble: 1 × 4
+##   statistic p.value parameter method                                            
+##       &lt;dbl&gt;   &lt;dbl&gt;     &lt;int&gt; &lt;chr&gt;                                             
+## 1   0.00452   0.946         1 Pearson&#39;s Chi-squared test with Yates&#39; continuity…</code></pre>
+<p>– Comment: since the p value is 0.946, at the significance level of
+95% confidence interval,we can conclude that randomization does not
+depend on the gender.</p>
+</div>
+<div id="does-the-randomization-arm-depend-on-erythrocyte-sedimentation-rate-in-mm-per-hour-at-baseline" class="section level4">
+<h4>Does the randomization arm depend on erythrocyte sedimentation rate
+in mm per hour at baseline?</h4>
+<pre class="r"><code>glimpse(joined_data)</code></pre>
+<pre><code>## Rows: 107
+## Columns: 16
+## $ patient_id                            &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1…
+## $ gender                                &lt;chr&gt; &quot;1&quot;, &quot;0&quot;, &quot;0&quot;, &quot;1&quot;, &quot;0&quot;, &quot;1&quot;, &quot;0…
+## $ arm                                   &lt;chr&gt; &quot;Control&quot;, &quot;Control&quot;, &quot;Control&quot;,…
+## $ `dose_strep [g]`                      &lt;chr&gt; &quot;No_dose&quot;, &quot;No_dose&quot;, &quot;No_dose&quot;,…
+## $ baseline_condition                    &lt;chr&gt; &quot;good&quot;, &quot;good&quot;, &quot;good&quot;, &quot;good&quot;, …
+## $ baseline_cavitation                   &lt;chr&gt; &quot;yes&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;no&quot;, &quot;…
+## $ strep_resistance_level                &lt;chr&gt; &quot;sensitive&quot;, &quot;sensitive&quot;, &quot;sensi…
+## $ strep_resistance                      &lt;chr&gt; &quot;0-8&quot;, &quot;0-8&quot;, &quot;0-8&quot;, &quot;0-8&quot;, &quot;0-8…
+## $ `6m_radiologic`                       &lt;chr&gt; &quot;Considerable_improvement&quot;, &quot;Mod…
+## $ rad_num                               &lt;dbl&gt; 6, 5, 5, 5, 5, 6, 5, 5, 5, 5, 6,…
+## $ improved                              &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TR…
+## $ baseline_temp                         &lt;dbl&gt; 98.73150, 100.59308, 98.57415, 9…
+## $ baseline_esr                          &lt;dbl&gt; 16, 13, 26, 27, 49, 23, 45, 47, …
+## $ status_after_high_dose_administration &lt;chr&gt; &quot;not_resistant&quot;, &quot;not_resistant&quot;…
+## $ baseline_temp_cels                    &lt;dbl&gt; 37.62861, 38.66282, 37.54119, 37…
+## $ baseline_esr_quartiles                &lt;fct&gt; &quot;(10.9,32.2]&quot;, &quot;(10.9,32.2]&quot;, &quot;(…</code></pre>
+<pre class="r"><code>joined_data %&gt;%
+  t.test(baseline_esr ~ arm, data = .) %&gt;% 
+  broom::tidy()</code></pre>
+<pre><code>## # A tibble: 1 × 10
+##   estimate estimate1 estimate2 statistic p.value parameter conf.low conf.high
+##      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+## 1    -4.17      55.7      59.8    -0.907   0.366      102.    -13.3      4.94
+## # ℹ 2 more variables: method &lt;chr&gt;, alternative &lt;chr&gt;</code></pre>
+<ul>
+<li>Comment: since the p-value is 0.366, at the significance level of
+95% confidence interval, we can conclude that randomization does not
+depend of erythrocyte sedimentation rate in mm per hour at
+baseline.</li>
+</ul>
+<div id="is-there-an-association-between-streptomycin-resistance-after-6-months-of-therapy-and-erythrocyte-sedimentation-rate-in-mm-per-hour-at-baseline" class="section level5">
+<h5>Is there an association between streptomycin resistance after 6
+months of therapy and erythrocyte sedimentation rate in mm per hour at
+baseline?</h5>
+<pre class="r"><code>joined_data %&gt;%
+  mutate(baseline_esr = log(baseline_esr)) %&gt;%
+  aov(baseline_esr ~ strep_resistance_level, data =.) %&gt;%
+  summary()</code></pre>
+<pre><code>##                         Df Sum Sq Mean Sq F value Pr(&gt;F)  
+## strep_resistance_level   2  1.486  0.7431   3.082 0.0501 .
+## Residuals              103 24.835  0.2411                 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 1 observation deleted due to missingness</code></pre>
+<ul>
+<li>Comment: I made anova test to do that because I have continues and
+categorical data which need to use anova the p-value is not
+statistically significant = 0.05, that’s why strep resistance level
+don’t affect the baseline-esr.</li>
+</ul>
+</div>
+<div id="according-to-the-data-was-there-a-difference-of-baseline-temperature-between-different-likert-score-rating-of-radiologic-response-on-chest-x-ray-at-6-months-categories" class="section level5">
+<h5>According to the data, was there a difference of baseline
+temperature between different Likert score rating of radiologic response
+on chest x-ray at 6 months categories?</h5>
+<ul>
+<li>One way ANOVA</li>
+</ul>
+<pre class="r"><code>joined_data %&gt;%
+  mutate(baseline_esr = log(baseline_esr)) %&gt;% aov(baseline_esr ~ `6m_radiologic` , data =.) %&gt;%
+  summary()</code></pre>
+<pre><code>##                  Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+## `6m_radiologic`   5  5.445  1.0890   5.216 0.000269 ***
+## Residuals       100 20.877  0.2088                     
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 1 observation deleted due to missingness</code></pre>
+<ul>
+<li>comment: the results show that the p-value is less than 0.05,
+suggesting there is a statistically significant difference in baseline
+temperature across different Likert score categories of 6-month
+radiologic response</li>
+</ul>
+</div>
+</div>
+</div>
 </div>
 </div>
 
