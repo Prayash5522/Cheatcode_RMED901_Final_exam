@@ -1,3 +1,8 @@
+---
+output:
+  html_document: default
+  pdf_document: default
+---
 # Cheatcode_RMED901_Final_exam
 Final group work 
 
