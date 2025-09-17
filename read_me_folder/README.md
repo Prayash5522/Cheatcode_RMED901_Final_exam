@@ -33,10 +33,13 @@ Final group work
 ## Day4 - 2025_09_10
 
  - Rest of the analysis were conducted in dataset "2025_09_08_joined_data_day2.txt"
+
+ - Added MIT License to the repository 
  
  - Completed Tasks 5
    
 ## Day5 - 2025_09_11
+
 - Started to organise files and .rmd file for report submission
   
 - Styled the main script using styler function
