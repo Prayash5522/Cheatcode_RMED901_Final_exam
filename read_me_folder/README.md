@@ -18,17 +18,17 @@ Final group work
 
  - Note: to delete branch use the code in TERMINAL: git branch -D "name of the branch"
 
- - Completed Task 3
+ - Completed Task 2
  
  - Saved the tidy data named: "2025_09_08_tidy_version_day2.txt"
 
 ## Day3 - 2025_09_09
 
- - Joined the tidy dataset from day 2 and 
+ - Completed some parts of Tasks 3 
+
+ - Joined the tidy dataset from day 2
  
  - Saved the tidy data named: "2025_09_08_joined_data_day2.txt"
-
- - Completed Tasks 4 
 
 ## Day4 - 2025_09_10
 
@@ -36,9 +36,11 @@ Final group work
 
  - Added MIT License to the repository 
  
- - Completed Tasks 5
+ - Completed Task 3 and started with Task 4
    
 ## Day5 - 2025_09_11
+
+- Completed Task 4 and Task 5
 
 - Started to organise files and .rmd file for report submission
   
