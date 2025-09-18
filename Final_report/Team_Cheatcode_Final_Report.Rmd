@@ -579,4 +579,3 @@ joined_data %>%
   summary()
 ```
 - comment: the results show that the p-value is less than 0.05, suggesting there is a statistically significant difference in baseline temperature across different Likert score categories of 6-month radiologic response 
-
